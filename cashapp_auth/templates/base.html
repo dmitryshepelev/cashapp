@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="CashAppAuth">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+    {% load staticfiles %}
+	<script type="text/javascript" src="{% static "libs/angular-1.5.0-beta.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "libs/angular-ui-router-0.2.15.min.js" %}"></script>
+
+	<script type="text/javascript" src="{% static "app/cashapp-module.js" %}"></script>
+	<script type="text/javascript" src="{% static "app/services/validate-service.js" %}"></script>
+
+	<script type="text/javascript" src="{% static "app/auth-module.js" %}"></script>
+	<script type="text/javascript" src="{% static "app/controllers/signin-controller.js" %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static "bootstrap.css" %}" />
+	<link rel="stylesheet" type="text/css" href="{% static "site.css" %}" />
+	{% block resources %}
+
+	{% endblock %}
+</head>
+
+<body>
+<nav class="navbar">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">CashApp</a>
+		</div>
+	</div>
+</nav>
+<div class="container">
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+{% block footer %}
+
+{% endblock %}
+</body>
+</html>
