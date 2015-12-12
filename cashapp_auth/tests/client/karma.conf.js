@@ -1,5 +1,6 @@
 // Karma configuration
 // Generated on Tue Dec 08 2015 16:07:24 GMT+0300 (Belarus Standard Time)
+// karma start cashapp_auth/tests/client/karma.conf.js
 
 module.exports = function(config) {
     config.set({
@@ -12,6 +13,13 @@ module.exports = function(config) {
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: ['jasmine'],
 
+        plugins : [
+            'karma-jasmine',
+            'karma-firefox-launcher',
+            'karma-phantomjs-launcher',
+            'karma-coverage',
+            'karma-teamcity-reporter'
+        ],
 
         // list of files / patterns to load in the browser
         files: [
@@ -39,7 +47,7 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'coverage'],
+        reporters: ['progress', 'coverage', 'teamcity'],
 
 
         // web server port
@@ -61,7 +69,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'IE'],
+        browsers: ['Firefox', 'PhantomJS'],
 
 
         // Continuous Integration mode

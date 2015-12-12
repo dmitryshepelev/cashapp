@@ -1,1 +1,0 @@
-call %~dp0\cashapp_auth\tests\client\run_client_tests.bat
