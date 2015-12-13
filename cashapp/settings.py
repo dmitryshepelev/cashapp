@@ -128,7 +128,8 @@ STATICFILES_DIRS = (
 
 	'cashapp/static/js/',
 
-	'cashapp_auth/static/js/'
+	'cashapp_auth/static/js/',
+	'cashapp_auth/static/res/'
 )
 
 STATIC_URL = '/static/'

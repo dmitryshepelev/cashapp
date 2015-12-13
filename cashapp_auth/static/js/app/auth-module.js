@@ -1,6 +1,15 @@
 (function (angular) {
 
-    function _config($stateProvider, $urlRouterProvider) {
+    function _config($stateProvider, $urlRouterProvider, $translateProvider, $interpolateProvider) {
+        $interpolateProvider.startSymbol('[[');
+        $interpolateProvider.endSymbol(']]');
+
+        $translateProvider.useStaticFilesLoader({
+            prefix: '/static/locale/',
+            suffix: '.json'
+        });
+        $translateProvider.preferredLanguage('en');
+
         $urlRouterProvider.otherwise("/signin");
 
         $stateProvider
@@ -15,7 +24,7 @@
             });
     }
 
-    angular.module('CashAppAuth', ['ui.router', 'CashApp']);
-    angular.module('CashAppAuth').config(['$stateProvider', '$urlRouterProvider', _config]);
+    angular.module('CashAppAuth', ['ui.router', 'pascalprecht.translate', 'services']);
+    angular.module('CashAppAuth').config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', _config]);
 
 })(angular);

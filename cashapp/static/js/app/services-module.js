@@ -1,3 +1,3 @@
 (function (angular) {
-    angular.module('CashApp', [])
+    angular.module('services', [])
 })(angular);

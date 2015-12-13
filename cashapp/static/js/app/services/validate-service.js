@@ -1,5 +1,5 @@
 (function (angular) {
-    angular.module('CashApp')
+    angular.module('services')
 
         // Service to validate elements
         .factory('$validator', function () {

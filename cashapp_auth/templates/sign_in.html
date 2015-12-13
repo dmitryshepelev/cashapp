@@ -5,13 +5,13 @@
 	<div class="col-md-4">
 		<form novalidate="" name="loginModel.form" ng-submit="loginModel.signin()" class="form-horizontal">
 			<div class="form-group">
-				<input type="text" name="username" placeholder="username" autocomplete="off" required autofocus ng-model="loginModel.data.username" class="form-control">
+				<input type="text" name="username" placeholder="[[ 'username'|translate ]]" autocomplete="off" required autofocus ng-model="loginModel.data.username" class="form-control">
 			</div>
 			<div class="form-group">
-				<input type="password" name="password" placeholder="password" autocomplete="off" required ng-model="loginModel.data.password" class="form-control">
+				<input type="password" name="password" placeholder="[[ 'password'|translate ]]" autocomplete="off" required ng-model="loginModel.data.password" class="form-control">
 			</div>
 			<div class="form-group">
-				<input type="submit" value="sign in" class="btn btn-primary-outline">
+				<input type="submit" value="[[ 'sign_in'|translate ]]" class="btn btn-primary-outline pull-md-right">
 			</div>
 		</form>
 	</div>
