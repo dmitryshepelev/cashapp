@@ -2,5 +2,7 @@
 	"username": "username",
 	"password": "password",
 	"sign_in": "sign in",
-	"sign_up": "sign up"
+	"sign_up": "sign up",
+	"email": "email",
+	"confirm_password": "confirm password"
 }

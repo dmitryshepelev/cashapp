@@ -1,3 +1,18 @@
 .ui-view-container {
-	margin-top: 20px;
+	margin: 20px 0;
+}
+
+.animate {
+
+	&.hide-show {
+		opacity: 1;
+
+		&.ng-hide {
+			opacity: 0;
+		}
+
+		&.ng-hide-add, &.ng-hide-remove {
+			transition: all linear 0.2s;
+		}
+	}
 }

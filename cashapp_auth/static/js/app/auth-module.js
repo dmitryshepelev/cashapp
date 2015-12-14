@@ -10,21 +10,27 @@
         });
         $translateProvider.preferredLanguage('en');
 
-        $urlRouterProvider.otherwise("/signin");
+        $urlRouterProvider.when('', '/signin');
 
         $stateProvider
-            .state('signin', {
-                url: "/signin",
+            .state('auth', {
+                abstract: true,
+                url: '',
+                templateUrl: '/auth/uiview/'
+            })
+            .state('auth.signin', {
+                url: '/signin',
                 templateUrl: '/auth/signin/',
                 controller: 'signin-controller'
             })
-            .state('signup', {
-                url: "/signup",
-                templateUrl: '/auth/signup/'
+            .state('auth.signup', {
+                url: '/signup',
+                templateUrl: '/auth/signup/',
+                controller: 'signup-controller'
             });
     }
 
-    angular.module('CashAppAuth', ['ui.router', 'pascalprecht.translate', 'services']);
+    angular.module('CashAppAuth', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate']);
     angular.module('CashAppAuth').config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', _config]);
 
 })(angular);

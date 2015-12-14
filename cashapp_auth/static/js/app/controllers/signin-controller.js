@@ -1,12 +1,12 @@
 (function (angular) {
     function SignInCtrl($scope, $validator) {
-        $scope.loginModel = {
+        $scope.signinModel = {
             data: {
                 username: '',
                 password: ''
             },
             signin: function () {
-                var result = $validator.validateForm($scope.loginModel.form);
+                var result = $validator.validateForm($scope.signinModel.form);
             }
         }
     }

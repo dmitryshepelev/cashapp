@@ -1,5 +1,5 @@
 (function (angular) {
-    angular.module('services')
+    angular.module('CashApp.Service')
 
         // Service to validate elements
         .factory('$validator', function () {
@@ -52,7 +52,7 @@
 
                     // set focus on the first error element
                     if (elements.length !== 0) {
-                        elements[0][0]().focus();
+                        elements[0][0].focus();
                     }
 
                     return { status: status, elements: elements }

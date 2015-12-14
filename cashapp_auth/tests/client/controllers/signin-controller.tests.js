@@ -23,14 +23,14 @@ describe('SignInController tests', function () {
             controller = $controller('signin-controller', { $scope: $scope, $validator: createValidatorService() });
         });
 
-        it('should be defaulted loginModel', function () {
-            expect($scope.loginModel.data).toEqual({ username: '', password: '' })
+        it('should be defaulted signinModel', function () {
+            expect($scope.signinModel.data).toEqual({ username: '', password: '' })
         });
 
         it('should be signin result true', function () {
-            $scope.loginModel.form = {};
-            var result = $scope.loginModel.signin();
+            $scope.signinModel.form = {};
+            var result = $scope.signinModel.signin();
             expect(result).toBe(undefined);
-        })
+        });
     })
 });

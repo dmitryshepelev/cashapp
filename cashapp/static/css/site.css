@@ -1,11 +1,13 @@
-html, body {
-    height: 100%;
+.ui-view-container {
+  margin: 20px 0;
 }
-
-nav {
-    margin-bottom: 10px;
+.animate.hide-show {
+  opacity: 1;
 }
-
-footer {
-    margin-top: 20px;
+.animate.hide-show.ng-hide {
+  opacity: 0;
+}
+.animate.hide-show.ng-hide-add,
+.animate.hide-show.ng-hide-remove {
+  transition: all linear 0.2s;
 }

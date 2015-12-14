@@ -1,1 +1,27 @@
-<h3>s two</h3>
+<div class="row">
+	<div class="col-md-4">
+
+	</div>
+	<div class="col-md-4">
+		<form novalidate="" name="signupModel.form" ng-submit="signupModel.signin()" class="form-horizontal">
+			<div class="form-group">
+				<input type="text" name="username" placeholder="[[ 'username'|translate ]]" autocomplete="off" required autofocus ng-model="signupModel.data.username" class="form-control">
+			</div>
+			<div class="form-group">
+				<input type="text" name="email" placeholder="[[ 'email'|translate ]]" autocomplete="off" required ng-model="signupModel.data.email" class="form-control">
+			</div>
+			<div class="form-group">
+				<input type="password" name="password" placeholder="[[ 'password'|translate ]]" autocomplete="off" required ng-model="signupModel.data.password" class="form-control">
+			</div>
+			<div class="form-group">
+				<input type="password" name="confirm_password" placeholder="[[ 'confirm_password'|translate ]]" ng-show="signupModel.data.password" autocomplete="off" required ng-model="signupModel.data.confirm_password" class="form-control animate hide-show">
+			</div>
+			<div class="form-group">
+				<input type="submit" value="[[ 'sign_up'|translate ]]" class="btn btn-primary-outline pull-md-right">
+			</div>
+		</form>
+	</div>
+	<div class="col-md-4">
+
+	</div>
+</div>

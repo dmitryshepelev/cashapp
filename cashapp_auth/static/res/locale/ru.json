@@ -2,5 +2,7 @@
 	"username": "имя пользователя",
 	"password": "пароль",
 	"sign_in": "вход",
-	"sign_up": "регистрация"
+	"sign_up": "регистрация",
+	"email": "email",
+	"confirm_password": "подтвердить пароль"
 }

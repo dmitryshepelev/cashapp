@@ -1,24 +1,20 @@
-{% extends 'base.html' %}
+<div class="row">
+    <div class="col-md-4">
 
-{% block content %}
-    <div class="row">
-        <div class="col-md-4">
-
-        </div>
-        <div class="col-md-4">
-            <div class="row form-group">
-                <div class="col-md-6">
-                    <a ui-sref="signin" class="pull-md-right" translate>sign_in</a>
-                </div>
-                <div class="col-md-6">
-                    <a ui-sref="signup" class="pull-md-left" translate>sign_up</a>
-                </div>
+    </div>
+    <div class="col-md-4">
+        <div class="row form-group">
+            <div class="col-md-6">
+                <a ui-sref="auth.signin" class="pull-md-right" translate>sign_in</a>
+            </div>
+            <div class="col-md-6">
+                <a ui-sref="auth.signup" class="pull-md-left" translate>sign_up</a>
             </div>
         </div>
-        <div class="col-md-4">
-
-        </div>
     </div>
+    <div class="col-md-4">
 
-    <div ui-view></div>
-{% endblock %}
+    </div>
+</div>
+
+<div ui-view></div>
