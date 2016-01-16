@@ -11,8 +11,10 @@
         /**
          * Callback to execute when signup isn't succeed
          */
-        function onSignUpError () {
-
+        function onSignUpError (response) {
+            if (response.data && response.data instanceof Object && !Array.isArray(response.data)) {
+                $validator.showErrors(response.data);
+            }
         }
 
         $scope.signupModel = {

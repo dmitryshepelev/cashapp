@@ -4,7 +4,10 @@ describe('SignInController tests', function () {
     createValidatorService = function () {
         return {
             validateForm: function () {
-                return true;
+                return { status: true, elements: [] };
+            },
+            showErrors: function () {
+                return undefined;
             }
         }
     };

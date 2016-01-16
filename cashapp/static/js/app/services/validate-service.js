@@ -3,13 +3,104 @@
 
         // Service to validate elements
         .factory('$validator', function () {
+
+            // define parent node selector
+            var _parentSelector = '.form-group';
+            var _errorKeys = {
+                required: {
+                    value: 'required',
+                    text: 'Please fill out this field'
+                },
+                email: {
+                    value: 'email',
+                    text: 'Email is incorrect'
+                }
+            };
+
+            /**
+             * Set clearance handler on 'oninput' event
+             * @param element
+             * @param cssClasses
+             */
+            function _setClearanceHandler (element, cssClasses) {
+                if (typeof element.oninput !== 'function') {
+                    element.on('input', function () {
+                        var $el = angular.element(this);
+
+                        // remove classes
+                        _removeError($el, cssClasses);
+
+                        // make handler to be executed once
+                        $el.oninput = undefined;
+                    })
+                }
+            }
+
+            /**
+             * Show error
+             * @param element
+             * @param cssClasses
+             * @param text
+             * @private
+             */
+            function _showError (element, cssClasses, text) {
+                element.addClass(cssClasses.errorElementClass);
+                element.attr('title', text);
+                element.parent(_parentSelector).addClass(cssClasses.errorParentClass);
+            }
+
+            /**
+             * Remove error
+             * @param element
+             * @param cssClasses
+             * @private
+             */
+            function _removeError (element, cssClasses) {
+                element.parent(_parentSelector).removeClass(cssClasses.errorParentClass);
+                element.removeAttr('title');
+                element.removeClass(cssClasses.errorElementClass);
+            }
+
+            /**
+             * Resolve css classes of invalid element
+             * @param key defines error type. {required|}
+             * @returns {{errorParentClass: string, errorElementClass: string}}
+             * @private
+             */
+            function _resolveCssClasses (key) {
+                var errorType = key === _errorKeys.required.value ? 'warning' : 'danger';
+                return {
+                    errorParentClass: 'has-' + errorType,
+                    errorElementClass: 'form-control-' + errorType
+                }
+            }
+
+            /**
+             * Set focus to the element
+             * @param data JQLite element or Array of elements
+             * @private
+             */
+            function _setFocus (data) {
+                var element = Array.isArray(data) ? data[0] : data;
+                element[0].focus();
+            }
+
+            /**
+             * Resolve text message by key
+             * @param key error key
+             * @private
+             */
+            function _resolveTextByKey (key) {
+                return _errorKeys[key] ? _errorKeys[key].text : '';
+            }
+
             return {
                 validateForm: function (form) {
                     // define validation status
                     var status = true;
                     // define errors elements
                     var elements = [];
-
+                    console.log(form.$error);
                     // check each group of error
                     angular.forEach(form.$error, function (value, key) {
                         // select group of errors
@@ -26,36 +117,44 @@
                             var $element = angular.element(document.querySelector('[name=' + elName + ']'));
                             elements.push($element);
 
-                            // define parent node selector
-                            var parentSelector = '.form-group';
                             // define error class
-                            var errorType = key === 'required' ? 'warning' : 'danger';
-                            var errorParentClass = 'has-' + errorType;
-                            var errorElementClass = 'form-control-' + errorType;
+                            var cssClasses = _resolveCssClasses(key);
 
                             // add styles
-                            $element.addClass(errorElementClass);
-                            $element.parent(parentSelector).addClass(errorParentClass);
+                            _showError($element, cssClasses, _resolveTextByKey(key));
 
                             // set clearance handler
-                            if (typeof $element.oninput !== 'function') {
-                                $element.on('input', function () {
-                                    var $el = angular.element(this);
-                                    $el.parent(parentSelector).removeClass(errorParentClass);
-                                    $el.removeClass(errorElementClass);
-                                    // make handler to be executed once
-                                    $el.oninput = undefined;
-                                })
-                            }
+                            _setClearanceHandler($element, cssClasses);
                         });
                     });
 
                     // set focus on the first error element
                     if (elements.length !== 0) {
-                        elements[0][0].focus();
+                        _setFocus(elements[0]);
                     }
 
                     return { status: status, elements: elements }
+                },
+
+                /**
+                 * Show errors
+                 * @param errors is the object where 'key' is the field name and 'value' is an Array of errors text
+                 */
+                showErrors: function (errors) {
+                    var i = 0;
+                    angular.forEach(errors, function (value, key) {
+                        var $element = angular.element(document.querySelector('[name=' + key + ']'));
+
+                        var cssClasses = _resolveCssClasses();
+                        // add styles
+                        _showError($element, cssClasses, value[0]);
+                        // set clearance handler
+                        _setClearanceHandler($element, cssClasses);
+
+                        if (i++ === 0) {
+                            _setFocus($element)
+                        }
+                    })
                 }
             }
         });

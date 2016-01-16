@@ -5,6 +5,9 @@ describe('SignUpController tests', function () {
         return {
             validateForm: function () {
                 return { status: true, elements: [] };
+            },
+            showErrors: function () {
+                return undefined;
             }
         }
     };
@@ -70,13 +73,27 @@ describe('SignUpController tests', function () {
             $httpBackend.flush()
         });
 
-        it('should be an error during signing up', function () {
+        it('should be an internal server error during signing up', function () {
             var newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
             var url = '/auth/api/signup/';
 
             $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
 
-            $httpBackend.whenPOST(url).respond(500);
+            $httpBackend.whenPOST(url).respond(500, {});
+            $httpBackend.expectPOST(url, newUser);
+
+            expect($scope.signupModel.signup()).toEqual(undefined);
+
+            $httpBackend.flush()
+        });
+
+        it('should be an data server error during signing up', function () {
+            var newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
+            var url = '/auth/api/signup/';
+
+            $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
+
+            $httpBackend.whenPOST(url).respond(500, { data: { password: ['Password is invalid'] }});
             $httpBackend.expectPOST(url, newUser);
 
             expect($scope.signupModel.signup()).toEqual(undefined);

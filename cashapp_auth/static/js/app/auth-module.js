@@ -1,6 +1,6 @@
 (function (angular) {
 
-    function _config($stateProvider, $urlRouterProvider, $translateProvider, $interpolateProvider) {
+    function _config($stateProvider, $urlRouterProvider, $translateProvider, $interpolateProvider, $httpProvider) {
         $interpolateProvider.startSymbol('[[');
         $interpolateProvider.endSymbol(']]');
 
@@ -10,8 +10,10 @@
         });
         $translateProvider.preferredLanguage('en');
 
-        $urlRouterProvider.when('', '/signin');
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 
+        $urlRouterProvider.when('', '/signin');
         $stateProvider
             .state('auth', {
                 abstract: true,
@@ -31,6 +33,6 @@
     }
 
     angular.module('CashAppAuth', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate']);
-    angular.module('CashAppAuth').config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', _config]);
+    angular.module('CashAppAuth').config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);
 
 })(angular);

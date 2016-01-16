@@ -10,6 +10,15 @@
             signup: function (model) {
                 var method = 'signup/';
                 return $http.post(baseUrl + method, model)
+            },
+            /**
+             * Service method to signin an existing user
+             * @param model existing user model
+             * @returns Promise
+             */
+            signin: function (model) {
+                var method = 'signin/';
+                return $http.post(baseUrl + method, model)
             }
         }
     }
