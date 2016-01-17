@@ -9,6 +9,16 @@ from cashapp_auth.forms import SigninForm
 
 
 @require_http_methods(['POST'])
+def sign_up(request):
+	"""
+	Api method to create new user
+	:param request: http request
+	:return: ApiResponse instance
+	"""
+	return ServerResponse.ok(data='abv')
+
+
+@require_http_methods(['POST'])
 def sign_in(request):
 	"""
 	Api method to sign in user

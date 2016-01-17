@@ -4,5 +4,8 @@
 	"sign_in": "sign in",
 	"sign_up": "sign up",
 	"email": "email",
-	"confirm_password": "confirm password"
+	"confirm_password": "confirm password",
+
+	"sign_up_title": "Sign Up",
+	"sign_in_title": "Sign In"
 }

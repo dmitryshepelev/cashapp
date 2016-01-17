@@ -95,12 +95,17 @@
             }
 
             return {
+
+                /**
+                 * Validate form fields
+                 * @param form angular form
+                 * @returns {{status: boolean, elements: Array}}
+                 */
                 validateForm: function (form) {
                     // define validation status
                     var status = true;
                     // define errors elements
                     var elements = [];
-                    console.log(form.$error);
                     // check each group of error
                     angular.forEach(form.$error, function (value, key) {
                         // select group of errors

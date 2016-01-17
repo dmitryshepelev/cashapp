@@ -1,5 +1,6 @@
 (function (angular) {
     function SignInCtrl($scope, $validator, $AuthService) {
+
         /**
          * Callback to execute when signin request is completed
          * @param response server data

@@ -1,13 +1,5 @@
 from django.contrib import auth
-from cashapp.classes.ServiceResultBase import ServiceResultBase
-
-
-class ServiceResult(ServiceResultBase):
-	"""
-	Auth module service result class
-	"""
-	def __init__(self):
-		super(ServiceResult, self).__init__()
+from cashapp_auth.classes.ServiceResult import ServiceResult
 
 
 def authenticate(username, password):

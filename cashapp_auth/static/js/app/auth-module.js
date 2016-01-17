@@ -23,12 +23,18 @@
             .state('auth.signin', {
                 url: '/signin',
                 templateUrl: '/auth/signin/',
-                controller: 'signin-controller'
+                controller: 'signin-controller',
+                data: {
+                    title: 'sign_in_title'
+                }
             })
             .state('auth.signup', {
                 url: '/signup',
                 templateUrl: '/auth/signup/',
-                controller: 'signup-controller'
+                controller: 'signup-controller',
+                data: {
+                    title: 'sign_up_title'
+                }
             });
     }
 

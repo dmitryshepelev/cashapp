@@ -4,5 +4,7 @@
 	"sign_in": "вход",
 	"sign_up": "регистрация",
 	"email": "email",
-	"confirm_password": "подтвердить пароль"
+	"confirm_password": "подтвердить пароль",
+	"sign_up_title": "Регистрация",
+	"sign_in_title": "Авторизация"
 }

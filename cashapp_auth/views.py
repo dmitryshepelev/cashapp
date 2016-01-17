@@ -1,5 +1,4 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
 
@@ -10,7 +9,7 @@ def base(request):
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render_to_response('base.html', {}, context_instance=RequestContext(request))
+	return render(request, 'base.html', {})
 
 
 @require_http_methods(['GET'])
@@ -20,7 +19,7 @@ def ui_view(request):
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render_to_response('ui_view.html', {}, context_instance=RequestContext(request))
+	return render(request, 'ui_view.html', {})
 
 
 @require_http_methods(['GET'])
@@ -30,14 +29,14 @@ def sign_in(request):
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render_to_response('sign_in.html', {}, context_instance=RequestContext(request))
+	return render(request, 'sign_in.html', {})
 
 
 @require_http_methods(['GET'])
 def sign_up(request):
 	"""
-	Page to signin or signup
+	Page to signup or signup
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render_to_response('sign_up.html', {}, context_instance=RequestContext(request))
+	return render(request, 'sign_up.html', {})
