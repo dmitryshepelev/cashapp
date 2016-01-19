@@ -5,7 +5,7 @@ from django.views.decorators.http import require_http_methods
 
 from cashapp.classes.ServerResponse import ServerResponse
 from cashapp_auth import services
-from cashapp_auth.forms.SignInForm import SignInForm
+from cashapp_auth.forms.SignIn import SignInForm
 from cashapp_auth.forms.SignUpForm import SignUpForm
 
 
