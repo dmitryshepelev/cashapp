@@ -30,7 +30,9 @@ module.exports = function(config) {
             '../cashapp/static/js/libs/angular-translate.min.js',
             '../cashapp/static/js/libs/angular-translate-loader-static-files.min.js',
 
-            '../cashapp/static/js/app/**/*.js',
+            '../cashapp/static/js/app/services-module.js',
+            '../cashapp/static/js/app/directives/*.js',
+            '../cashapp/static/js/app/services/*.js',
 
             'static/js/app/**/*.js',
 

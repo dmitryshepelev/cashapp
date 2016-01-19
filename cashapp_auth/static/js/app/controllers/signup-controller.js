@@ -2,10 +2,10 @@
     function SignUpCtrl($scope, $validator, $AuthService, $window) {
         /**
          * Callback to execute when signup is succeed
-         * @param data server data
+         * @param response server data
          */
-        function onSignUpSuccess (data) {
-            $window.location.href = (data && data.redirect_url) ? data.redirect_url : '/';
+        function onSignUpSuccess (response) {
+            $window.location.href = (response.data && response.data.redirect_url) ? response.data.redirect_url : '/';
         }
 
         /**

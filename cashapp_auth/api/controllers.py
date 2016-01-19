@@ -30,7 +30,7 @@ def sign_up(request):
 	auth_user = signup_result.data
 	login(request, auth_user)
 
-	return ServerResponse.ok()
+	return ServerResponse.ok(services.redirect_resolver(request).data)
 
 
 @require_http_methods(['POST'])
@@ -54,4 +54,4 @@ def sign_in(request):
 	auth_user = auth_result.data
 	login(request, auth_user)
 
-	return ServerResponse.ok()
+	return ServerResponse.ok(services.redirect_resolver(request).data)

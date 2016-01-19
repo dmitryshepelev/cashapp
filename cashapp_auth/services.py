@@ -59,3 +59,17 @@ def sign_up(username, email, password):
 		result.data = {'error': e.message if settings.DEBUG else 'Unable to sign up'}
 
 	return result
+
+
+def redirect_resolver(request):
+	"""
+	Resolve redirect url by request
+	:param request: HTTP request
+	:return: ServiceResponse instance
+	"""
+	result = ServiceResult()
+	result.data = {
+		'redirect_url': ('/admin/' if request.user.is_superuser else ('/' if request.user.is_active else '/blocked/')) if request.user.is_authenticated() else '/auth/'
+	}
+
+	return result

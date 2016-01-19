@@ -31,11 +31,14 @@ describe('SignUpController tests', function () {
     });
 
     describe('signupModel', function () {
-        var $scope, controller;
+        var $scope, controller, newUser, url;
 
         beforeEach(function () {
             $scope = {};
             controller = $controller('signup-controller', { $scope: $scope, $validator: createValidatorService(), $window: $window });
+
+            newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
+            url = '/auth/api/signup/';
 
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
             $httpBackend.flush();
@@ -46,12 +49,9 @@ describe('SignUpController tests', function () {
         });
 
         it('should be successful signing up with valid redirect url', function () {
-            var newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
-            var url = '/auth/api/signup/';
-
             $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
 
-            $httpBackend.whenPOST(url).respond(200, { redirect_url: 'url' });
+            $httpBackend.whenPOST(url).respond(200, { data: { redirect_url: 'url' }});
             $httpBackend.expectPOST(url, newUser);
 
             expect($scope.signupModel.signup()).toEqual(undefined);
@@ -60,12 +60,9 @@ describe('SignUpController tests', function () {
         });
 
         it('should be successful signing up with invalid redirect url', function () {
-            var newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
-            var url = '/auth/api/signup/';
-
             $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
 
-            $httpBackend.whenPOST(url).respond(200, undefined);
+            $httpBackend.whenPOST(url).respond(200, { data: {}});
             $httpBackend.expectPOST(url, newUser);
 
             expect($scope.signupModel.signup()).toEqual(undefined);
@@ -74,12 +71,9 @@ describe('SignUpController tests', function () {
         });
 
         it('should be an internal server error during signing up', function () {
-            var newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
-            var url = '/auth/api/signup/';
-
             $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
 
-            $httpBackend.whenPOST(url).respond(500, {});
+            $httpBackend.whenPOST(url).respond(500, { data: {}});
             $httpBackend.expectPOST(url, newUser);
 
             expect($scope.signupModel.signup()).toEqual(undefined);
@@ -88,12 +82,9 @@ describe('SignUpController tests', function () {
         });
 
         it('should be an data server error during signing up', function () {
-            var newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
-            var url = '/auth/api/signup/';
-
             $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
 
-            $httpBackend.whenPOST(url).respond(500, { data: { password: ['Password is invalid'] }});
+            $httpBackend.whenPOST(url).respond(400, { data: { password: ['Password is invalid'] }});
             $httpBackend.expectPOST(url, newUser);
 
             expect($scope.signupModel.signup()).toEqual(undefined);

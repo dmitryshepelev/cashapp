@@ -141,6 +141,8 @@ TEMPLATE_DIRS = (
 	os.path.join(BASE_DIR,  'cashapp_auth/templates'),
 )
 
+LOGIN_URL = '/auth/'
+
 # Use nose to run all tests
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
