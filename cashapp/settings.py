@@ -38,6 +38,8 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'cashapp_auth',
+
+	'django_nose',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -138,3 +140,13 @@ TEMPLATE_DIRS = (
 	os.path.join(BASE_DIR,  'templates'),
 	os.path.join(BASE_DIR,  'cashapp_auth/templates'),
 )
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'foo' and 'bar' apps
+NOSE_ARGS = [
+	'--with-coverage',
+	'--cover-package=cashapp,cashapp_auth',
+	'--cover-html',
+]

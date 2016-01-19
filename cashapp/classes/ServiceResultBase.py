@@ -1,6 +1,6 @@
 class ServiceResultBase(object):
 	"""
-
+	Service result class
 	"""
 	def __init__(self):
 		self.__is_succeed = True

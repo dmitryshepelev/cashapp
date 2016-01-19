@@ -29,9 +29,8 @@
 
                 if (result.status) {
                     $AuthService.signup(this.data)
-                        .success(onSignUpSuccess)
-                        .error(onSignUpError)
-                        .then()
+                        .then(onSignUpSuccess)
+                        .catch(onSignUpError)
                 }
             }
         }
