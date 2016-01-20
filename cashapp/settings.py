@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +37,7 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'cashapp_auth',
+	'cashapp_my',
 
 	'django_nose',
 ]
@@ -127,11 +127,12 @@ USE_TZ = True
 
 STATICFILES_DIRS = (
 	'cashapp/static/css/',
-
 	'cashapp/static/js/',
+	'cashapp/static/res/',
 
 	'cashapp_auth/static/js/',
-	'cashapp_auth/static/res/'
+
+	'cashapp_my/static/js/',
 )
 
 STATIC_URL = '/static/'
@@ -139,6 +140,7 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
 	os.path.join(BASE_DIR,  'templates'),
 	os.path.join(BASE_DIR,  'cashapp_auth/templates'),
+	os.path.join(BASE_DIR,  'cashapp_my/templates'),
 )
 
 LOGIN_URL = '/auth/'

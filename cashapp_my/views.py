@@ -9,7 +9,7 @@ def base(request):
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'auth_base.html', {})
+	return render(request, 'my_base.html', {})
 
 
 @require_http_methods(['GET'])
@@ -19,24 +19,25 @@ def ui_view(request):
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'auth_ui_view.html', {})
+	return render(request, 'my_ui_view.html', {})
 
 
 @require_http_methods(['GET'])
-def sign_in(request):
+def dashboard(request):
 	"""
-	Page to signin or signup
+	Page to show dashboard
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'sign_in.html', {})
+	return render(request, 'dashboard.html', {})
 
 
 @require_http_methods(['GET'])
-def sign_up(request):
+def conf(request, *args):
 	"""
-	Page to signup or signup
+	Page to show dashboard
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'sign_up.html', {})
+	base_name = 'conf_{name}.html'
+	return render(request, base_name.format(name=args[0] if len(args) == 1 else 'general'), {})

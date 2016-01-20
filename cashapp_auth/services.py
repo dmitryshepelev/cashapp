@@ -69,7 +69,7 @@ def redirect_resolver(request):
 	"""
 	result = ServiceResult()
 	result.data = {
-		'redirect_url': ('/admin/' if request.user.is_superuser else ('/' if request.user.is_active else '/blocked/')) if request.user.is_authenticated() else '/auth/'
+		'redirect_url': ('/admin/' if request.user.is_superuser else ('/my/' if request.user.is_active else '/blocked/')) if request.user.is_authenticated() else '/auth/'
 	}
 
 	return result

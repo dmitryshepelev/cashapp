@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="CashAppMy" ng-cloak>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>[[ title ]]</title>
+    {% load staticfiles %}
+	<script type="text/javascript" src="{% static "libs/angular-1.5.0-beta.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "libs/angular-ui-router-0.2.15.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "libs/angular-translate.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "libs/angular-translate-loader-static-files.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "libs/angular-animate.min.js" %}"></script>
+
+	<script type="text/javascript" src="{% static "app/services-module.js" %}"></script>
+	<script type="text/javascript" src="{% static "app/services/validate-service.js" %}"></script>
+    <script type="text/javascript" src="{% static "app/directives/page-title-directive.js" %}"></script>
+
+	<script type="text/javascript" src="{% static "app/my-module.js" %}"></script>
+	<script type="text/javascript" src="{% static "app/controllers/dashboard-controller.js" %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static "bootstrap.css" %}" />
+	<link rel="stylesheet" type="text/css" href="{% static "site.css" %}" />
+	<link rel="stylesheet" type="text/css" href="{% static "icons.css" %}" />
+	{% block resources %}
+
+	{% endblock %}
+</head>
+
+<body>
+<nav class="navbar">
+	<div class="container">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">CashApp</a>
+		</div>
+		<div class="pull-xs-right">
+			<a ui-sref="my.dashboard" class="btn btn-link"><span class="lnr lnr-user"></span></a>
+			<a ui-sref="my.conf.general" class="btn btn-link"><span class="lnr lnr-cog"></span></a>
+			<a class="btn btn-link"><span class="lnr lnr-exit"></span></a>
+		</div>
+	</div>
+</nav>
+<div class="container">
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                {% block footer %}
+                {% endblock %}
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

@@ -17,8 +17,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 import cashapp_auth
+import cashapp_my
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^auth/', include(cashapp_auth.urlpatterns)),
+    url(r'^my/', include(cashapp_my.urlpatterns)),
 ]

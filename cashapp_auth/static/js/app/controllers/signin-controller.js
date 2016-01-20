@@ -5,7 +5,6 @@
          * @param response server data
          */
         function onSignInCompleted (response) {
-            console.log(response.data.redirect_url);
             $window.location.href = (response.data && response.data.redirect_url) ? response.data.redirect_url : '/';
         }
 
