@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="CashAppMy" ng-cloak>
+<html ng-app="CashAppSett" ng-cloak>
 <head lang="en">
     <meta charset="UTF-8">
     <title>[[ title ]]</title>
@@ -9,13 +9,15 @@
     <script type="text/javascript" src="{% static "libs/angular-translate.min.js" %}"></script>
     <script type="text/javascript" src="{% static "libs/angular-translate-loader-static-files.min.js" %}"></script>
 	<script type="text/javascript" src="{% static "libs/angular-animate.min.js" %}"></script>
+	<script type="text/javascript" src="{% static "libs/angular-ui-tabs.js" %}"></script>
 
 	<script type="text/javascript" src="{% static "app/services-module.js" %}"></script>
 	<script type="text/javascript" src="{% static "app/services/validate-service.js" %}"></script>
     <script type="text/javascript" src="{% static "app/directives/page-title-directive.js" %}"></script>
 
-	<script type="text/javascript" src="{% static "app/my-module.js" %}"></script>
-	<script type="text/javascript" src="{% static "app/controllers/dashboard-controller.js" %}"></script>
+	<script type="text/javascript" src="{% static "app/sett-module.js" %}"></script>
+	<script type="text/javascript" src="{% static "app/controllers/general-controller.js" %}"></script>
+    <script type="text/javascript" src="{% static "app/controllers/set-cash-controller.js" %}"></script>
 
     <link rel="stylesheet" type="text/css" href="{% static "bootstrap.css" %}" />
 	<link rel="stylesheet" type="text/css" href="{% static "site.css" %}" />

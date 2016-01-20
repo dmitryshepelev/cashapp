@@ -25,7 +25,7 @@ module.exports = function(config) {
         files: [
             '../cashapp/static/js/libs/angular-1.5.0-beta.min.js',
             '../cashapp/static/js/libs/angular-mock.js',
-            '../cashapp/static/js/libs/angular-ui-router-0.2.15.min.js',
+            '../cashapp/static/js/libs/angular-angular-ui-router-0.2.15.min.js',
             '../cashapp/static/js/libs/angular-animate.min.js',
             '../cashapp/static/js/libs/angular-translate.min.js',
             '../cashapp/static/js/libs/angular-translate-loader-static-files.min.js',

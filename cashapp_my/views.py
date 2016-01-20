@@ -5,7 +5,7 @@ from django.views.decorators.http import require_http_methods
 @require_http_methods(['GET'])
 def base(request):
 	"""
-	Page to signin or signup
+	Base of my module
 	:param request: http request
 	:return: HttpResponse
 	"""
@@ -15,7 +15,7 @@ def base(request):
 @require_http_methods(['GET'])
 def ui_view(request):
 	"""
-	Page to signin or signup
+	UiView of my module
 	:param request: http request
 	:return: HttpResponse
 	"""
@@ -30,14 +30,3 @@ def dashboard(request):
 	:return: HttpResponse
 	"""
 	return render(request, 'dashboard.html', {})
-
-
-@require_http_methods(['GET'])
-def conf(request, *args):
-	"""
-	Page to show dashboard
-	:param request: http request
-	:return: HttpResponse
-	"""
-	base_name = 'conf_{name}.html'
-	return render(request, base_name.format(name=args[0] if len(args) == 1 else 'general'), {})

@@ -16,11 +16,18 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from cashapp.views import ui_template
+
 import cashapp_auth
 import cashapp_my
+import cashapp_sett
+
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^auth/', include(cashapp_auth.urlpatterns)),
-    url(r'^my/', include(cashapp_my.urlpatterns)),
+	url(r'^admin/', admin.site.urls),
+	url(r'^auth/', include(cashapp_auth.urlpatterns)),
+	url(r'^my/', include(cashapp_my.urlpatterns)),
+	url(r'^sett/', include(cashapp_sett.urlpatterns)),
+
+	url(r'^uitempl/(?P<templ_type>ui)/(?P<name>\w+)/$', ui_template)
 ]

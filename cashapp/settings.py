@@ -36,8 +36,11 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+
+	'cashapp',
 	'cashapp_auth',
 	'cashapp_my',
+	'cashapp_sett',
 
 	'django_nose',
 ]
@@ -133,14 +136,17 @@ STATICFILES_DIRS = (
 	'cashapp_auth/static/js/',
 
 	'cashapp_my/static/js/',
+
+	'cashapp_sett/static/js/',
 )
 
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (
-	os.path.join(BASE_DIR,  'templates'),
+	os.path.join(BASE_DIR,  'cashapp/templates'),
 	os.path.join(BASE_DIR,  'cashapp_auth/templates'),
 	os.path.join(BASE_DIR,  'cashapp_my/templates'),
+	os.path.join(BASE_DIR,  'cashapp_sett/templates'),
 )
 
 LOGIN_URL = '/auth/'

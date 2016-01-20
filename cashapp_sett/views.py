@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
@@ -6,38 +5,38 @@ from django.views.decorators.http import require_http_methods
 @require_http_methods(['GET'])
 def base(request):
 	"""
-	Base of auth module
+	Base of sett module
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'auth_base.html', {})
+	return render(request, 'sett_base.html', {})
 
 
 @require_http_methods(['GET'])
 def ui_view(request):
 	"""
-	UiView of auth module
+	UiView of sett module
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'auth_ui_view.html', {})
+	return render(request, 'sett_ui_view.html', {})
 
 
 @require_http_methods(['GET'])
-def sign_in(request):
+def general(request):
 	"""
-	Sign in page
+	Page of general settings
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'sign_in.html', {})
+	return render(request, 'general.html', {})
 
 
 @require_http_methods(['GET'])
-def sign_up(request):
+def set_cash(request):
 	"""
-	Sign up page
+	Set initial cash page
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'sign_up.html', {})
+	return render(request, 'set_cash.html', {})

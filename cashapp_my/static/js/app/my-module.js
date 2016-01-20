@@ -29,18 +29,6 @@
                 data: {
                     title: 'dashboard_title'
                 }
-            })
-            .state('my.conf', {
-                url: '/conf',
-                templateUrl: _baseUrl + '/conf/ui_view/'
-            })
-            .state('my.conf.general', {
-                url: '/general',
-                templateUrl: _baseUrl + '/conf/general/'
-            })
-            .state('my.conf.init', {
-                url: '/init',
-                templateUrl: _baseUrl + '/conf/init/'
             });
     }
 
