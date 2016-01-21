@@ -1,3 +1,4 @@
+import json
 from django.contrib import auth
 from cashapp import settings
 
@@ -68,8 +69,12 @@ def redirect_resolver(request):
 	:return: ServiceResponse instance
 	"""
 	result = ServiceResult()
+
+	data = json.loads(request.body)
+	redirect_url = data.get('redirect_url', None)
+
 	result.data = {
-		'redirect_url': ('/admin/' if request.user.is_superuser else ('/my/' if request.user.is_active else '/blocked/')) if request.user.is_authenticated() else '/auth/'
+		'redirect_url': redirect_url or ('/admin/' if request.user.is_superuser else ('/my/' if request.user.is_active else '/blocked/')) if request.user.is_authenticated() else '/auth/'
 	}
 
 	return result

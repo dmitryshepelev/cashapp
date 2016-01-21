@@ -1,5 +1,6 @@
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
 
 
@@ -10,7 +11,8 @@ def base(request):
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'auth_base.html', {})
+	redirect_url = request.GET.get('next', '')
+	return render(request, 'auth_base.html', {'redirect_url': redirect_url})
 
 
 @require_http_methods(['GET'])
@@ -30,6 +32,7 @@ def sign_in(request):
 	:param request: http request
 	:return: HttpResponse
 	"""
+
 	return render(request, 'sign_in.html', {})
 
 
@@ -41,3 +44,14 @@ def sign_up(request):
 	:return: HttpResponse
 	"""
 	return render(request, 'sign_up.html', {})
+
+
+@require_http_methods(['GET'])
+def sign_out(request):
+	"""
+	Sign out current user
+	:param request: HTTP request
+	:return: redirect to '/'
+	"""
+	logout(request)
+	return redirect('/')

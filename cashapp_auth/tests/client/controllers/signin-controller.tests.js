@@ -1,5 +1,5 @@
 describe('SignInController tests', function () {
-    var $controller, $httpBackend, createValidatorService, $window;
+    var $controller, $httpBackend, createValidatorService, $RedirectService;
 
     createValidatorService = function () {
         return {
@@ -12,9 +12,12 @@ describe('SignInController tests', function () {
         }
     };
 
-    $window = {
-        location: {
-            href: ''
+    $RedirectService = {
+        redirectToUrl: function () {
+            return true
+        },
+        getRedirectUrl: function () {
+            return '/some/url/'
         }
     };
 
@@ -35,9 +38,9 @@ describe('SignInController tests', function () {
 
         beforeEach(function () {
             $scope = {};
-            controller = $controller('signin-controller', { $scope: $scope, $validator: createValidatorService(),  $window: $window });
+            controller = $controller('signin-controller', { $scope: $scope, $validator: createValidatorService(),  $RedirectService: $RedirectService });
 
-            user = { username: 'test', password: '123456' };
+            user = { username: 'test', password: '123456', redirect_url: '' };
             url = '/auth/api/signin/';
 
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
@@ -45,11 +48,11 @@ describe('SignInController tests', function () {
         });
 
         it('should be default signinModel', function () {
-            expect($scope.signinModel.data).toEqual({ username: '', password: '' })
+            expect($scope.signinModel.data).toEqual({ username: '', password: '', redirect_url: '/some/url/' })
         });
 
         it('should be successful signing in with valid redirect url', function () {
-            $scope.signinModel.data = { username: 'test', password: '123456' };
+            $scope.signinModel.data = { username: 'test', password: '123456', redirect_url: '' };
 
             $httpBackend.whenPOST(url).respond(200, { data: { redirect_url: 'url' }});
             $httpBackend.expectPOST(url, user);
@@ -60,7 +63,7 @@ describe('SignInController tests', function () {
         });
 
         it('should be successful signing in with invalid redirect url', function () {
-            $scope.signinModel.data = { username: 'test', password: '123456' };
+            $scope.signinModel.data = { username: 'test', password: '123456', redirect_url: '' };
 
             $httpBackend.whenPOST(url).respond(200, { data: {}});
             $httpBackend.expectPOST(url, user);
@@ -71,7 +74,7 @@ describe('SignInController tests', function () {
         });
 
         it('should be internal server error during signing in', function () {
-            $scope.signinModel.data = { username: 'test', password: '123456' };
+            $scope.signinModel.data = { username: 'test', password: '123456', redirect_url: '' };
 
             $httpBackend.whenPOST(url).respond(500, { data: {}});
             $httpBackend.expectPOST(url, user);
@@ -82,7 +85,7 @@ describe('SignInController tests', function () {
         });
 
         it('should be data server error during signing in', function () {
-            $scope.signinModel.data = { username: 'test', password: '123456' };
+            $scope.signinModel.data = { username: 'test', password: '123456', redirect_url: '' };
 
             $httpBackend.whenPOST(url).respond(400, { data: { password: ['Password is invalid'] }});
             $httpBackend.expectPOST(url, user);

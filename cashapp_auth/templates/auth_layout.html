@@ -16,6 +16,7 @@
 
 	<script type="text/javascript" src="{% static "app/auth-module.js" %}"></script>
 	<script type="text/javascript" src="{% static "app/services/auth-service.js" %}"></script>
+	<script type="text/javascript" src="{% static "app/services/redirect-service.js" %}"></script>
 	<script type="text/javascript" src="{% static "app/controllers/signin-controller.js" %}"></script>
 	<script type="text/javascript" src="{% static "app/controllers/signup-controller.js" %}"></script>
 
@@ -35,6 +36,7 @@
 	</div>
 </nav>
 <div class="container">
+	<input type="hidden" id="redirect_url" autocomplete value="{{ redirect_url }}">
     {% block content %}
 
     {% endblock %}

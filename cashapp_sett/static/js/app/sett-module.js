@@ -35,7 +35,7 @@
                 templateUrl: _baseUrl + '/setcash/',
                 controller: 'set-cash-controller',
                 data: {
-                    title: 'general_title'
+                    title: 'set_cash_title'
                 }
             });
     }

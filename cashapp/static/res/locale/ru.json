@@ -7,7 +7,8 @@
 	"confirm_password": "подтвердить пароль",
 	"sign_up_title": "Регистрация",
 	"sign_in_title": "Авторизация",
-
 	"dashboard_title": "Информационная панель",
-	"general_title": "Основные настройки"
+	"general_title": "Основные настройки",
+
+	"set_cash_title": "Начальный баланс"
 }

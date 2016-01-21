@@ -1,11 +1,11 @@
 (function (angular) {
-    function SignUpCtrl($scope, $validator, $AuthService, $window) {
+    function SignUpCtrl($scope, $validator, $AuthService, $RedirectService) {
         /**
          * Callback to execute when signup is succeed
          * @param response server data
          */
         function onSignUpSuccess (response) {
-            $window.location.href = (response.data && response.data.redirect_url) ? response.data.redirect_url : '/';
+            $RedirectService.redirectToUrl(response.data.redirect_url);
         }
 
         /**
@@ -22,7 +22,8 @@
                 username: '',
                 email: '',
                 password: '',
-                confirm_password: ''
+                confirm_password: '',
+                redirect_url: $RedirectService.getRedirectUrl()
             },
             signup: function () {
                 var result = $validator.validateForm($scope.signupModel.form);
@@ -36,7 +37,7 @@
         }
     }
 
-    SignUpCtrl.$inject = ['$scope', '$validator', '$AuthService', '$window'];
+    SignUpCtrl.$inject = ['$scope', '$validator', '$AuthService', '$RedirectService'];
 
     angular
         .module('CashAppAuth')

@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
 
 @require_http_methods(['GET'])
+@login_required
 def base(request):
 	"""
 	Base of sett module
@@ -13,6 +15,7 @@ def base(request):
 
 
 @require_http_methods(['GET'])
+@login_required
 def ui_view(request):
 	"""
 	UiView of sett module
@@ -23,6 +26,7 @@ def ui_view(request):
 
 
 @require_http_methods(['GET'])
+@login_required
 def general(request):
 	"""
 	Page of general settings
@@ -33,6 +37,7 @@ def general(request):
 
 
 @require_http_methods(['GET'])
+@login_required
 def set_cash(request):
 	"""
 	Set initial cash page

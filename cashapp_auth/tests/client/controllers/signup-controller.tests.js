@@ -1,5 +1,5 @@
 describe('SignUpController tests', function () {
-    var $controller, $httpBackend, createValidatorService, $window;
+    var $controller, $httpBackend, createValidatorService, $RedirectService;
 
     createValidatorService = function () {
         return {
@@ -12,9 +12,12 @@ describe('SignUpController tests', function () {
         }
     };
 
-    $window = {
-        location: {
-            href: ''
+    $RedirectService = {
+        redirectToUrl: function () {
+            return true
+        },
+        getRedirectUrl: function () {
+            return '/some/url/'
         }
     };
 
@@ -35,9 +38,9 @@ describe('SignUpController tests', function () {
 
         beforeEach(function () {
             $scope = {};
-            controller = $controller('signup-controller', { $scope: $scope, $validator: createValidatorService(), $window: $window });
+            controller = $controller('signup-controller', { $scope: $scope, $validator: createValidatorService(), $RedirectService: $RedirectService });
 
-            newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
+            newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz', redirect_url: '' };
             url = '/auth/api/signup/';
 
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
@@ -45,11 +48,11 @@ describe('SignUpController tests', function () {
         });
 
         it('should be a default signupModel', function () {
-            expect($scope.signupModel.data).toEqual({ username: '', email: '', password: '', confirm_password: '' })
+            expect($scope.signupModel.data).toEqual({ username: '', email: '', password: '', confirm_password: '', redirect_url: '/some/url/' })
         });
 
         it('should be successful signing up with valid redirect url', function () {
-            $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
+            $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz', redirect_url: '' };
 
             $httpBackend.whenPOST(url).respond(200, { data: { redirect_url: 'url' }});
             $httpBackend.expectPOST(url, newUser);
@@ -60,7 +63,7 @@ describe('SignUpController tests', function () {
         });
 
         it('should be successful signing up with invalid redirect url', function () {
-            $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
+            $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz', redirect_url: '' };
 
             $httpBackend.whenPOST(url).respond(200, { data: {}});
             $httpBackend.expectPOST(url, newUser);
@@ -71,7 +74,7 @@ describe('SignUpController tests', function () {
         });
 
         it('should be an internal server error during signing up', function () {
-            $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
+            $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz', redirect_url: '' };
 
             $httpBackend.whenPOST(url).respond(500, { data: {}});
             $httpBackend.expectPOST(url, newUser);
@@ -82,7 +85,7 @@ describe('SignUpController tests', function () {
         });
 
         it('should be an data server error during signing up', function () {
-            $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz' };
+            $scope.signupModel.data = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz', redirect_url: '' };
 
             $httpBackend.whenPOST(url).respond(400, { data: { password: ['Password is invalid'] }});
             $httpBackend.expectPOST(url, newUser);
