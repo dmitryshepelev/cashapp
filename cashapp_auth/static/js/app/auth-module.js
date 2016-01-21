@@ -8,7 +8,7 @@
             prefix: '/static/locale/',
             suffix: '.json'
         });
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.use(JSON.parse(window.localStorage.getItem('ls.lang')) || 'en');
 
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -38,7 +38,10 @@
             });
     }
 
-    angular.module('CashAppAuth', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate']);
-    angular.module('CashAppAuth').config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);
+    angular
+        .module('CashAppAuth', ['pascalprecht.translate', 'ui.router',  'CashApp.Service', 'ngAnimate']);
+    angular
+        .module('CashAppAuth')
+        .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);
 
 })(angular);

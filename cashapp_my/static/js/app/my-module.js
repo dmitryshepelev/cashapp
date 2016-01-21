@@ -10,7 +10,7 @@
             prefix: '/static/locale/',
             suffix: '.json'
         });
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.use(JSON.parse(window.localStorage.getItem('ls.lang')) || 'en');
 
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -21,6 +21,7 @@
                 abstract: true,
                 url: '',
                 templateUrl: _baseUrl + '/uiview/'
+
             })
             .state('my.dashboard', {
                 url: '/dashboard',
@@ -32,7 +33,10 @@
             });
     }
 
-    angular.module('CashAppMy', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate']);
-    angular.module('CashAppMy').config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);
+    angular
+        .module('CashAppMy', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate']);
+    angular
+        .module('CashAppMy')
+        .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);
 
 })(angular);

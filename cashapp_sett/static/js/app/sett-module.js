@@ -10,7 +10,7 @@
             prefix: '/static/locale/',
             suffix: '.json'
         });
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.use(JSON.parse(window.localStorage.getItem('ls.lang')) || 'en');
 
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';

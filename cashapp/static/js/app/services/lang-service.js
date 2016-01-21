@@ -1,44 +1,9 @@
 (function (angular) {
-    function LangSrv ($http, localStorageService) {
-
-        var baseUrl = '/sett/api/lang/';
+    function LangSrv (localStorageService) {
         var languages = [
             { title: 'English', key: 'en' },
             { title: 'Русский', key: 'ru' }
         ];
-
-        /**
-         * Get language success callback
-         * @param response
-         */
-        function onGetLanguageSuccess (response) {
-            return this.getLanguageByKey(response.data.key)
-        }
-
-        /**
-         * Get language error callback
-         * @param response
-         */
-        function onGetLanguageError (response) {
-            console.log(response);
-        }
-
-        /**
-         * Set language success callback
-         * @param response
-         */
-        function onSetLanguageSuccess (response) {
-            localStorageService.set('lang', response.data.key);
-            return this.getLanguageByKey(response.data.key)
-        }
-
-        /**
-         * Set language error callback
-         * @param response
-         */
-        function onSetLanguageError (response) {
-            console.log(response);
-        }
 
         return {
             /**
@@ -61,30 +26,23 @@
             },
             /**
              * Get current lang key
-             * @returns Promise
+             * @returns language object
              */
-            getCurrentLang: function (onSuccess) {
-                $http.get(baseUrl)
-                    .then(onGetLanguageSuccess.bind(this))
-                    .then(onSuccess)
-                    .catch(onGetLanguageError)
+            getCurrentLang: function () {
+                var key = localStorageService.get('lang') || 'en';
+                return this.getLanguageByKey(key)
             },
             /**
              * Set current lang
-             * @param lang object
-             * @param onSuccess callback
-             * @returns Promise
+             * @param langKey object
              */
-            setCurrentLang: function (lang, onSuccess) {
-                $http.post(baseUrl, lang)
-                    .then(onSetLanguageSuccess.bind(this))
-                    .then(onSuccess)
-                    .catch(onSetLanguageError)
+            setCurrentLang: function (langKey) {
+                localStorageService.set('lang', langKey);
             }
         }
     }
 
-    LangSrv.$inject = ['$http', 'localStorageService'];
+    LangSrv.$inject = ['localStorageService'];
 
     angular
         .module('CashApp.Service')

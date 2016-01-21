@@ -25,10 +25,11 @@ module.exports = function(config) {
         files: [
             '../cashapp/static/js/libs/angular-1.5.0-beta.min.js',
             '../cashapp/static/js/libs/angular-mock.js',
-            '../cashapp/static/js/libs/angular-angular-ui-router-0.2.15.min.js',
+            '../cashapp/static/js/libs/angular-ui-router-0.2.15.min.js',
             '../cashapp/static/js/libs/angular-animate.min.js',
             '../cashapp/static/js/libs/angular-translate.min.js',
             '../cashapp/static/js/libs/angular-translate-loader-static-files.min.js',
+            '../cashapp/static/js/libs/angular-local-storage.js',
 
             '../cashapp/static/js/app/services-module.js',
             '../cashapp/static/js/app/directives/*.js',
@@ -68,7 +69,7 @@ module.exports = function(config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
 
 
         // enable / disable watching file and executing tests whenever any file changes
@@ -77,7 +78,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Firefox', 'PhantomJS'],
+        browsers: ['PhantomJS'],
 
 
         // Continuous Integration mode
