@@ -3,4 +3,4 @@ from cashapp_my.api.urls import urlpatterns
 
 
 def autodiscover():
-	autodiscover_modules('api', register_to=urlpatterns)
+	autodiscover_modules('cashapp_my_api', register_to=urlpatterns)

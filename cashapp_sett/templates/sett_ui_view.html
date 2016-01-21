@@ -1,8 +1,12 @@
-<div class="row">
-    <uib-tabset vertical="true" type="pills">
-        <uib-tab heading="General" ui-sref="sett.general"></uib-tab>
-        <uib-tab heading="Init" ui-sref="sett.setCash"></uib-tab>
-    </uib-tabset>
+<div class="row" ng-controller="$UiViewController">
+	<div class="col-lg-3">
+		<div class="jumbotron jumbotron-fluid jumbotron-light jumbotron-small">
+			<uib-tabset vertical="true" type="pills">
+	            <uib-tab ng-repeat="tab in tabs" heading="[[ tab.heading ]]" ui-sref="[[ tab.toState ]]"></uib-tab>
+	        </uib-tabset>
+		</div>
+	</div>
+	<div class="col-lg-9">
+		<div ui-view></div>
+	</div>
 </div>
-
-<div ui-view></div>

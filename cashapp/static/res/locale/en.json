@@ -9,6 +9,7 @@
 	"sign_in_title": "Sign In",
 	"dashboard_title": "Dashboard",
 	"general_title": "General settings",
-
-	"set_cash_title": "Set initial cash"
+	"set_cash_title": "Set initial cash",
+	"redirect_title": "Redirecting...",
+	"interface_language": "Interface language"
 }

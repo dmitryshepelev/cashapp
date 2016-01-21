@@ -11,3 +11,16 @@
 .animate.hide-show.ng-hide-remove {
   transition: all linear 0.2s;
 }
+.dropdown-item {
+  cursor: pointer;
+}
+.dropdown-item > a {
+  text-decoration: none;
+}
+.jumbotron.jumbotron-light {
+  background-color: #fafafc;
+}
+.jumbotron.jumbotron-small {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}

@@ -15,12 +15,19 @@
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-        $urlRouterProvider.when('', '/general');
+        $urlRouterProvider.when('', '/redirect');
         $stateProvider
             .state('sett', {
                 abstract: true,
                 url: '',
                 templateUrl: _baseUrl + '/uiview/'
+            })
+            .state('sett.redirect', {
+                url: '/redirect',
+                template: '',
+                data: {
+                    title: 'redirect_title'
+                }
             })
             .state('sett.general', {
                 url: '/general',
@@ -41,7 +48,7 @@
     }
 
     angular
-        .module('CashAppSett', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate', 'ui.bootstrap.tabs']);
+        .module('CashAppSett', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate', 'ui.bootstrap.tabs', 'ui.bootstrap.dropdown', 'ui.bootstrap.position', 'LocalStorageModule']);
     angular
         .module('CashAppSett')
         .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);

@@ -9,6 +9,7 @@
 	"sign_in_title": "Авторизация",
 	"dashboard_title": "Информационная панель",
 	"general_title": "Основные настройки",
-
-	"set_cash_title": "Начальный баланс"
+	"set_cash_title": "Начальный баланс",
+	"redirect_title": "Перенаправление",
+	"interface_language": "Язык интерфейса"
 }
