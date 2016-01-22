@@ -6,6 +6,7 @@
              * Returns redirect url if exist
              */
             getRedirectUrl: function () {
+                console.log(document.querySelector('#redirect_url'));
                 return angular.element(document.querySelector('#redirect_url')).val()
             },
             /**

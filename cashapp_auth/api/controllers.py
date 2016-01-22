@@ -1,4 +1,4 @@
-import json
+from ast import literal_eval
 
 from django.contrib.auth import login
 from django.views.decorators.http import require_http_methods
@@ -16,7 +16,7 @@ def sign_up(request):
 	:param request: http request
 	:return: ApiResponse instance
 	"""
-	data = json.loads(request.body)
+	data = literal_eval(request.body)
 	form = SignUpForm(data)
 
 	if form.errors:
@@ -40,7 +40,7 @@ def sign_in(request):
 	:param request: HTTP request
 	:return: redirect url if user signed in succeed
 	"""
-	data = json.loads(request.body)
+	data = literal_eval(request.body)
 	form = SignInForm(data)
 
 	if form.errors:

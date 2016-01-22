@@ -1,7 +1,8 @@
-import json
-from django.contrib import auth
-from cashapp import settings
+from ast import literal_eval
 
+from django.contrib import auth
+
+from cashapp import settings
 from cashapp.classes.Repository.UserRepository import UserRepository
 from cashapp.classes.ServiceException import ServiceException
 from cashapp_auth.classes.ServiceResult import ServiceResult
@@ -70,7 +71,7 @@ def redirect_resolver(request):
 	"""
 	result = ServiceResult()
 
-	data = json.loads(request.body)
+	data = literal_eval(request.body)
 	redirect_url = data.get('redirect_url', None)
 
 	result.data = {
