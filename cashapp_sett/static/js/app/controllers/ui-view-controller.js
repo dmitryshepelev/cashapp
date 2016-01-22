@@ -10,7 +10,8 @@
              */
             function onGetUiTabsSuccess (response) {
                 $scope.tabs = response.data.tabs;
-                $state.go($scope.tabs[0].toState)
+                console.log($state.$current.self.name);
+                $state.go($state.$current.self.name || $scope.tabs[0].toState)
             }
             /**
              * getUiTab success callback
