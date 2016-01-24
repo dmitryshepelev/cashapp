@@ -1,11 +1,12 @@
 <div class="row" ng-controller="$UiViewController">
-	<div class="col-lg-3">
-		<div class="jumbotron jumbotron-fluid jumbotron-light jumbotron-small">
+	<div class="col-lg-2 form-group">
+		<div class="small">
+            <li class="nav-group-header" translate>settings</li>
 			<uib-tabset vertical="true" type="pills">
-	            <uib-tab ng-repeat="tab in tabs" heading="[[ tab.heading ]]" ui-sref="[[ tab.toState ]]"></uib-tab>
+	            <uib-tab ng-repeat="tab in tabs" heading="[[ tab.heading ]]" active="tab.active" ui-sref="[[ tab.toState ]]"></uib-tab>
 	        </uib-tabset>
 		</div>
-	</div>
+    </div>
 	<div class="col-lg-9">
 		<div ui-view></div>
 	</div>

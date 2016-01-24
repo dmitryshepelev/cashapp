@@ -10,8 +10,15 @@
              */
             function onGetUiTabsSuccess (response) {
                 $scope.tabs = response.data.tabs;
-                console.log($state.$current.self.name);
-                $state.go($state.$current.self.name || $scope.tabs[0].toState)
+
+                var toState = $state.$current.self.name || $scope.tabs[0].toState;
+
+                var activeTab = $scope.tabs.filter(function (item) {
+                    return item.toState == toState;
+                })[0];
+                activeTab.active = true;
+
+                $state.go(toState)
             }
             /**
              * getUiTab success callback

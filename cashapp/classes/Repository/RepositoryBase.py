@@ -13,3 +13,10 @@ class RepositoryBase(object):
 		"""
 		instance = self.e_type.objects.create(**kwargs)
 		return instance
+
+	def get_all(self):
+		"""
+		Returns all records of e_type
+		:return: List
+		"""
+		return self.e_type.objects.all()

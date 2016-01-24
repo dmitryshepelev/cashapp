@@ -1,3 +1,28 @@
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Light'), local('Roboto-Light'), url(fonts/Roboto-Light.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto'), local('Roboto-Regular'), url(fonts/Roboto-Regular.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Roboto Light Italic'), local('Roboto-LightItalic'), url(fonts/Roboto-Light-Italic.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 500;
+  src: local('Roboto Italic'), local('Roboto-Italic'), url(fonts/Roboto-Regular-Italic.woff2) format('woff2');
+}
+
 .ui-view-container {
 	margin: 20px 0;
 }
@@ -42,4 +67,49 @@ nav {
 
 .container {
 	padding: 15px;
+}
+
+.nav-group-header {
+	padding-left: 1em;
+	padding-right: 1em;
+	margin-bottom: 5px;
+	font-size: 90%;
+	font-weight: normal;
+	letter-spacing: 1px;
+	color: #aeaeae;
+	text-transform: uppercase;
+	list-style: none;
+}
+
+.nav-item.active {
+	& > .nav-link {
+		background-color: rgba(2, 117, 216, 0.52);
+		color: #ffffff;
+	}
+}
+
+@indentFactor: 5;
+.indent-05 {
+	margin-bottom: 0.5em !important;
+}
+.buildIndentClasses(@num) when (@num =< @indentFactor) {
+	.indent-@{num} {
+		margin-bottom: @num * 1em !important;
+	}
+	.buildIndentClasses((@num + 1));
+}
+.buildIndentClasses(@num) when (@num > @indentFactor) {}
+.buildIndentClasses(1);
+
+select {
+	&.form-control-sm {
+		height: 2.27em;
+	}
+
+	margin: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 }

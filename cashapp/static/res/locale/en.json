@@ -11,5 +11,16 @@
 	"general_title": "General settings",
 	"set_cash_title": "Set initial cash",
 	"redirect_title": "Redirecting...",
-	"interface_language": "Interface language"
+	"interface_language": "Interface language",
+	"settings": "Settings",
+	"bank_cards": "Bank cards",
+	"cash": "Cash",
+	"card_name": "Card name",
+	"balance": "Balance",
+	"add_more": "Add more",
+	"delete": "Delete",
+	"usd": "Dollar USA",
+	"euro": "Euro",
+	"rub": "Russian ruble",
+	"byr": "Belorussian ruble"
 }

@@ -1,5 +1,9 @@
 from cashapp import settings
+from cashapp.classes.Repository.CurrencyRepository import CurrencyRepository
 from cashapp_sett.classes.ServiceResult import ServiceResult
+
+
+currency_repository = CurrencyRepository()
 
 
 def generate_ui_tab_collection(user):
@@ -10,10 +14,10 @@ def generate_ui_tab_collection(user):
 	"""
 	result = ServiceResult()
 
-	keys = ['heading', 'toState', 'show']
+	keys = ['heading', 'toState', 'show', 'active']
 	default_tab_values = [
-		['general_title', 'sett.general', False],
-		['set_cash_title', 'sett.setCash', False]
+		['general_title', 'sett.general', False, False],
+		['set_cash_title', 'sett.setCash', False, False]
 	]
 
 	result.data = {
@@ -49,5 +53,20 @@ def set_language(key):
 
 	result.data = {
 		'key': settings.CURRENT_LANGUAGE
+	}
+	return result
+
+
+def get_available_currencies():
+	"""
+	Returns available currencies
+	:return: ServiceResult
+	"""
+	result = ServiceResult()
+
+	currencies = currency_repository.get_all()
+
+	result.data = {
+		'currencies': [{'code': currency.code, 'hex': currency.hex, 'dec': currency.dec, 'label': currency.label} for currency in currencies]
 	}
 	return result

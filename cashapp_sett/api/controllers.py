@@ -40,3 +40,14 @@ def manage_lang(request):
 		key = data.get('key')
 
 		return ServerResponse.ok(data=services.set_language(key).data)
+
+
+@login_required
+@require_http_methods(['GET'])
+def get_currencies(request):
+	"""
+	Get list of available currencies
+	:param request: HttpRequest
+	:return: ServerResponse instance
+	"""
+	return ServerResponse.ok(data=services.get_available_currencies().data)
