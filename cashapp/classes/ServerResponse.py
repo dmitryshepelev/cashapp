@@ -34,6 +34,15 @@ class ServerResponse(object):
 		"""
 		return JsonResponse(status=400, data=cls.__resolve_data(data))
 
+	@classmethod
+	def unauthorized(cls, data=None):
+		"""
+		Returns Error JsonResponse with 401 status code
+		:param data: response content
+		:return: JsonResponse instance
+		"""
+		return JsonResponse(status=401, data=cls.__resolve_data(data))
+
 	# 5xx
 	@classmethod
 	def internal_server_error(cls, data=None):

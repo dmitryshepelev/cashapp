@@ -88,12 +88,16 @@ nav > .container {
   margin-bottom: 5em !important;
 }
 select {
+  background: #ffffff url(images/lnr-arrow-down.svg) no-repeat 96% 50% !important;
+  background-size: 0.9em !important;
   margin: 0;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: none;
+  cursor: pointer;
+  line-height: normal !important;
   -webkit-appearance: none;
   -moz-appearance: none;
+  appearance: none;
 }
 select.form-control-sm {
   height: 2.27em;

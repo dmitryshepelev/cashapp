@@ -22,5 +22,8 @@
 	"usd": "Dollar USA",
 	"euro": "Euro",
 	"rub": "Russian ruble",
-	"byr": "Belorussian ruble"
+	"byr": "Belorussian ruble",
+	"save": "Save",
+	"reset": "Reset",
+	"cancel": "Cancel"
 }

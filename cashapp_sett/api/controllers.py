@@ -1,3 +1,4 @@
+from ast import literal_eval
 import json
 
 from django.contrib.auth.decorators import login_required
@@ -51,3 +52,25 @@ def get_currencies(request):
 	:return: ServerResponse instance
 	"""
 	return ServerResponse.ok(data=services.get_available_currencies().data)
+
+
+@require_http_methods(['POST'])
+def set_init_cash(request):
+	"""
+	Set initial cash
+	:param request: HTTP request
+	:return: ServerResponse instance
+	"""
+	if not request.user.is_authenticated():
+		return ServerResponse.unauthorized()
+
+	data = literal_eval(request.body)
+	cards = data.get('cards', [])
+	cashes = data.get('cashes', [])
+
+	set_finance_result = services.set_finances(cards, cashes, request.user.pk)
+
+	if not set_finance_result.is_succeed:
+		return ServerResponse.internal_server_error(data=set_finance_result.data)
+
+	return ServerResponse.ok(data=set_finance_result.data)

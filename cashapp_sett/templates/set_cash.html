@@ -1,24 +1,32 @@
 <div>
 	<div class="form-group">
-		<h3 class="text-muted" translate>set_cash_title</h3>
+		<h3>[[ 'set_cash_title' | translate ]]
+            <small class="nowrap">
+				<button class="btn btn-link btn-sm" ng-click="save()">
+					<span class="lnr lnr-checkmark-circle"></span> [[ 'save' | translate ]]
+				</button>
+				<button class="btn btn-link btn-sm" ng-click="resetScope()">
+					<span class="lnr lnr-cross-circle"></span> [[ 'reset' | translate ]]
+				</button>
+			</small>
+		</h3>
 	</div>
-	<div class="form-group">
+	<div class="form-group col-lg-12">
 		<div class="row">
-			<div class="col-md-8">
-                <h5 translate>bank_cards</h5>
+			<div class="col-lg-7 form-group">
+                <h5 class="indent-1">[[ 'bank_cards' | translate ]]</h5>
                 <form class="form-inline">
-                    <div class="indent-05 form-group" ng-repeat="card in cardsModel.cards track by $index">
-                        <div class="form-group small">
-                            [[ $index + 1 ]].
-                        </div>
-                        <div class="form-group">
+                    <div ng-repeat="card in cardsModel.cards track by $index">
+                        <div class="form-group indent-05">
                             <input type="text" class="form-control form-control-sm" ng-model="card.name" placeholder="[[ 'card_name' | translate ]]" autocomplete="off">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group indent-05">
                             <input type="text" class="form-control form-control-sm" ng-model="card.balance" placeholder="[[ 'balance' | translate ]]" autocomplete="off">
-                            <select class="form-control form-control-sm minimal" ng-options="currency.dec | decUnicode for currency in currencies track by currency.code" ng-model="card.currency"></select>
                         </div>
-                        <button type="submit" class="btn btn-link btn-sm" title="[[ 'delete' | translate ]]" ng-if="$index != 0" ng-click="cardsModel.removeCard($index)">
+	                    <div class="form-group indent-05 pull-right">
+		                    <select class="form-control form-control-sm minimal" ng-options="currency.dec | decUnicode for currency in currencies track by currency.code" ng-model="card.currency"></select>
+	                    </div>
+                        <button type="submit" class="btn btn-link btn-sm indent-05 pull-right" title="[[ 'delete' | translate ]]" ng-if="$index != 0" ng-click="cardsModel.removeCard($index)">
                             <span class="lnr lnr-circle-minus"></span>
                         </button>
                     </div>
@@ -27,9 +35,24 @@
                     <span class="lnr lnr-plus-circle"></span> [[ 'add_more' | translate ]]
                 </button>
 			</div>
-			<div class="col-md-4">
-                <h5 translate>cash</h5>
-
+			<div class="col-lg-5 form-group">
+                <h5 class="indent-1"> [[ 'cash' | translate ]]</h5>
+				<form class="form-inline">
+                    <div ng-repeat="cash in cashesModel.cashes track by $index">
+                        <div class="form-group indent-05">
+                            <input type="text" class="form-control form-control-sm" ng-model="cash.balance" placeholder="[[ 'balance' | translate ]]" autocomplete="off">
+                        </div>
+	                    <div class="form-group indent-05">
+		                    <select class="form-control form-control-sm minimal" ng-options="currency.dec | decUnicode for currency in currencies track by currency.code" ng-model="cash.currency"></select>
+	                    </div>
+                        <button type="submit" class="btn btn-link btn-sm indent-05" title="[[ 'delete' | translate ]]" ng-if="$index != 0" ng-click="cashesModel.removeCash($index)">
+                            <span class="lnr lnr-circle-minus"></span>
+                        </button>
+                    </div>
+                </form>
+                <button class="btn btn-link btn-sm" type="button" ng-click="cashesModel.addCash()">
+                    <span class="lnr lnr-plus-circle"></span> [[ 'add_more' | translate ]]
+                </button>
 			</div>
 		</div>
 	</div>
