@@ -24,6 +24,15 @@ class ServerResponse(object):
 		"""
 		return JsonResponse(status=200, data=cls.__resolve_data(data))
 
+	@classmethod
+	def created(cls, data=None):
+		"""
+		Returns Success JsonResponse with 201 status code
+		:param data: response content
+		:return: JsonResponse instance
+		"""
+		return JsonResponse(status=201, data=cls.__resolve_data(data))
+
 	# 4xx
 	@classmethod
 	def bad_request(cls, data=None):

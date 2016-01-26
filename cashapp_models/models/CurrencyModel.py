@@ -5,7 +5,7 @@ class Currency(models.Model):
 	"""
 	Provide Currency table
 	"""
-	code = models.CharField(max_length=3, db_index=True)
+	code = models.CharField(max_length=3, db_index=True, unique=True)
 	hex = models.CharField(max_length=10)
 	dec = models.CharField(max_length=20)
 	label = models.CharField(max_length=30, null=True)

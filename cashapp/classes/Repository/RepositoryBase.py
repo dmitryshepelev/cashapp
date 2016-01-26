@@ -20,3 +20,12 @@ class RepositoryBase(object):
 		:return: List
 		"""
 		return self.e_type.objects.all()
+
+	def get(self, *args, **kwargs):
+		"""
+		Get an instance
+		:param args:
+		:param kwargs:
+		:return: instance of e_type
+		"""
+		return self.e_type.objects.get(args, kwargs)

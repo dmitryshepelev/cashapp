@@ -1,10 +1,15 @@
-from ast import literal_eval
 import json
+from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
+
 from django.views.decorators.http import require_http_methods
 
+from cashapp import settings
+
+from cashapp.classes.Request import Request
 from cashapp.classes.ServerResponse import ServerResponse
+from cashapp_models.models.FinanceModel import Finance
 from cashapp_sett import services
 
 
@@ -51,26 +56,51 @@ def get_currencies(request):
 	:param request: HttpRequest
 	:return: ServerResponse instance
 	"""
-	return ServerResponse.ok(data=services.get_available_currencies().data)
-
-
-@require_http_methods(['POST'])
-def set_init_cash(request):
-	"""
-	Set initial cash
-	:param request: HTTP request
-	:return: ServerResponse instance
-	"""
 	if not request.user.is_authenticated():
 		return ServerResponse.unauthorized()
 
-	data = literal_eval(request.body)
-	cards = data.get('cards', [])
-	cashes = data.get('cashes', [])
+	return ServerResponse.ok(data=services.get_available_currencies().data)
 
-	set_finance_result = services.set_finances(cards, cashes, request.user.pk)
 
-	if not set_finance_result.is_succeed:
-		return ServerResponse.internal_server_error(data=set_finance_result.data)
+@require_http_methods(['GET', 'PUT', 'POST', 'DELETE'])
+def manage_cash(request, cash_type):
+	"""
+	Set initial cash
+	:param request: HTTP request
+	:param cash_type: finance type
+	:return: ServerResponse instance
+	"""
+	request = Request(request)
 
-	return ServerResponse.ok(data=set_finance_result.data)
+	if not request.user.is_authenticated():
+		return ServerResponse.unauthorized()
+
+	if request.is_GET:
+		pass
+
+	if request.is_DELETE:
+		pass
+
+	if request.is_PUT:
+		pass
+
+	if request.is_POST:
+		if not isinstance(request.data, list):
+			return ServerResponse.bad_request(data={'error': 'Data isn\'t Array type'})
+
+		instances_created = []
+		try:
+			for index, value in enumerate(request.data):
+				instance = Finance.parse(value, cash_type, request.user.pk)
+
+				if instance is not None:
+					instances_created.append(instance.save(balance=Decimal(value.get('balance'))).get_view_model('name',))
+					instances_created = index + 1
+
+			if instances_created == 0:
+				return ServerResponse.bad_request(data={'error': 'No cashes were created'})
+
+		except Exception as e:
+			return ServerResponse.internal_server_error(data={'error': e.message}) if settings.DEBUG else ServerResponse.internal_server_error()
+
+		return ServerResponse.created()

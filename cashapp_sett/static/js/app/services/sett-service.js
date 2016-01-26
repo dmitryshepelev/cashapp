@@ -17,16 +17,6 @@
             getCurrenciresList: function () {
                 var method = 'getCurrencies/';
                 return $http.get(baseUrl + method);
-            },
-
-            /**
-             * Save init cash data
-             * @param data
-             * @returns {*}
-             */
-            setInitCash: function (data) {
-                var method = 'setInitCash/';
-                return $http.post(baseUrl + method, data)
             }
         }
     }

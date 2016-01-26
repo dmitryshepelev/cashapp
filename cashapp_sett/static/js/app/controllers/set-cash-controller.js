@@ -1,6 +1,6 @@
 (function (angular) {
 
-    function SetCashCtrl ($scope, $SettService, $CommonService) {
+    function SetCashCtrl ($scope, $SettService, $CommonService, $CashService) {
         $scope.cardsModel = {};
         $scope.cashesModel = {};
         $scope.currencies = [];
@@ -30,7 +30,6 @@
             Cash.call(this);
         }
 
-        //Card.prototype = Object.create(Cash.prototype);
         $CommonService.extendBase(Cash, Card);
 
         /**
@@ -55,6 +54,18 @@
                  */
                 removeCard: function (cardIndex) {
                     this.cards.splice(cardIndex, 1);
+                },
+                /**
+                 * Save current model
+                 */
+                save: function () {
+                    $CashService.createCash(this.cards, 'card')
+                },
+                /**
+                 * Reset scope data
+                 */
+                reset: function () {
+                    this.cards = [new Card()];
                 }
             };
 
@@ -75,25 +86,20 @@
                  */
                 removeCash: function (cashIndex) {
                     this.cashes.splice(cashIndex, 1)
+                },
+                /**
+                 * Save current model
+                 */
+                save: function () {
+                    $CashService.createCash(this.cashes, 'cash')
+                },
+                /**
+                 * Reset scope data
+                 */
+                reset: function () {
+                    this.cashes = [new Cash()];
                 }
             };
-
-            /**
-             * Reinit $scope with default values
-             */
-            $scope.resetScope = initScope;
-
-            /**
-             * Save models
-             */
-            $scope.save = function () {
-                var data = {
-                        cashes: $scope.cashesModel.cashes,
-                        cards: $scope.cardsModel.cards
-                    };
-                $SettService.setInitCash(data)
-            };
-
             /**
              * Success callback
              */
@@ -116,7 +122,7 @@
         initScope();
     }
 
-    SetCashCtrl.$inject = ['$scope', '$SettService', '$CommonService'];
+    SetCashCtrl.$inject = ['$scope', '$SettService', '$CommonService', '$CashService'];
 
     angular
         .module('CashAppSett')
