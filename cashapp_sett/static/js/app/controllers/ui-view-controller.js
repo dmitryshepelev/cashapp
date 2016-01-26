@@ -11,7 +11,8 @@
             function onGetUiTabsSuccess (response) {
                 $scope.tabs = response.data.tabs;
 
-                var toState = $state.$current.self.name || $scope.tabs[0].toState;
+                var requestState = $state.$current.self.name;
+                var toState = (requestState && requestState != 'sett.redirect') ? requestState : $scope.tabs[0].toState;
 
                 var activeTab = $scope.tabs.filter(function (item) {
                     return item.toState == toState;
