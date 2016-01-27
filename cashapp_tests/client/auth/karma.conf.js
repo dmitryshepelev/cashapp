@@ -35,9 +35,9 @@ module.exports = function(config) {
             '../cashapp/static/js/app/directives/*.js',
             '../cashapp/static/js/app/services/*.js',
 
-            'static/js/app/**/*.js',
+            '../cashapp_auth/static/js/app/**/*.js',
 
-            'tests/client/**/*.js'
+            'client/auth/**/*.js'
         ],
 
 
@@ -49,7 +49,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'static/js/app/**/*.js': ['coverage']
+            '../cashapp_auth/static/js/app/**/*.js': ['coverage']
         },
 
 

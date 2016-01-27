@@ -41,7 +41,7 @@ describe('SignUpController tests', function () {
             controller = $controller('signup-controller', { $scope: $scope, $validator: createValidatorService(), $RedirectService: $RedirectService });
 
             newUser = { username: 'test', email: 'test@dog.cat', password: 'qwertyz', confirmed_password: 'qwertyz', redirect_url: '' };
-            url = '/auth/api/signup/';
+            url = '/api/auth/signup/';
 
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
             $httpBackend.flush();

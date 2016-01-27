@@ -41,7 +41,7 @@ describe('SignInController tests', function () {
             controller = $controller('signin-controller', { $scope: $scope, $validator: createValidatorService(),  $RedirectService: $RedirectService });
 
             user = { username: 'test', password: '123456', redirect_url: '' };
-            url = '/auth/api/signin/';
+            url = '/api/auth/signin/';
 
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
             $httpBackend.flush();

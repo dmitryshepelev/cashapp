@@ -94,13 +94,13 @@ def manage_cash(request, cash_type):
 				instance = Finance.parse(value, cash_type, request.user.pk)
 
 				if instance is not None:
-					instances_created.append(instance.save(balance=Decimal(value.get('balance'))))
-					instances_created = index + 1
+					instance.save(balance=Decimal(value.get('balance')))
+					instances_created.append({'id': value.get('id', index)})
 
-			if instances_created == 0:
+			if len(instances_created) == 0:
 				return ServerResponse.bad_request(data={'error': 'No cashes were created'})
 
 		except Exception as e:
 			return ServerResponse.internal_server_error(data={'error': e.message}) if settings.DEBUG else ServerResponse.internal_server_error()
 
-		return ServerResponse.created()
+		return ServerResponse.created(data={'instances': instances_created})

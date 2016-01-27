@@ -111,3 +111,6 @@ select {
 select.form-control-sm {
   height: 2.27em;
 }
+select.form-control:disabled {
+  background-color: #eceeef !important;
+}
