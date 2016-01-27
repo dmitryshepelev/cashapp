@@ -38,11 +38,11 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 
 	'cashapp',
-	'cashapp_api',
 	'cashapp_models',
 	'cashapp_auth',
 	'cashapp_my',
 	'cashapp_sett',
+	'cashapp_api',
 
 	'django_nose',
 ]

@@ -38,7 +38,7 @@ module.exports = function(config) {
 
             '../cashapp_auth/static/js/app/**/*.js',
 
-            'client/auth/**/*.js'
+            'client/authoruze/**/*.js'
         ],
 
 

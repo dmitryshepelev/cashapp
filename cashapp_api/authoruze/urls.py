@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from cashapp_api.auth.controllers import sign_up
-from cashapp_api.auth.controllers import sign_in
+from cashapp_api.authoruze.controllers import sign_up
+from cashapp_api.authoruze.controllers import sign_in
 
 
 urlpatterns = [

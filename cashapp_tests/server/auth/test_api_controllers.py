@@ -28,7 +28,7 @@ class TestSignUp(TestCase):
 		response = self.client.post(self.url, self.data, content_type=self.request_content_type)
 
 		self.assertEqual(response.status_code, 400, response.content)
-		self.assertEqual(response.content, '{"confirm_password": ["Your passwords do not match"], "password": ["This field is required."]}', response.content)
+		self.assertEqual(response.content, '{"confirm_password": ["Your passwords do not match"], "message": {}, "password": ["This field is required."]}', response.content)
 
 	def test_sign_up_ok(self):
 		"""
@@ -83,7 +83,7 @@ class TestSignIn(TestCase):
 		response = self.client.post(self.url, self.data, content_type=self.request_content_type)
 
 		self.assertEqual(response.status_code, 400, response.content)
-		self.assertEqual(response.content, '{"password": ["This field is required."]}', response.content)
+		self.assertEqual(response.content, '{"message": {}, "password": ["This field is required."]}', response.content)
 
 	def test_sign_in_ok(self):
 		"""
@@ -102,4 +102,4 @@ class TestSignIn(TestCase):
 		response = self.client.post(self.url, self.data, content_type=self.request_content_type)
 
 		self.assertEqual(response.status_code, 500, response.content)
-		self.assertEqual(response.content, '{"username": ["Invalid username or password"], "password": ["Invalid username or password"]}', response.content)
+		self.assertEqual(response.content, '{"username": ["Invalid username or password"], "message": {}, "password": ["Invalid username or password"]}', response.content)
