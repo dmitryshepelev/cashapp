@@ -6,7 +6,7 @@ module.exports = function(config) {
     config.set({
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
-        basePath: '../../',
+        basePath: '../',
 
 
         // frameworks to use
@@ -38,7 +38,7 @@ module.exports = function(config) {
 
             '../cashapp_auth/static/js/app/**/*.js',
 
-            'client/authoruze/**/*.js'
+            'client/auth/**/*.js'
         ],
 
 
