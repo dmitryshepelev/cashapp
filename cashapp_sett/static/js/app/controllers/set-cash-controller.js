@@ -1,6 +1,6 @@
 (function (angular) {
 
-    function SetCashCtrl ($scope, $SettService, $CommonService, $CashService) {
+    function SetCashCtrl ($scope, $SettService, $CommonService, $CashService, $ToastrService) {
         $scope.cardsModel = {};
         $scope.cashesModel = {};
         $scope.currencies = [];
@@ -97,7 +97,9 @@
          * @param response
          */
         function onSaveError (response) {
-
+            var data = response.data || {};
+            var message = data.message || { type: 'error' };
+            $ToastrService[message.type || 'info'](message.text, message.header)
         }
 
         /**
@@ -232,7 +234,7 @@
         initScope();
     }
 
-    SetCashCtrl.$inject = ['$scope', '$SettService', '$CommonService', '$CashService'];
+    SetCashCtrl.$inject = ['$scope', '$SettService', '$CommonService', '$CashService', '$ToastrService'];
 
     angular
         .module('CashAppSett')

@@ -25,5 +25,14 @@
 	"byr": "Belorussian ruble",
 	"save": "Save",
 	"reset": "Reset",
-	"cancel": "Cancel"
+	"cancel": "Cancel",
+	"no_cashes_created": "No cashes were created",
+	"success_header": "Success",
+	"error_header": "Error",
+	"warning_header": "Warning",
+	"info_header": "Info",
+	"success_text": "Completed successfully",
+	"error_text": "The error has occurred",
+	"warning_text": "Check if you actions are right",
+	"info_text": "To be honest... the info is bullshit"
 }

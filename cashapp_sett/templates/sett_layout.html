@@ -13,11 +13,13 @@
 	<script type="text/javascript" src="{% static "libs/angular-ui-position.js" %}"></script>
 	<script type="text/javascript" src="{% static "libs/angular-ui-tabs.js" %}"></script>
 	<script type="text/javascript" src="{% static "libs/angular-ui-dropdown.js" %}"></script>
+	<script type="text/javascript" src="{% static "libs/angular-toastr.min.js" %}"></script>
 
 	<script type="text/javascript" src="{% static "app/services-module.js" %}"></script>
 	<script type="text/javascript" src="{% static "app/services/common-service.js" %}"></script>
 	<script type="text/javascript" src="{% static "app/services/validate-service.js" %}"></script>
 	<script type="text/javascript" src="{% static "app/services/lang-service.js" %}"></script>
+	<script type="text/javascript" src="{% static "app/services/toastr-service.js" %}"></script>
 	<script type="text/javascript" src="{% static "app/filters/dec-unicode-filter.js" %}"></script>
     <script type="text/javascript" src="{% static "app/directives/page-title-directive.js" %}"></script>
 
@@ -31,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "bootstrap.css" %}" />
 	<link rel="stylesheet" type="text/css" href="{% static "site.css" %}" />
 	<link rel="stylesheet" type="text/css" href="{% static "icons.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "toastr.css" %}" />
 	{% block resources %}
 
 	{% endblock %}

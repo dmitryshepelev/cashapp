@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 
 from cashapp import settings
+from cashapp.classes.Message import Message
 
 from cashapp.classes.Request import Request
 from cashapp.classes.ServerResponse import ServerResponse
@@ -98,9 +99,9 @@ def manage_cash(request, cash_type):
 					instances_created.append({'id': value.get('id', index)})
 
 			if len(instances_created) == 0:
-				return ServerResponse.bad_request(data={'error': 'No cashes were created'})
+				return ServerResponse.bad_request(message=Message.warning('no_cashes_created'))
 
 		except Exception as e:
-			return ServerResponse.internal_server_error(data={'error': e.message}) if settings.DEBUG else ServerResponse.internal_server_error()
+			return ServerResponse.internal_server_error(data=Message.error(e.message)) if settings.DEBUG else ServerResponse.internal_server_error()
 
 		return ServerResponse.created(data={'instances': instances_created})
