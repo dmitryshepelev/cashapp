@@ -1,6 +1,6 @@
 (function (angular) {
     function SettSrv ($http) {
-        var baseUrl = '/sett/api/';
+        var baseUrl = '/api/sett/';
         return {
             /**
              * Get array of ui tabs

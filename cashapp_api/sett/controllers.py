@@ -94,7 +94,7 @@ def manage_cash(request, cash_type):
 				instance = Finance.parse(value, cash_type, request.user.pk)
 
 				if instance is not None:
-					instances_created.append(instance.save(balance=Decimal(value.get('balance'))).get_view_model('name',))
+					instances_created.append(instance.save(balance=Decimal(value.get('balance'))))
 					instances_created = index + 1
 
 			if instances_created == 0:

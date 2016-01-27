@@ -8,7 +8,7 @@ class TestSignUp(TestCase):
 		"""
 		Tests setups
 		"""
-		self.url = '/auth/api/signup/'
+		self.url = '/api/auth/signup/'
 		self.request_content_type = 'application/json'
 		self.client = Client()
 		self.data = {
@@ -64,7 +64,7 @@ class TestSignIn(TestCase):
 		"""
 		Tests setups
 		"""
-		self.url = '/auth/api/signin/'
+		self.url = '/api/auth/signin/'
 		self.request_content_type = 'application/json'
 		self.client = Client()
 		self.data = {

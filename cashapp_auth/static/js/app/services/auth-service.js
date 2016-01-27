@@ -1,6 +1,6 @@
 (function (angular) {
     function AuthService ($http) {
-        var baseUrl = '/auth/api/';
+        var baseUrl = '/api/auth/';
         return {
             /**
              * Service method to signup new user

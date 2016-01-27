@@ -1,6 +1,6 @@
 (function (angular) {
     function CashSrv ($http) {
-        var baseUrl = '/sett/api/mcash/';
+        var baseUrl = '/api/sett/mcash/';
         return {
             /**
              * Save init cash data

@@ -17,6 +17,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from cashapp.views import ui_template
+import cashapp_api
 
 import cashapp_auth
 import cashapp_my
@@ -28,6 +29,7 @@ urlpatterns = [
 	url(r'^auth/', include(cashapp_auth.urlpatterns)),
 	url(r'^my/', include(cashapp_my.urlpatterns)),
 	url(r'^sett/', include(cashapp_sett.urlpatterns)),
+	url(r'^api/', include(cashapp_api.urlpatterns)),
 
 	url(r'^uitempl/(?P<templ_type>ui)/(?P<name>\w+)/$', ui_template)
 ]

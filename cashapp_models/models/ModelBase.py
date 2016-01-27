@@ -1,8 +1,7 @@
 import hashlib
 import random
+
 from django.db import models
-import django
-from django.core import serializers
 
 
 class ModelBase(models.Model):
@@ -22,14 +21,6 @@ class ModelBase(models.Model):
 			self.guid = hashlib.sha1(str(random.random())).hexdigest()
 
 		super(ModelBase, self).save(force_insert, force_update, using, update_fields)
-
-	def get_view_model(self, *args):
-		"""
-		Geturns VM of model
-		:param args: required fields names. Use '.' to separate fields of related models
-		:return: {dict}
-		"""
-		print(args)
 
 	class Meta:
 		abstract = True
