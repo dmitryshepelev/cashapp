@@ -66,6 +66,23 @@
              */
             info: function (text, header) {
                 showToast('info', text, header);
+            },
+            /**
+             * Resolve message object from response or caught error
+             * @param response
+             * @returns {string|Function|window.angular.mock.TzDate.message|*|message|angular.mock.inject.message}
+             */
+            messageFromResponse: function (response) {
+                // Define server data.
+                // Check if the response contains data.
+                // Then it's a server response, else it's a caught error
+                var data = response.data || {};
+                // Define message object
+                // Check if the data contains message object.
+                // If false, define default error message
+                var message = data.message || {type: 'error'};
+                this[message.type](message.text, message.header);
+                return message
             }
         }
     }

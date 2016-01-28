@@ -2,14 +2,13 @@ import json
 from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
-
 from django.views.decorators.http import require_http_methods
 
 from cashapp import settings
 from cashapp.classes.Message import Message
-
 from cashapp.classes.Request import Request
 from cashapp.classes.ServerResponse import ServerResponse
+from cashapp_api.server_errors import ServerErrorText
 from cashapp_models.models.FinanceModel import Finance
 from cashapp_sett import services
 
@@ -87,21 +86,27 @@ def manage_cash(request, cash_type):
 
 	if request.is_POST:
 		if not isinstance(request.data, list):
-			return ServerResponse.bad_request(data={'error': 'Data isn\'t Array type'})
+			return ServerResponse.bad_request(message=Message.error(ServerErrorText.NOT_AN_ARRAY))
 
-		instances_created = []
+		instances = []
 		try:
 			for index, value in enumerate(request.data):
 				instance = Finance.parse(value, cash_type, request.user.pk)
 
 				if instance is not None:
-					instance.save(balance=Decimal(value.get('balance')))
-					instances_created.append({'id': value.get('id', index)})
+					inst = dict(id=value.get('id', index))
+					try:
+						instance.save(balance=Decimal(value.get('balance')))
+						inst.__setitem__('created', True)
+					except Exception as e:
+						inst.__setitem__('error', True)
+					finally:
+						instances.append(inst)
 
-			if len(instances_created) == 0:
-				return ServerResponse.bad_request(message=Message.warning('no_cashes_created'))
+			if len(instances) == 0:
+				return ServerResponse.bad_request(message=Message.warning(ServerErrorText.NO_CASHES_CREATED))
 
 		except Exception as e:
-			return ServerResponse.internal_server_error(data=Message.error(e.message)) if settings.DEBUG else ServerResponse.internal_server_error()
+			return ServerResponse.internal_server_error(message=Message.error(e.message)) if settings.DEBUG else ServerResponse.internal_server_error()
 
-		return ServerResponse.created(data={'instances': instances_created})
+		return ServerResponse.created(data={'instances': instances})

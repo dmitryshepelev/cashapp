@@ -51,7 +51,7 @@ class Finance(ModelBase):
 
 		is_card = type.lower() == 'card'
 
-		name = item.get('name', 'card') if is_card else None
+		name = (item.get('name') or 'card') if is_card else None
 		currency_code = item.get('currency', {}).get('code', 'BYR')
 
 		return Finance(name=name, currency_id=currency_code, user_id=user_id, type_id=type)

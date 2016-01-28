@@ -1,3 +1,11 @@
+/**
+ * TODO issues:
+ *  1. Setting default currency as a default select value
+ *  2. Helps around the controls
+ *  3. Load created cashes on load
+ *  4. Ability to edit card names
+ */
+
 (function (angular) {
 
     function SetCashCtrl ($scope, $SettService, $CommonService, $CashService, $ToastrService) {
@@ -14,6 +22,7 @@
             this.balance = '';
             this.currency = {};
             this.created = '';
+            this.error = ''
         }
 
         Cash.prototype = {
@@ -72,7 +81,8 @@
             instances.forEach(function (instance) {
                 var model = $scope.cashesModel.getCashById(instance.id);
                 if (model) {
-                    model.created = true;
+                    model.created = instance.created;
+                    model.error = instance.error ? instance.error.toString() : '';
                 }
             })
         }
@@ -87,7 +97,8 @@
             instances.forEach(function (instance) {
                 var model = $scope.cardsModel.getCardById(instance.id);
                 if (model) {
-                    model.created = true;
+                    model.created = instance.created;
+                    model.error = instance.error ? instance.error.toString() : '';
                 }
             })
         }
@@ -97,9 +108,7 @@
          * @param response
          */
         function onSaveError (response) {
-            var data = response.data || {};
-            var message = data.message || { type: 'error' };
-            $ToastrService[message.type || 'info'](message.text, message.header)
+            $ToastrService.messageFromResponse(response);
         }
 
         /**
@@ -111,12 +120,24 @@
                  * List of cards
                  */
                 cards: [new Card()],
-
                 /**
                  * Adds a new card to model
                  */
                 addCard: function () {
-                    addInstance(this.cards, Card)
+                    if (this.addingEnable) {
+                        addInstance(this.cards, Card);
+                        this.toggleAdding();
+                    }
+                },
+                /**
+                 * Flag if new item adding enabled
+                 */
+                addingEnable: true,
+                /**
+                 * Set the addingEnable flag
+                 */
+                toggleAdding: function () {
+                    this.addingEnable = this.cards.length < 10;
                 },
                 /**
                  * Removes card from model by index
@@ -124,6 +145,7 @@
                  */
                 removeCard: function (cardIndex) {
                     this.cards.splice(cardIndex, 1);
+                    this.toggleAdding();
                 },
                 /**
                  * Returns Card instance of cardModel.cards by id
@@ -157,6 +179,7 @@
                  */
                 reset: function () {
                     this.cards = deleteUnsavedInstances(this.cards, Card);
+                    this.toggleAdding();
                 }
             };
 
@@ -169,14 +192,28 @@
                  * Adds a new cash to the model
                  */
                 addCash: function () {
-                    addInstance(this.cashes, Cash)
+                    if (this.addingEnable) {
+                        addInstance(this.cashes, Cash);
+                        this.toggleAdding();
+                    }
+                },
+                /**
+                 * Flag if new item adding enabled
+                 */
+                addingEnable: true,
+                /**
+                 * Set the addingEnable flag
+                 */
+                toggleAdding: function () {
+                    this.addingEnable = this.cashes.length < 6;
                 },
                 /**
                  * Removes cash from the model by index
                  * @param cashIndex
                  */
                 removeCash: function (cashIndex) {
-                    this.cashes.splice(cashIndex, 1)
+                    this.cashes.splice(cashIndex, 1);
+                    this.toggleAdding()
                 },
                 /**
                  * Returns Cash instance of cashModel.cashes by id
@@ -209,7 +246,8 @@
                  * Reset scope data
                  */
                 reset: function () {
-                    this.cashes = deleteUnsavedInstances(this.cashes, Cash)
+                    this.cashes = deleteUnsavedInstances(this.cashes, Cash);
+                    this.toggleAdding()
                 }
             };
             /**
@@ -222,8 +260,8 @@
             /**
              * Error callback
              */
-            function onGetCurrenciesListError() {
-
+            function onGetCurrenciesListError(response) {
+                $ToastrService.messageFromResponse(response);
             }
 
             $SettService.getCurrenciresList()

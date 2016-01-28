@@ -1,3 +1,13 @@
+class MessageTypes:
+	def __init__(self):
+		pass
+
+	SUCCESS = 'success'
+	ERROR = 'error'
+	WARNING = 'warning'
+	INFO = 'info'
+
+
 class Message(object):
 
 	@classmethod
@@ -9,7 +19,15 @@ class Message(object):
 		:param header: header
 		:return: dict
 		"""
-		return dict(type=obj_type, text=text or '', header=header or '')
+		obj = dict(type=obj_type)
+
+		if text:
+			obj.__setitem__('text', text)
+
+		if header:
+			obj.__setitem__('header', header)
+
+		return obj
 
 	@classmethod
 	def success(cls, text=None, header=None):
@@ -19,7 +37,7 @@ class Message(object):
 		:param header:
 		:return:
 		"""
-		return cls.__get_obj('success', text, header)
+		return cls.__get_obj(MessageTypes.SUCCESS, text, header)
 
 	@classmethod
 	def error(cls, text=None, header=None):
@@ -29,7 +47,7 @@ class Message(object):
 		:param header:
 		:return:
 		"""
-		return cls.__get_obj('error', text, header)
+		return cls.__get_obj(MessageTypes.ERROR, text, header)
 
 	@classmethod
 	def warning(cls, text=None, header=None):
@@ -39,7 +57,7 @@ class Message(object):
 		:param header:
 		:return:
 		"""
-		return cls.__get_obj('warning', text, header)
+		return cls.__get_obj(MessageTypes.WARNING, text, header)
 
 	@classmethod
 	def info(cls, text=None, header=None):
@@ -49,4 +67,4 @@ class Message(object):
 		:param header:
 		:return:
 		"""
-		return cls.__get_obj('info', text, header)
+		return cls.__get_obj(MessageTypes.INFO, text, header)

@@ -6,7 +6,8 @@
          */
         angular.extend(toastrConfig, {
             maxOpened: 3,
-            timeOut: 10000
+            timeOut: 10000,
+            allowHtml: true
         })
     }
 

@@ -1,21 +1,25 @@
 from django.http import JsonResponse
+from cashapp.classes.Message import MessageTypes
+from cashapp_api.server_errors import ServerErrorText
 
 
 class ServerResponse(object):
 	def __init__(self):
 		pass
 
-	@staticmethod
-	def __resolve_data(data):
+	@classmethod
+	def __resolve_data(cls, data, message):
 		"""
 		Resolve data value
 		:param data: data
 		:return: empty object if the data is None
 		"""
-		return {} if not data else data
+		data = data or {}
+		data.__setitem__('message', cls.__resolve_message(message))
+		return data
 
-	@staticmethod
-	def __resolve_message(message):
+	@classmethod
+	def __resolve_message(cls, message):
 		"""
 		Resolve message
 		:param message: Message instance or None
@@ -31,8 +35,7 @@ class ServerResponse(object):
 		:param data: response content
 		:return: JsonResponse instance
 		"""
-		data = cls.__resolve_data(data)
-		data.__setitem__('message', cls.__resolve_message(message))
+		data = cls.__resolve_data(data, message)
 		return JsonResponse(status=200, data=data)
 
 	@classmethod
@@ -42,8 +45,7 @@ class ServerResponse(object):
 		:param data: response content
 		:return: JsonResponse instance
 		"""
-		data = cls.__resolve_data(data)
-		data.__setitem__('message', cls.__resolve_message(message))
+		data = cls.__resolve_data(data, message)
 		return JsonResponse(status=201, data=data)
 
 	# 4xx
@@ -54,8 +56,7 @@ class ServerResponse(object):
 		:param data: response content
 		:return: JsonResponse instance
 		"""
-		data = cls.__resolve_data(data)
-		data.__setitem__('message', cls.__resolve_message(message))
+		data = cls.__resolve_data(data, message)
 		return JsonResponse(status=400, data=data)
 
 	@classmethod
@@ -65,8 +66,7 @@ class ServerResponse(object):
 		:param data: response content
 		:return: JsonResponse instance
 		"""
-		data = cls.__resolve_data(data)
-		data.__setitem__('message', cls.__resolve_message(message))
+		data = cls.__resolve_data(data, message or {'type': MessageTypes.ERROR, 'text': ServerErrorText.NOT_AUTHORIZED})
 		return JsonResponse(status=401, data=data)
 
 	# 5xx
@@ -77,6 +77,5 @@ class ServerResponse(object):
 		:param data: response content
 		:return: JsonResponse instance
 		"""
-		data = cls.__resolve_data(data)
-		data.__setitem__('message', cls.__resolve_message(message))
+		data = cls.__resolve_data(data, message)
 		return JsonResponse(status=500, data=data)
