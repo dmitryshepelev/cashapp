@@ -10,7 +10,7 @@ class Request(object):
 		Class constructor
 		:param request: HTTP request
 		"""
-		self.__data = literal_eval(request.body)
+		self.__data = literal_eval(request.body) if request.body else dict()
 		self.__request = request
 
 	@property

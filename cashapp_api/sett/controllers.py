@@ -2,6 +2,7 @@ import json
 from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
+from django.db.models import Max
 from django.views.decorators.http import require_http_methods
 
 from cashapp import settings
@@ -65,7 +66,11 @@ def get_currencies(request):
 @require_http_methods(['GET', 'PUT', 'POST', 'DELETE'])
 def manage_cash(request, cash_type):
 	"""
-	Set initial cash
+	Manage the cash depending on HTTP method
+	GET: return already created cashes
+	DELETE:
+	PUT:
+	POST: create new cashes
 	:param request: HTTP request
 	:param cash_type: finance type
 	:return: ServerResponse instance
@@ -76,7 +81,15 @@ def manage_cash(request, cash_type):
 		return ServerResponse.unauthorized()
 
 	if request.is_GET:
-		pass
+		result = {cash_type: []}
+
+		finances = request.user.finance_set.filter(type_id=cash_type)
+
+		for f in finances:
+			last_register = f.financeregister_set.annotate(max_date=Max('date')).first()
+			result[cash_type].append(dict(guid=f.guid, name=f.name, currency=f.currency_id, created=True, balance=last_register.balance))
+
+		return ServerResponse.ok(data=result)
 
 	if request.is_DELETE:
 		pass
@@ -97,7 +110,7 @@ def manage_cash(request, cash_type):
 					inst = dict(id=value.get('id', index))
 					try:
 						instance.save(balance=Decimal(value.get('balance')))
-						inst.__setitem__('created', True)
+						inst.__setitem__('guid', instance.guid)
 					except Exception as e:
 						inst.__setitem__('error', True)
 					finally:

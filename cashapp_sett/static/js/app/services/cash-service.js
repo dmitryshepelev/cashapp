@@ -10,7 +10,15 @@
              */
             createCash: function (data, type) {
                 var method = type + '/';
-                return $http.post(baseUrl + method, data)
+                return $http.post(baseUrl + method, data);
+            },
+            /**
+             * Get cashes by type
+             * @param type
+             */
+            getCash: function (type) {
+                var method = type + '/';
+                return $http.get(baseUrl + method);
             }
         }
     }
