@@ -13,7 +13,7 @@
 
 
     angular
-        .module('CashApp.Service', ['LocalStorageModule', 'ngAnimate', 'toastr']);
+        .module('CashApp.Service', ['LocalStorageModule', 'ngAnimate', 'toastr', 'angular-loading-bar']);
 
     angular
         .module('CashApp.Service')

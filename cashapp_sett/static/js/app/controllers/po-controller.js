@@ -7,7 +7,7 @@
 
 (function (angular) {
 
-    function POCtrl ($scope, $SettService, $CommonService, $POService, $ToastrService) {
+    function POCtrl ($scope, $SettService, $CommonService, $POService, $CurrencyService, $ToastrService) {
         $scope.cardsModel = {};
         $scope.cashesModel = {};
         $scope.currencies = [];
@@ -183,7 +183,7 @@
                      */
                     save: function () {
                         var cardsToSave = this.getUnsavedCards();
-                        $POService.createPO(cardsToSave, 'card')
+                        $POService.create(cardsToSave, 'card')
                             .then(onCardSaveSuccess)
                             .catch(onError)
                     },
@@ -280,7 +280,7 @@
                      */
                     save: function () {
                         var cashesToSave = this.getUnsavedCashes();
-                        $POService.createPO(cashesToSave, 'cash')
+                        $POService.create(cashesToSave, 'cash')
                             .then(onCashSaveSuccess)
                             .catch(onError)
                     },
@@ -314,9 +314,9 @@
         function loadInitialData () {
             Promise
                 .all([
-                    $SettService.getCurrenciresList(),
-                    $POService.getPO('card'),
-                    $POService.getPO('cash')
+                    $CurrencyService.getAll(),
+                    $POService.getByType('card'),
+                    $POService.getByType('cash')
                 ])
                 .then(initScope)
                 .catch(onError);
@@ -325,7 +325,7 @@
         loadInitialData();
     }
 
-    POCtrl.$inject = ['$scope', '$SettService', '$CommonService', '$POService', '$ToastrService'];
+    POCtrl.$inject = ['$scope', '$SettService', '$CommonService', '$POService', '$CurrencyService', '$ToastrService'];
 
     angular
         .module('CashAppSett')

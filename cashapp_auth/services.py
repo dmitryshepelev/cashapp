@@ -5,7 +5,7 @@ from django.contrib import auth
 from cashapp import settings
 from cashapp.classes.Repository.UserRepository import UserRepository
 from cashapp.classes.ServiceException import ServiceException
-from cashapp_auth.classes.ServiceResult import ServiceResult
+from cashapp.classes.ServiceResult import ServiceResult
 
 
 user_repository = UserRepository()

@@ -1,4 +1,4 @@
-class ServiceResultBase(object):
+class ServiceResult(object):
 	"""
 	Service result class
 	"""

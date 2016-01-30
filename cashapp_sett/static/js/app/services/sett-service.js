@@ -9,14 +9,6 @@
             getUiTabs: function () {
                 var method = 'getUiTabs/';
                 return $http.get(baseUrl + method);
-            },
-
-            /**
-             * Gets list of currencies
-             */
-            getCurrenciresList: function () {
-                var method = 'getCurrencies/';
-                return $http.get(baseUrl + method);
             }
         }
     }

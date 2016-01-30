@@ -1,6 +1,6 @@
 (function (angular) {
     function POSrv ($http) {
-        var baseUrl = '/api/sett/po/';
+        var baseUrl = '/api/cmn/po/';
         return {
             /**
              * Save PO data
@@ -8,7 +8,7 @@
              * @param type
              * @returns {*}
              */
-            createPO: function (data, type) {
+            create: function (data, type) {
                 var method = type + '/';
                 return $http.post(baseUrl + method, data);
             },
@@ -16,7 +16,7 @@
              * Get PO by type
              * @param type
              */
-            getPO: function (type) {
+            getByType: function (type) {
                 var method = type + '/';
                 return $http.get(baseUrl + method);
             }
@@ -26,7 +26,7 @@
     POSrv.$inject = ['$http'];
 
     angular
-        .module('CashAppSett')
+        .module('CashApp.Service')
         .factory('$POService', POSrv)
 
 })(angular);
