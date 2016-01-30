@@ -1,5 +1,5 @@
 from cashapp.classes.Repository.RepositoryBase import RepositoryBase
-from cashapp_models.models.FinanceTypeModel import FinanceType
+from cashapp_models.models.POTypeModel import POType
 
 
 class FinanceTypeRepository(RepositoryBase):
@@ -7,4 +7,4 @@ class FinanceTypeRepository(RepositoryBase):
 	Concrete repository
 	"""
 	def __init__(self):
-		super(FinanceTypeRepository, self).__init__(FinanceType)
+		super(FinanceTypeRepository, self).__init__(POType)

@@ -37,18 +37,18 @@
                     title: 'general_title'
                 }
             })
-            .state('sett.setCash', {
-                url: '/setcash',
-                templateUrl: _baseUrl + '/setcash/',
-                controller: 'set-cash-controller',
+            .state('sett.po', {
+                url: '/po',
+                templateUrl: _baseUrl + '/po/',
+                controller: 'po-controller',
                 data: {
-                    title: 'set_cash_title'
+                    title: 'po_title'
                 }
             });
     }
 
     angular
-        .module('CashAppSett', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate', 'ui.bootstrap.tabs', 'ui.bootstrap.dropdown', 'ui.bootstrap.position', 'LocalStorageModule', 'ngMask']);
+        .module('CashAppSett', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate', 'ui.bootstrap.tabs', 'ui.bootstrap.dropdown', 'ui.bootstrap.position', 'LocalStorageModule', 'ngMask', 'angular-loading-bar']);
     angular
         .module('CashAppSett')
         .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);

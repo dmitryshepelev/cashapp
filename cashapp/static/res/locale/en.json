@@ -9,7 +9,7 @@
 	"sign_in_title": "Sign In",
 	"dashboard_title": "Dashboard",
 	"general_title": "General settings",
-	"set_cash_title": "Set initial cash",
+	"po_title": "Payment objects",
 	"redirect_title": "Redirecting...",
 	"interface_language": "Interface language",
 	"settings": "Settings",
@@ -26,7 +26,7 @@
 	"save": "Save",
 	"reset": "Reset",
 	"cancel": "Cancel",
-	"no_cashes_created": "No cashes were created",
+	"no_po_created": "No payment objects were created",
 	"not_an_array": "Not an array given",
 	"not_authorized": "Session is out. You need to <a href=\"/auth/\">authorize</a>",
 	"success_header": "Success",
@@ -37,5 +37,4 @@
 	"error_text": "The error has occurred",
 	"warning_text": "Check if you actions are right",
 	"info_text": "To be honest... the info is bullshit"
-
 }

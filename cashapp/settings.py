@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'cashapp.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-		'NAME': 'cashappdb' if DEBUG else 'videomesrf',
-		'USER': 'postgres' if DEBUG else 'videomesrf',
+		'NAME': 'cashappdb',
+		'USER': 'postgres',
 		'PASSWORD': 'qwaszx@1',
-		'HOST': 'localhost' if DEBUG else 'pg.sweb.ru',
+		'HOST': 'localhost',
 		'PORT': '5432',
 	}
 }

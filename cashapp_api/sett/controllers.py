@@ -10,7 +10,7 @@ from cashapp.classes.Message import Message
 from cashapp.classes.Request import Request
 from cashapp.classes.ServerResponse import ServerResponse
 from cashapp_api.server_errors import ServerErrorText
-from cashapp_models.models.FinanceModel import Finance
+from cashapp_models.models.POModel import PaymentObject
 from cashapp_sett import services
 
 
@@ -30,26 +30,6 @@ def get_ui_tabs(request):
 
 
 @login_required
-@require_http_methods(['GET', 'POST'])
-def manage_lang(request):
-	"""
-	Get or Set current language depends on request method
-	:param request:  HTTP request
-	:return: ServerResponse instance
-	"""
-	if request.method == 'GET':
-		# get language
-		return ServerResponse.ok(data=services.get_language().data)
-
-	else:
-		# set language
-		data = json.loads(request.body)
-		key = data.get('key')
-
-		return ServerResponse.ok(data=services.set_language(key).data)
-
-
-@login_required
 @require_http_methods(['GET'])
 def get_currencies(request):
 	"""
@@ -64,15 +44,15 @@ def get_currencies(request):
 
 
 @require_http_methods(['GET', 'PUT', 'POST', 'DELETE'])
-def manage_cash(request, cash_type):
+def manage_po(request, po_type):
 	"""
-	Manage the cash depending on HTTP method
-	GET: return already created cashes
+	Manage the payment objects depending on HTTP method
+	GET: return already created PO
 	DELETE:
 	PUT:
-	POST: create new cashes
+	POST: create new PO
 	:param request: HTTP request
-	:param cash_type: finance type
+	:param po_type: payment object type
 	:return: ServerResponse instance
 	"""
 	request = Request(request)
@@ -81,13 +61,13 @@ def manage_cash(request, cash_type):
 		return ServerResponse.unauthorized()
 
 	if request.is_GET:
-		result = {cash_type: []}
+		result = {po_type: []}
 
-		finances = request.user.finance_set.filter(type_id=cash_type)
+		finances = request.user.paymentobject_set.filter(type_id=po_type)
 
 		for f in finances:
-			last_register = f.financeregister_set.annotate(max_date=Max('date')).first()
-			result[cash_type].append(dict(guid=f.guid, name=f.name, currency=f.currency_id, created=True, balance=last_register.balance))
+			last_register = f.poregister_set.annotate(max_date=Max('date')).first()
+			result[po_type].append(dict(guid=f.guid, name=f.name, currency=f.currency_id, created=True, balance=last_register.balance))
 
 		return ServerResponse.ok(data=result)
 
@@ -104,7 +84,7 @@ def manage_cash(request, cash_type):
 		instances = []
 		try:
 			for index, value in enumerate(request.data):
-				instance = Finance.parse(value, cash_type, request.user.pk)
+				instance = PaymentObject.parse(value, po_type, request.user.pk)
 
 				if instance is not None:
 					inst = dict(id=value.get('id', index))
@@ -117,7 +97,7 @@ def manage_cash(request, cash_type):
 						instances.append(inst)
 
 			if len(instances) == 0:
-				return ServerResponse.bad_request(message=Message.warning(ServerErrorText.NO_CASHES_CREATED))
+				return ServerResponse.bad_request(message=Message.warning(ServerErrorText.NO_PO_CREATED))
 
 		except Exception as e:
 			return ServerResponse.internal_server_error(message=Message.error(e.message)) if settings.DEBUG else ServerResponse.internal_server_error()

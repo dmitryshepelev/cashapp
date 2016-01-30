@@ -1,33 +1,33 @@
 (function (angular) {
-    function CashSrv ($http) {
-        var baseUrl = '/api/sett/mcash/';
+    function POSrv ($http) {
+        var baseUrl = '/api/sett/po/';
         return {
             /**
-             * Save init cash data
+             * Save PO data
              * @param data
              * @param type
              * @returns {*}
              */
-            createCash: function (data, type) {
+            createPO: function (data, type) {
                 var method = type + '/';
                 return $http.post(baseUrl + method, data);
             },
             /**
-             * Get cashes by type
+             * Get PO by type
              * @param type
              */
-            getCash: function (type) {
+            getPO: function (type) {
                 var method = type + '/';
                 return $http.get(baseUrl + method);
             }
         }
     }
 
-    CashSrv.$inject = ['$http'];
+    POSrv.$inject = ['$http'];
 
     angular
         .module('CashAppSett')
-        .factory('$CashService', CashSrv)
+        .factory('$POService', POSrv)
 
 })(angular);
 

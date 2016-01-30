@@ -38,10 +38,10 @@ def general(request):
 
 @require_http_methods(['GET'])
 @login_required
-def set_cash(request):
+def manage_po(request):
 	"""
 	Set initial cash page
 	:param request: http request
 	:return: HttpResponse
 	"""
-	return render(request, 'set_cash.html', {})
+	return render(request, 'manage_po.html', {})

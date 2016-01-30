@@ -6,5 +6,5 @@ class ServerErrorText():
 		pass
 
 	NOT_AN_ARRAY = 'not_an_array'
-	NO_CASHES_CREATED = 'no_cashes_created'
+	NO_PO_CREATED = 'no_po_created'
 	NOT_AUTHORIZED = 'not_authorized'
