@@ -30,8 +30,12 @@ module.exports = function(config) {
             '../cashapp/static/js/libs/angular-translate.min.js',
             '../cashapp/static/js/libs/angular-translate-loader-static-files.min.js',
             '../cashapp/static/js/libs/angular-local-storage.js',
-            '../cashapp/static/js/libs/angular-toastr.min.js',
             '../cashapp/static/js/libs/angular-loading-bar.js',
+            '../cashapp/static/js/libs/angular-toastr.min.js',
+            '../cashapp/static/js/libs/angular-ng-mask.js',
+            '../cashapp/static/js/libs/angular-ui-position.js',
+            '../cashapp/static/js/libs/angular-ui-tabs.js',
+            '../cashapp/static/js/libs/angular-ui-dropdown.js',
 
             '../cashapp/static/js/app/services-module.js',
             '../cashapp/static/js/app/directives/*.js',
@@ -39,7 +43,11 @@ module.exports = function(config) {
 
             '../cashapp_auth/static/js/app/**/*.js',
 
-            'client/auth/**/*.js'
+            '../cashapp_sett/static/js/app/sett-module.js',
+            '../cashapp_sett/static/js/app/**/*.js',
+
+            'client/auth/**/*.js',
+            'client/sett/**/*.js'
         ],
 
 
@@ -51,7 +59,8 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            '../cashapp_auth/static/js/app/**/*.js': ['coverage']
+            '../cashapp_auth/static/js/app/**/*.js': ['coverage'],
+            '../cashapp_sett/static/js/app/**/*.js': ['coverage']
         },
 
 

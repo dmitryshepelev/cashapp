@@ -58,7 +58,7 @@ def manage_po(request, po_type):
 
 		for f in finances:
 			last_register = f.poregister_set.annotate(max_date=Max('date')).first()
-			result[po_type].append(dict(guid=f.guid, name=f.name, currency=f.currency_id, created=True, balance=last_register.balance))
+			result[po_type].append(dict(guid=f.guid, name=f.name, currency=f.currency_id, balance=last_register.balance))
 
 		return ServerResponse.ok(data=result)
 

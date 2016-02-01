@@ -1,5 +1,5 @@
 (function (angular) {
-    function UiViewCtrl ($scope, $rootScope, $state, $SettService) {
+    function UiViewCtrl ($scope, $rootScope, $state, $SettService, $ToastrService) {
         /**
          * Init $scope with default values get from server
          */
@@ -26,6 +26,7 @@
              * @param response
              */
             function onGetUiTabsError (response) {
+                $ToastrService.messageFromResponse(response);
             }
 
             $SettService.getUiTabs()
@@ -50,7 +51,7 @@
         initScope();
     }
 
-    UiViewCtrl.$inject = ['$scope', '$rootScope', '$state', '$SettService'];
+    UiViewCtrl.$inject = ['$scope', '$rootScope', '$state', '$SettService', '$ToastrService'];
 
     angular
         .module('CashAppSett')

@@ -7,7 +7,7 @@
 
 (function (angular) {
 
-    function POCtrl ($scope, $SettService, $CommonService, $POService, $CurrencyService, $ToastrService) {
+    function POCtrl ($scope, $q, $CommonService, $POService, $CurrencyService, $ToastrService) {
         $scope.cardsModel = {};
         $scope.cashesModel = {};
         $scope.currencies = [];
@@ -24,15 +24,7 @@
             this.guid = ''
         }
 
-        Cash.prototype = {
-            /**
-             * Set currency value
-             * @param currency
-             */
-            setCurrency: function (currency) {
-                this.currency = currency;
-            }
-        };
+        Cash.prototype = {};
 
         /**
          * Card class
@@ -124,8 +116,10 @@
                         if (model) {
                             model.guid = instance.guid;
                             model.error = instance.error ? instance.error.toString() : '';
+                        } else {
+
                         }
-                    })
+                    });
                 }
 
                 $scope.cardsModel = {
@@ -140,6 +134,8 @@
                         if (this.addingEnable) {
                             addInstance(this.cards, Card);
                             this.toggleAdding();
+                        } else {
+                            return 0;
                         }
                     },
                     /**
@@ -157,8 +153,13 @@
                      * @param card
                      */
                     removeCard: function (card) {
-                        this.cards.splice(this.cards.indexOf(card), 1);
-                        this.toggleAdding();
+                        var index = this.cards.indexOf(card);
+                        if (index > 0) {
+                            this.cards.splice(index, 1);
+                            this.toggleAdding();
+                        } else {
+                            return 0;
+                        }
                     },
                     /**
                      * Returns Card instance of cardModel.cards by id
@@ -168,7 +169,7 @@
                         var card = this.cards.filter(function (card) {
                             return card.id == id;
                         });
-                        return card ? card[0] : {}
+                        return card.length !== 0 ? card[0] : {}
                     },
                     /**
                      * Returns array of uncreated cards
@@ -237,6 +238,8 @@
                         if (this.addingEnable) {
                             addInstance(this.cashes, Cash);
                             this.toggleAdding();
+                        } else {
+                            return 0;
                         }
                     },
                     /**
@@ -254,8 +257,13 @@
                      * @param cash
                      */
                     removeCash: function (cash) {
-                        this.cashes.splice(this.cashes.indexOf(cashes), 1);
-                        this.toggleAdding()
+                        var index = this.cashes.indexOf(cash);
+                        if (index > 0) {
+                            this.cashes.splice(index, 1);
+                            this.toggleAdding()
+                        } else {
+                            return 0;
+                        }
                     },
                     /**
                      * Returns Cash instance of cashModel.cashes by id
@@ -265,7 +273,7 @@
                         var cash = this.cashes.filter(function (cash) {
                             return cash.id == id;
                         });
-                        return cash ? cash[0] : {}
+                        return cash.length !== 0 ? cash[0] : {}
                     },
                     /**
                      * Returns array of unsaved cashes
@@ -297,7 +305,6 @@
             }
 
             data.forEach(function (item) {
-
                 if (item.data.hasOwnProperty('currencies')) {
                     initCurrencies(item.data.currencies)
                 } else if (item.data.hasOwnProperty('card')) {
@@ -305,14 +312,11 @@
                 } else if (item.data.hasOwnProperty('cash')) {
                     initCashesModel(item.data.cash)
                 }
-
             });
-
-            $scope.$apply()
         }
 
         function loadInitialData () {
-            Promise
+            $q
                 .all([
                     $CurrencyService.getAll(),
                     $POService.getByType('card'),
@@ -325,7 +329,7 @@
         loadInitialData();
     }
 
-    POCtrl.$inject = ['$scope', '$SettService', '$CommonService', '$POService', '$CurrencyService', '$ToastrService'];
+    POCtrl.$inject = ['$scope', '$q', '$CommonService', '$POService', '$CurrencyService', '$ToastrService'];
 
     angular
         .module('CashAppSett')
