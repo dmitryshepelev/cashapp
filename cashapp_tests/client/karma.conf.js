@@ -44,7 +44,10 @@ module.exports = function(config) {
             '../cashapp_auth/static/js/app/**/*.js',
 
             '../cashapp_sett/static/js/app/sett-module.js',
-            '../cashapp_sett/static/js/app/**/*.js',
+            '../cashapp_sett/static/js/app/services/sett-service.js',
+            '../cashapp_sett/static/js/app/controllers/po-controller.js',
+            '../cashapp_sett/static/js/app/controllers/ui-view-controller.js',
+            '../cashapp_sett/static/js/app/controllers/general-controller.js',
 
             'client/auth/**/*.js',
             'client/sett/**/*.js'
