@@ -34,7 +34,7 @@
     }
 
     angular
-        .module('CashAppMy', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate']);
+        .module('CashAppMy', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate', 'ui.bootstrap']);
     angular
         .module('CashAppMy')
         .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);

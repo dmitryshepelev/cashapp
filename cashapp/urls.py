@@ -31,5 +31,5 @@ urlpatterns = [
 	url(r'^sett/', include(cashapp_sett.urlpatterns)),
 	url(r'^api/', include(cashapp_api.urlpatterns)),
 
-	url(r'^uitempl/(?P<templ_type>ui)/(?P<name>\w+)/$', ui_template)
+	url(r'^uitempl/(?P<templ_type>ui|modal)/(?P<name>\w+)/$', ui_template)
 ]

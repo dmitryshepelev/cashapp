@@ -1,1 +1,20 @@
-<h4>dashboard</h4>
+<div>
+	<div class="row">
+		<div class="col-lg-12" ng-mouseenter="POWidgets.panel.isMouseover = true" ng-mouseleave="POWidgets.panel.isMouseover = false">
+			<div ng-class="{'card card-block text-xs-center': POWidgets.widgets.length === 0}">
+				<button class="btn btn-link pull-md-right">
+					<span ng-show="POWidgets.panel.isMouseover" class="lnr lnr-plus-circle"></span>
+				</button>
+				<div ng-if="POWidgets.widgets.length === 0" class="card-title text-muted m-b-0">
+					<button type="button" class="btn btn-link" ng-click="POWidgets.addWidget()">[[ 'add_po_widget' | translate ]]</button>
+				</div>
+				<div class="card col-md-4" ng-repeat="widget in POWidgets.widgets track by widget.guid">
+					<div class="card-block">
+					    <h4 class="card-title">[[ widget.balance ]] [[ widget.currency.dec | decUnicode ]]</h4>
+                        <h6 class="card-subtitle text-muted">[[ widget.name ]]</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

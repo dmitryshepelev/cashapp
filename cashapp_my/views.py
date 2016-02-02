@@ -34,3 +34,14 @@ def dashboard(request):
 	:return: HttpResponse
 	"""
 	return render(request, 'dashboard.html', {})
+
+
+@require_http_methods(['GET'])
+@login_required
+def po_widget(request):
+	"""
+	Partial page to show widget
+	:param request: http request
+	:return: HttpResponse
+	"""
+	return render(request, 'po_widget.html', {})

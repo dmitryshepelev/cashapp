@@ -19,6 +19,13 @@
             getByType: function (type) {
                 var method = type + '/';
                 return $http.get(baseUrl + method);
+            },
+            /**
+             * Get all PO
+             * @returns {*}
+             */
+            getAll: function () {
+                return $http.get(baseUrl)
             }
         }
     }

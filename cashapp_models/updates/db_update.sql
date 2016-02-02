@@ -20,3 +20,23 @@ CREATE INDEX "cashapp_models_paymentobject_94757cae" ON "cashapp_models_paymento
 ALTER TABLE "cashapp_models_paymentobject" ADD CONSTRAINT "cashapp_m_type_id_1a11eec542e1d9f_fk_cashapp_models_potype_name" FOREIGN KEY ("type_id") REFERENCES "cashapp_models_potype" ("name") DEFERRABLE INITIALLY DEFERRED;
 CREATE INDEX "cashapp_models_paymentobject_e8701ad4" ON "cashapp_models_paymentobject" ("user_id");
 ALTER TABLE "cashapp_models_paymentobject" ADD CONSTRAINT "cashapp_models_payment_user_id_574186d7bf2876d6_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+
+-- Added Language, PERS, Widget tables --
+CREATE TABLE "cashapp_models_language" ("id" serial NOT NULL PRIMARY KEY, "guid" varchar(40) NOT NULL UNIQUE, "is_exist" boolean NOT NULL, "code" varchar(2) NOT NULL UNIQUE);
+CREATE TABLE "cashapp_models_pers" ("id" serial NOT NULL PRIMARY KEY, "language_id" varchar(2) NOT NULL, "user_id" integer NOT NULL UNIQUE);
+CREATE TABLE "cashapp_models_widget" ("id" serial NOT NULL PRIMARY KEY, "guid" varchar(40) NOT NULL UNIQUE, "is_exist" boolean NOT NULL, "object_type" varchar(40) NOT NULL, "object_guid" varchar(40) NOT NULL, "order_number" smallint NULL CHECK ("order_number" >
+= 0), "pers_id" integer NOT NULL);
+ALTER TABLE "cashapp_models_poregister" DROP CONSTRAINT "b447d93c7c15f2afc1d8cfce5262f840";
+ALTER TABLE "cashapp_models_poregister" RENAME COLUMN "finance_id" TO "payment_object_id";
+ALTER TABLE "cashapp_models_poregister" ADD CONSTRAINT "D77b96e924f4543aa3375f3bbc2aadb8" FOREIGN KEY ("payment_object_id") REFERENCES "cashapp_models_paymentobject" ("guid") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "cashapp_models_language_guid_50185fb9_like" ON "cashapp_models_language" ("guid" varchar_pattern_ops);
+CREATE INDEX "cashapp_models_language_code_13a7142f_like" ON "cashapp_models_language" ("code" varchar_pattern_ops);
+ALTER TABLE "cashapp_models_pers" ADD CONSTRAINT "cashapp_mo_language_id_5425d619_fk_cashapp_models_language_code" FOREIGN KEY ("language_id") REFERENCES "cashapp_models_language" ("code") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "cashapp_models_pers" ADD CONSTRAINT "cashapp_models_pers_user_id_8e2a51e_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "cashapp_models_pers_468679bd" ON "cashapp_models_pers" ("language_id");
+CREATE INDEX "cashapp_models_pers_language_id_5425d619_like" ON "cashapp_models_pers" ("language_id" varchar_pattern_ops);
+ALTER TABLE "cashapp_models_widget" ADD CONSTRAINT "cashapp_models_widge_pers_id_2f2ace79_fk_cashapp_models_pers_id" FOREIGN KEY ("pers_id") REFERENCES "cashapp_models_pers" ("id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "cashapp_models_widget_9247b31c" ON "cashapp_models_widget" ("pers_id");
+CREATE INDEX "cashapp_models_widget_guid_202d422f_like" ON "cashapp_models_widget" ("guid" varchar_pattern_ops);
+ALTER TABLE "cashapp_models_language" DROP COLUMN "guid" CASCADE;
+ALTER TABLE "cashapp_models_language" DROP COLUMN "is_exist" CASCADE;

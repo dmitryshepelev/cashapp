@@ -8,3 +8,5 @@ class ServerErrorText():
 	NOT_AN_ARRAY = 'not_an_array'
 	NO_PO_CREATED = 'no_po_created'
 	NOT_AUTHORIZED = 'not_authorized'
+	TYPE_ISNT_SPECIFIED = 'type_isnt_specified'
+	NO_PO = 'no_po'

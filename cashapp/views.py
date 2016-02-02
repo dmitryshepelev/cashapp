@@ -10,5 +10,5 @@ def ui_template(request, templ_type, name):
 	:param name: template name
 	:return: HttpResponse instance
 	"""
-	templ_type = 'angular-ui' if templ_type == 'ui' else ''
+	templ_type = 'angular-ui' if templ_type == 'ui' else templ_type
 	return render(request, '{type}/{name}.html'.format(type=templ_type, name=name), {})
