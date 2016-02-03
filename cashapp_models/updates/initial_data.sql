@@ -1,4 +1,6 @@
-INSERT INTO "cashapp_models_financetype" (name) VALUES ('card'), ('cash');
+INSERT INTO "cashapp_models_potype" (name) VALUES ('card'), ('cash');
+
+INSERT INTO cashapp_models_language (code) VALUES ('en', 'ru');
 
 INSERT INTO
   "cashapp_models_currency" (code, hex, dec, label, is_exist, guid)

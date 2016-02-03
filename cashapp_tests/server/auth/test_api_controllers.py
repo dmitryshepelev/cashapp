@@ -1,6 +1,7 @@
 from unittest import TestCase
 from django.contrib.auth.models import User
 from django.test import Client
+from cashapp_models.models.LanguageModel import Language
 
 
 class TestSignUp(TestCase):
@@ -17,6 +18,9 @@ class TestSignUp(TestCase):
 			'password': '1234567890',
 			'confirm_password': '1234567890'
 		}
+
+		if len(Language.objects.all()) == 0:
+			Language.objects.create(code='en')
 
 		User.objects.all().delete()
 
@@ -74,6 +78,9 @@ class TestSignIn(TestCase):
 
 		if not User.objects.exists():
 			User.objects.create_user(self.data['username'], 'some@email.test', self.data['password'])
+
+		if len(Language.objects.all()) == 0:
+			Language.objects.create(code='en')
 
 	def test_sign_in_bad_request(self):
 		"""

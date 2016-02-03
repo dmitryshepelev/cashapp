@@ -38,7 +38,7 @@
                     var widget = this.widgets.filter(function (item) {
                         return item.guid === guid;
                     });
-                    return widget.length !== 0 ? widget : {}
+                    return widget.length !== 0 ? widget[0] : {}
                 },
                 /**
                  * Opens modal and add widget to array on resolve

@@ -1,11 +1,5 @@
 <div>
 	<div class="row row-equal">
-		<div ng-hide="POWidgets.widgets.length !== 0" class="card card-block text-xs-center canvas-border">
-			<div class="card-title text-muted m-b-0">
-				<button type="button" class="btn btn-link" ng-click="POWidgets.addWidget()">[[ 'add_widget' | translate ]]</button>
-			</div>
-		</div>
-
 		<div class="col-sm-6 col-md-3" ng-repeat="widget in POWidgets.widgets track by widget.guid">
 			<div class="card">
 				<div class="card-block">
@@ -16,6 +10,16 @@
                     <h6 class="card-subtitle text-muted">[[ widget.content.name ]]</h6>
 				</div>
 			</div>
+		</div>
+
+        <div ng-class="{'col-sm-6 col-md-3': POWidgets.widgets.length !== 0}" ng-if="POWidgets.widgets.length < 4">
+            <div class="card text-xs-center canvas-border">
+                <div class="card-block">
+                    <div class="card-title text-muted m-b-0">
+                        <button type="button" class="btn btn-link" ng-click="POWidgets.addWidget()">[[ 'add_widget' | translate ]]</button>
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
 </div>
