@@ -1,6 +1,6 @@
 (function (angular) {
 
-    function POMOdalCtrl ($scope, $uibModalInstance, $POService, $ToastrService) {
+    function POMOdalCtrl ($scope, $uibModalInstance, $POService, $ToastrService, $WidgetService) {
         $scope.poModel = {};
 
         /**
@@ -9,6 +9,16 @@
          */
         function onError (response) {
             $ToastrService.messageFromResponse(response);
+        }
+
+        /**
+         * Creation success callback
+         * @param response
+         */
+        function onCreateWidgetSuccess(response) {
+            var po = response.data.widget;
+            console.log(po);
+            $uibModalInstance.close(po)
         }
 
         /**
@@ -32,7 +42,9 @@
                  */
                 addPO: function () {
                     if (this.selected) {
-                        $uibModalInstance.close(this.selected)
+                        $WidgetService.create({type: 'paymentobject', guid: this.selected.guid})
+                            .then(onCreateWidgetSuccess)
+                            .catch(onError)
                     } else {
                         $ToastrService.warning('choose_po')
                     }
@@ -45,7 +57,7 @@
             .catch(onError)
     }
 
-    POMOdalCtrl.$inject = ['$scope', '$uibModalInstance', '$POService', '$ToastrService'];
+    POMOdalCtrl.$inject = ['$scope', '$uibModalInstance', '$POService', '$ToastrService', '$WidgetService'];
 
     angular
         .module('CashAppMy')

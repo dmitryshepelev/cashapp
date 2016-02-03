@@ -1,6 +1,7 @@
 import datetime
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Max
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.POTypeModel import POType
 from cashapp_models.models.ModelBase import ModelBase
@@ -16,6 +17,31 @@ class PaymentObject(ModelBase):
 
 	class Meta:
 		app_label = 'cashapp_models'
+
+	def get_vm(self, *args, **kwargs):
+		"""
+		Overrides base class method
+		:param args:
+		:param kwargs:
+		:return: dict
+		"""
+		default_vm = ('allow_negative', 'guid', 'is_locked', 'name')
+
+		vm = super(PaymentObject, self).get_vm(*(args or default_vm), **kwargs)
+
+		if not args:
+			vm.__setitem__('type', self.type.name)
+			vm.__setitem__('balance', self.get_last_register().get_vm('date', 'balance'))
+			vm.__setitem__('currency', self.currency.get_vm('code', 'label', 'dec'))
+
+		return vm
+
+	def get_last_register(self):
+		"""
+		Get last register
+		:return: PORegister model
+		"""
+		return self.poregister_set.annotate(max_date=Max('date')).first()
 
 	def save(self, balance=None, force_insert=False, force_update=False, using=None, update_fields=None):
 		"""

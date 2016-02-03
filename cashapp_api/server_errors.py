@@ -10,3 +10,4 @@ class ServerErrorText():
 	NOT_AUTHORIZED = 'not_authorized'
 	TYPE_ISNT_SPECIFIED = 'type_isnt_specified'
 	NO_PO = 'no_po'
+	INVALID_DATA = 'invalid_data'

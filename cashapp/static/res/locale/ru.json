@@ -37,10 +37,11 @@
 	"error_text": "Произошла ошибка",
 	"warning_text": "Проверьте правильнось действий",
 	"info_text": "Так себе информация честно говоря...",
-	"add_po_widget": "Добавить виджет платежного объекта",
+	"add_widget": "Добавить виджет",
 	"add": "Добавить",
 	"payment_object": "Платежный объект",
 	"po_card_template": "Карта: [[name]]",
 	"po_cash_template": "Наличные: [[balance]] [[currency | decUnicode]]",
-	"choose_po": "Выберите платежный объект"
+	"choose_po": "Выберите платежный объект",
+	"invalid_data": "Неправильные данные"
 }

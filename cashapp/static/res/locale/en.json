@@ -37,10 +37,11 @@
 	"error_text": "The error has occurred",
 	"warning_text": "Check if you actions are right",
 	"info_text": "To be honest... the info is bullshit",
-	"add_po_widget": "Add Payment object widget",
+	"add_widget": "Add widget",
 	"add": "Add",
 	"payment_object": "Payment object",
 	"po_card_template": "Card: [[name]]",
 	"po_cash_template": "Cash: [[balance]] [[currency | decUnicode]]",
-	"choose_po": "Choose Payment object"
+	"choose_po": "Choose Payment object",
+	"invalid_data": "Invalid data"
 }

@@ -60,8 +60,7 @@ def manage_po(request, po_type=None):
 			payment_objects = request.user.paymentobject_set.filter(type_id=po_type)
 
 			for po in payment_objects:
-				last_register = po.poregister_set.annotate(max_date=Max('date')).first()
-				result[po_type].append(dict(guid=po.guid, name=po.name, currency=po.currency_id, balance=last_register.balance))
+				result[po_type].append(dict(guid=po.guid, name=po.name, currency=po.currency_id, balance=po.get_last_register().balance))
 
 			return ServerResponse.ok(data=result)
 
@@ -72,8 +71,7 @@ def manage_po(request, po_type=None):
 			payment_objects = request.user.paymentobject_set.all()
 
 			for po in payment_objects:
-				last_register = po.poregister_set.annotate(max_date=Max('date')).first()
-				result['po'].append(dict(guid=po.guid, type=po.type_id, name=po.name, currency=dict(code=po.currency.code, dec=po.currency.dec, label=po.currency.label), balance=last_register.balance))
+				result['po'].append(dict(guid=po.guid, type=po.type_id, name=po.name, currency=po.currency.get_vm('code', 'dec', 'label'), balance=po.get_last_register().balance))
 
 			return ServerResponse.ok(data=result)
 
@@ -133,7 +131,10 @@ def manage_pers(request):
 
 		for item_name in item_names:
 			if item_name == 'widget':
-				result[item_name] = [dict(type=widget.object_type, guid=widget.object_guid, order=widget.order_number) for widget in Widget.objects.filter(pers_id=request.user.pers.pk)]
+				result[item_name] = []
+
+				for widget in Widget.objects.filter(pers_id=request.user.pers.pk):
+					result[item_name].append(widget.get_vm())
 
 		return ServerResponse.ok(data=result)
 
@@ -145,3 +146,55 @@ def manage_pers(request):
 
 	if request.is_POST:
 		pass
+
+
+@require_http_methods(['POST', 'DELETE'])
+def manage_widgets(request):
+	"""
+	Manage PERS
+	:param request: HTTP request
+	GET:
+	DELETE: delete existing widget: Required params: guid. returns deleted widget guid
+	PUT:
+	POST: create new widget. Required params: guid, type. Returns created widget vm
+	:return: ServerResponse instance
+	"""
+	request = Request(request)
+
+	if not request.user.is_authenticated():
+		return ServerResponse.unauthorized()
+
+	if request.is_GET:
+		pass
+
+	if request.is_DELETE:
+		# Get request param
+		guid = request.get('guid')
+
+		if not guid:
+			return ServerResponse.bad_request(message=Message.error(ServerErrorText.INVALID_DATA))
+
+		# Get widget to delete
+		widget = Widget.objects.get(guid=guid)
+
+		# Check if current user is owner of this widget
+		if not widget.pers.user.pk == request.user.pk:
+			return ServerResponse.bad_request(message=Message.error(ServerErrorText.INVALID_DATA))
+
+		widget.delete()
+		return ServerResponse.ok(data={'guid': guid})
+
+	if request.is_PUT:
+		pass
+
+	if request.is_POST:
+
+		guid = request.data.get('guid')
+		type = request.data.get('type')
+
+		if not guid or not type:
+			return ServerResponse.bad_request(message=Message.error(ServerErrorText.INVALID_DATA))
+
+		widget = Widget.objects.create(object_guid=guid, object_type=type, pers_id=request.user.pers.pk)
+
+		return ServerResponse.created(data={'widget': widget.get_vm()})

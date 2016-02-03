@@ -1,7 +1,8 @@
 from django.db import models
+from cashapp_models.models.ModelBase import ModelBase
 
 
-class Currency(models.Model):
+class Currency(ModelBase):
 	"""
 	Provide Currency table
 	"""

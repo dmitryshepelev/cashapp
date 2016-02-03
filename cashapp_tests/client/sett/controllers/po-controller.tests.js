@@ -45,7 +45,7 @@ describe('POController tests', function () {
             controller = $controller('po-controller', {
                 $scope: $scope
             });
-            console.log(controller);
+
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
             $httpBackend.whenGET('/api/cmn/currency/').respond(200, { currencies: [{ code: 'USD' }, { code: 'BYR' }]});
 
