@@ -1,20 +1,26 @@
 (function (angular) {
-    function PORegisterSrv ($http) {
-        var baseUrl = '/api/cmn/poregister/';
+    function PORegisterSrv ($http, $CommonService) {
+        var baseUrl = '/api/cmn/reg/';
         return {
             /**
              * Get PO by type
              * @param poGuid
-             * @param period value to fetch data - {week|month|year}
+             * @param period value to fetch data - {c|w|m|y}
+             * @param type value to calculate data - {current|expense|income}
              */
-            getByPO: function (poGuid, period) {
-                var method = poGuid + '/' + (period ? '?p=' + period : '');
+            get: function (poGuid, period, type) {
+                var params = {
+                    p: period || '',
+                    t: type || ''
+                };
+                var urlString = $CommonService.encodeQueryData(params);
+                var method = poGuid + '/' + (urlString !== '' ? '?' + urlString : '');
                 return $http.get(baseUrl + method);
             }
         }
     }
 
-    PORegisterSrv.$inject = ['$http'];
+    PORegisterSrv.$inject = ['$http', '$CommonService'];
 
     angular
         .module('CashApp.Service')

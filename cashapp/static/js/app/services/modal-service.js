@@ -13,7 +13,7 @@
                 return $uibModal.open({
                     templateUrl: baseUrl + templateName + '/',
                     controller: controllerName || function () {},
-                    resolve: resolve | {}
+                    resolve: resolve || {}
                 })
             }
         }

@@ -1,18 +1,18 @@
 <div>
 	<div class="row row-equal">
-		<div class="col-sm-6 col-md-3" ng-repeat="widget in POWidgets.widgets track by widget.guid">
+		<div class="col-sm-6 col-md-6 col-lg-3" ng-repeat="widget in POWidgets.widgets track by widget.guid">
 			<div class="card">
 				<div class="card-block">
                     <button type="button" class="btn btn-link btn-xs p-a-0 pull-sm-right" ng-click="POWidgets.deleteWidget(widget)">
                         <span class="lnr lnr-circle-minus"></span>
                     </button>
 				    <h4 class="card-title">[[ widget.content.balance.balance ]] [[ widget.content.currency.dec | decUnicode ]]</h4>
-                    <h6 class="card-subtitle text-muted">[[ widget.content.name ]]</h6>
+                    <h6 class="card-subtitle text-muted">[[ widget.content.name || 'cash' | translate ]]</h6>
 				</div>
 			</div>
 		</div>
 
-        <div ng-class="{'col-sm-6 col-md-3': POWidgets.widgets.length !== 0}" ng-if="POWidgets.widgets.length < 4">
+        <div ng-class="{'col-sm-6 col-md-6 col-lg-3': POWidgets.widgets.length !== 0}" ng-if="POWidgets.widgets.length < 4">
             <div class="card text-xs-center canvas-border">
                 <div class="card-block">
                     <div class="card-title text-muted m-b-0">

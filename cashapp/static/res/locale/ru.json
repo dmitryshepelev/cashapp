@@ -43,5 +43,7 @@
 	"po_card_template": "Карта: [[name]]",
 	"po_cash_template": "Наличные: [[balance]] [[currency | decUnicode]]",
 	"choose_po": "Выберите платежный объект",
-	"invalid_data": "Неправильные данные"
+	"invalid_data": "Неправильные данные",
+	"cash": "Наличные",
+	"card": "Карта"
 }

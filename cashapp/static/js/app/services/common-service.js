@@ -13,6 +13,25 @@
                 child.prototype = new F();
                 child.prototype.constructor = child;
                 child.super = base.prototype;
+            },
+            /**
+             * Build query string from object
+             */
+            encodeQueryData: function (data) {
+                if (typeof data !== "object" || Array.isArray(data) || data === null) {
+                    throw new TypeError('The parameter \'data\' is not an object')
+
+                } else {
+                    var strings = [];
+
+                    for (var d in data) {
+                        if (data.hasOwnProperty(d) && data[d] !== '') {
+                            strings.push(d + '=' + data[d])
+                        }
+                    }
+
+                    return strings.join('&');
+                }
             }
         }
     }

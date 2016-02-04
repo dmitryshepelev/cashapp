@@ -125,5 +125,11 @@ select.form-control:disabled {
   border-radius: 0.2rem;
 }
 .canvas-border {
-  border: .0625rem dashed #e5e5e5;
+  border: 0.0625rem dashed #e5e5e5;
+}
+.border-primary {
+  border-color: #0275d8;
+}
+.po-widget {
+  height: 6em;
 }

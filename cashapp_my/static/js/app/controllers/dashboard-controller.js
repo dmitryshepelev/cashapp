@@ -1,6 +1,6 @@
 (function (angular) {
 
-    function DashboardCtrl ($scope, $PERSService, $ToastrService, $ModalService, $WidgetService) {
+    function DashboardCtrl ($scope, $PERSService, $ToastrService, $ModalService, $WidgetService, $PORegisterService) {
         var widgets = [];
 
         /**
@@ -18,6 +18,18 @@
             } else {
                 $ToastrService.error()
             }
+        }
+
+        /**
+         * Success added widget callback
+         * @param widget
+         */
+        function onAddWidgetSuccess (widget) {
+            this.widgets.unshift(widget);
+
+            $PORegisterService.get(widget.content.guid, 'w', 'expense')
+                .then()
+                .catch();
         }
 
         /**
@@ -46,11 +58,15 @@
                 addWidget: function () {
                     var thus = this;
                     $ModalService
-                        .open('powidget', 'po-modal-controller')
+                        .open('po_modal', 'po-modal-controller', { PaymentObjects: function () {
+                            return {
+                                exclude: thus.widgets.map(function (item) {
+                                    return item.content.guid;
+                                })
+                            }
+                        }})
                         .result
-                            .then(function (result) {
-                                thus.widgets.push(result)
-                            })
+                            .then(onAddWidgetSuccess.bind(thus))
                             .catch()
                 },
                 /**
@@ -91,7 +107,7 @@
             .catch(onError)
     }
 
-    DashboardCtrl.$inject = ['$scope', '$PERSService', '$ToastrService', '$ModalService', '$WidgetService'];
+    DashboardCtrl.$inject = ['$scope', '$PERSService', '$ToastrService', '$ModalService', '$WidgetService', '$PORegisterService'];
 
     angular
         .module('CashAppMy')

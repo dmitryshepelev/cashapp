@@ -1,6 +1,16 @@
 (function (angular) {
 
-    function POMOdalCtrl ($scope, $uibModalInstance, $POService, $ToastrService, $WidgetService) {
+    /**
+     * Controller function
+     * @param $scope
+     * @param $uibModalInstance
+     * @param $POService
+     * @param $ToastrService
+     * @param $WidgetService
+     * @param PaymentObjects provider to init data. returns obj of guids { include: [], exclude: [], selected: {} }
+     * @constructor
+     */
+    function POMOdalCtrl ($scope, $uibModalInstance, $POService, $ToastrService, $WidgetService, PaymentObjects) {
         $scope.poModel = {};
 
         /**
@@ -17,7 +27,6 @@
          */
         function onCreateWidgetSuccess(response) {
             var po = response.data.widget;
-            console.log(po);
             $uibModalInstance.close(po)
         }
 
@@ -26,16 +35,32 @@
          * @param response
          */
         function initScope (response) {
+            var po = response.data.po;
+
+            if (PaymentObjects.exclude) {
+                po = po.filter(function (item) {
+                    return PaymentObjects.exclude.indexOf(item.guid) === -1;
+                });
+            } else if (PaymentObjects.include) {
+                po = po.filter(function (item) {
+                    return PaymentObjects.include.indexOf(item.guid) !== -1;
+                });
+            } else {}
+
+            var selected = PaymentObjects.selected ? po.filter(function (item) {
+                return item.guid = PaymentObjects.selected
+            }) : [];
+
             $scope.poModel = {
                 /**
                  * All PO
                  */
-                objects: response.data.po,
+                objects: po,
 
                 /**
                  * Selected PO
                  */
-                selected: undefined,
+                selected: selected.length === 0 ? undefined: selected[0],
 
                 /**
                  * Resolve selected PO and close modal
@@ -57,7 +82,7 @@
             .catch(onError)
     }
 
-    POMOdalCtrl.$inject = ['$scope', '$uibModalInstance', '$POService', '$ToastrService', '$WidgetService'];
+    POMOdalCtrl.$inject = ['$scope', '$uibModalInstance', '$POService', '$ToastrService', '$WidgetService', 'PaymentObjects'];
 
     angular
         .module('CashAppMy')

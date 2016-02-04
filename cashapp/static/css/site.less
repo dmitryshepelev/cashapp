@@ -1,3 +1,7 @@
+@color-primary: #0275D8;
+@color-primary-muted: #7DB8EA;
+@color-muted: #e5e5e5;
+
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -141,5 +145,9 @@ select {
 }
 
 .canvas-border {
-	border: .0625rem dashed #e5e5e5;
+	border: .0625rem dashed @color-muted;
+}
+
+.border-primary {
+	border-color: @color-primary;
 }

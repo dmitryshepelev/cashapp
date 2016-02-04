@@ -43,5 +43,7 @@
 	"po_card_template": "Card: [[name]]",
 	"po_cash_template": "Cash: [[balance]] [[currency | decUnicode]]",
 	"choose_po": "Choose Payment object",
-	"invalid_data": "Invalid data"
+	"invalid_data": "Invalid data",
+	"cash": "Cash",
+	"card": "Card"
 }

@@ -1,6 +1,5 @@
 from decimal import Decimal
 
-from django.db.models import Max
 from django.views.decorators.http import require_http_methods
 
 from cashapp import settings
@@ -71,7 +70,7 @@ def manage_po(request, po_type=None):
 			payment_objects = request.user.paymentobject_set.all()
 
 			for po in payment_objects:
-				result['po'].append(dict(guid=po.guid, type=po.type_id, name=po.name, currency=po.currency.get_vm('code', 'dec', 'label'), balance=po.get_last_register().balance))
+				result['po'].append(po.get_vm())
 
 			return ServerResponse.ok(data=result)
 
@@ -198,3 +197,29 @@ def manage_widgets(request):
 		widget = Widget.objects.create(object_guid=guid, object_type=type, pers_id=request.user.pers.pk)
 
 		return ServerResponse.created(data={'widget': widget.get_vm()})
+
+
+@require_http_methods(['GET'])
+def manage_register(request, po_guid):
+	"""
+	Manage po registers
+	:param request:
+	GET: returns register.
+		Required params:
+			p (period) = c - current: default|w - week|m - month|y - year;
+			t (type) = current: default|expense|income
+			If period is set as 'current' the current value is returned ignoring type
+	:param po_guid: payment object guid
+	:return: ServiceResponse
+	"""
+	request = Request(request)
+
+	if not request.user.is_authenticated():
+		return ServerResponse.unauthorized()
+
+	if request.is_GET:
+
+		reg_period = request.request.GET.get('p', 'c')
+		reg_type = request.request.GET.get('t', 'current')
+
+		return ServerResponse.ok()
