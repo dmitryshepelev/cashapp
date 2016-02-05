@@ -27,7 +27,7 @@
         function onAddWidgetSuccess (widget) {
             this.widgets.unshift(widget);
 
-            $PORegisterService.get(widget.content.guid, 'w', 'expense')
+            $PORegisterService.get(widget.content.guid, 'w', 'e')
                 .then()
                 .catch();
         }

@@ -1,4 +1,7 @@
 from decimal import Decimal
+import datetime
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 
 from django.views.decorators.http import require_http_methods
 
@@ -9,6 +12,7 @@ from cashapp.classes.ServerResponse import ServerResponse
 from cashapp_api.server_errors import ServerErrorText
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.POModel import PaymentObject
+from cashapp_models.models.PORegisterModel import PORegisterParams, PORegister
 from cashapp_models.models.WidgetModel import Widget
 
 
@@ -218,8 +222,29 @@ def manage_register(request, po_guid):
 		return ServerResponse.unauthorized()
 
 	if request.is_GET:
+		try:
+			payment_object = PaymentObject.objects.get(guid=po_guid)
+
+			if payment_object.user.pk != request.user.pk:
+				raise ObjectDoesNotExist('User {u_id} is not an owner of {po_guid}'.format(u_id=request.user.pk, po_guid=payment_object.guid))
+
+		except Exception as e:
+			return ServerResponse.not_found(message=Message.error(e.message if settings.DEBUG else None))
 
 		reg_period = request.request.GET.get('p', 'c')
-		reg_type = request.request.GET.get('t', 'current')
+		reg_type = request.request.GET.get('t', 'c')
 
-		return ServerResponse.ok()
+		reg_params = PORegisterParams(reg_period, reg_type)
+
+		result_item_name = 'register'
+		result = {result_item_name: dict(owner=payment_object.guid, type=reg_params.reg_type, data=list())}
+
+		query = Q() if reg_params.period == reg_params.Period.current else Q(Q(date__gte=reg_params.start_date), Q(date__lte=reg_params.end_date))
+		query.add(Q(payment_object_id=payment_object.guid), Q.AND)
+
+		registers = PORegister.objects.filter(query)
+
+		for register in registers:
+			result[result_item_name]['data'].append(register.get_vm())
+
+		return ServerResponse.ok(data=result)

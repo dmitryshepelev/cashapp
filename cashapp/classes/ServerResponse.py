@@ -69,6 +69,16 @@ class ServerResponse(object):
 		data = cls.__resolve_data(data, message or {'type': MessageTypes.ERROR, 'text': ServerErrorText.NOT_AUTHORIZED})
 		return JsonResponse(status=401, data=data)
 
+	@classmethod
+	def not_found(cls, data=None, message=None):
+		"""
+		Returns Error JsonResponse with 404 status code
+		:param data: response content
+		:return: JsonResponse instance
+		"""
+		data = cls.__resolve_data(data, message or {'type': MessageTypes.ERROR, 'text': ServerErrorText.NOT_FOUND})
+		return JsonResponse(status=404, data=data)
+
 	# 5xx
 	@classmethod
 	def internal_server_error(cls, data=None, message=None):

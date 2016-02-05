@@ -29,8 +29,11 @@ class ModelBase(models.Model):
 
 		else:
 			for key in self.__dict__.keys():
-				if (key == 'id' and kwargs.get('include_pk', False)) or not key.startswith('_'):
-					vm.__setitem__(key, self.__dict__.get(key))
+				if not key.startswith('_'):
+					if key == 'id' and not kwargs.get('include_pk', False):
+						continue
+					else:
+						vm.__setitem__(key, self.__dict__.get(key))
 
 		return vm
 
