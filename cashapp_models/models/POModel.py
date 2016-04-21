@@ -8,12 +8,14 @@ from cashapp_models.models.ModelBase import ModelBase
 
 
 class PaymentObject(ModelBase):
-	name = models.CharField(max_length=30, null=True)
-	is_locked = models.BooleanField(default=False)
-	allow_negative = models.BooleanField(default=False)
-	currency = models.ForeignKey(Currency, to_field='code')
-	user = models.ForeignKey(User)
-	type = models.ForeignKey(POType, to_field='name')
+	"""
+	Represents Payment object table
+	"""
+	name = models.CharField(max_length = 30, null = False)
+	allow_negative = models.BooleanField(default = False)
+	currency = models.ForeignKey(Currency, to_field='guid', on_delete = models.PROTECT)
+	user = models.ForeignKey(User, on_delete = models.CASCADE, null = False)
+	type = models.ForeignKey(POType, to_field='guid', on_delete = models.PROTECT, null = False)
 
 	class Meta:
 		app_label = 'cashapp_models'

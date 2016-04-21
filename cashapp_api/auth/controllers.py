@@ -1,12 +1,11 @@
-from ast import literal_eval
-
 from django.contrib.auth import login
 from django.views.decorators.http import require_http_methods
 
-from cashapp.classes.ServerResponse import ServerResponse
+from cashapp.libs.ServerResponse import ServerResponse
 from cashapp_auth import services
-from cashapp_auth.forms.SignIn import SignInForm
+from cashapp_auth.forms.SignInForm import SignInForm
 from cashapp_auth.forms.SignUpForm import SignUpForm
+from cashapp_auth.libs.RedirectResolver import RedirectResolver
 
 
 @require_http_methods(['POST'])
@@ -16,7 +15,7 @@ def sign_up(request):
 	:param request: http request
 	:return: ApiResponse instance
 	"""
-	data = literal_eval(request.body)
+	data = request.body_data
 	form = SignUpForm(data)
 
 	if form.errors:
@@ -30,7 +29,9 @@ def sign_up(request):
 	auth_user = signup_result.data
 	login(request, auth_user)
 
-	return ServerResponse.ok(services.redirect_resolver(request).data)
+	resolver = RedirectResolver(request)
+
+	return ServerResponse.ok(resolver.get_auth_redirect_url())
 
 
 @require_http_methods(['POST'])
@@ -40,7 +41,7 @@ def sign_in(request):
 	:param request: HTTP request
 	:return: redirect url if user signed in succeed
 	"""
-	data = literal_eval(request.body)
+	data = request.body_data
 	form = SignInForm(data)
 
 	if form.errors:
@@ -54,4 +55,6 @@ def sign_in(request):
 	auth_user = auth_result.data
 	login(request, auth_user)
 
-	return ServerResponse.ok(services.redirect_resolver(request).data)
+	resolver = RedirectResolver(request)
+
+	return ServerResponse.ok(resolver.get_auth_redirect_url())

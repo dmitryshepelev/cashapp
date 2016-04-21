@@ -56,6 +56,7 @@ MIDDLEWARE_CLASSES = [
 	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'cashapp.middleware.RequestParser.RequestBodyParserMiddleware'
 ]
 
 ROOT_URLCONF = 'cashapp.urls'
@@ -85,7 +86,7 @@ WSGI_APPLICATION = 'cashapp.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-		'NAME': 'cashappdb',
+		'NAME': 'cashappdb_dev',
 		'USER': 'postgres',
 		'PASSWORD': 'qwaszx@1',
 		'HOST': 'localhost',

@@ -1,4 +1,4 @@
-from cashapp.classes.ServiceResult import ServiceResult
+from cashapp.libs.ServiceResult import ServiceResult
 
 
 def generate_ui_tab_collection(tab_values):

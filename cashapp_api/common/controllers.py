@@ -1,19 +1,17 @@
 from decimal import Decimal
-import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-
 from django.views.decorators.http import require_http_methods
 
 from cashapp import settings
-from cashapp.classes.Message import Message
-from cashapp.classes.Request import Request
-from cashapp.classes.ServerResponse import ServerResponse
+from cashapp.libs.Message import Message
+from cashapp.libs.Request import Request
+from cashapp.libs.ServerResponse import ServerResponse
 from cashapp_api.server_errors import ServerErrorText
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.POModel import PaymentObject
-from cashapp_models.models.PORegisterModel import PORegisterParams, PORegister
-from cashapp_models.models.WidgetModel import Widget
+from cashapp_models.models.PORegisterModel import PORegister
 
 
 @require_http_methods(['GET'])

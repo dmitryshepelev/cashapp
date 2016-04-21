@@ -6,7 +6,7 @@ from django.db import models
 
 class ModelBase(models.Model):
 	guid = models.CharField(max_length=40, db_index=True, unique=True)
-	is_exist = models.BooleanField(default=True)
+	exist = models.BooleanField(default=True)
 
 	class Meta:
 		abstract = True

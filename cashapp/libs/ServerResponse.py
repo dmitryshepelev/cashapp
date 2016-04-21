@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from cashapp.classes.Message import MessageTypes
+from cashapp.libs.Message import MessageTypes
 from cashapp_api.server_errors import ServerErrorText
 
 
