@@ -8,6 +8,7 @@ from cashapp_models.models import ExpenseTransactionModel
 from cashapp_models.models import IncomeTransactionModel
 from cashapp_models.models import MeasureModel
 from cashapp_models.models import ModelBase
+from cashapp_models.models import RegisterModelBase
 from cashapp_models.models import POModel
 from cashapp_models.models import PORegisterModel
 from cashapp_models.models import POTypeModel

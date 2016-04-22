@@ -6,8 +6,8 @@
                     <button type="button" class="btn btn-link btn-xs p-a-0 pull-sm-right" ng-click="POWidgets.deleteWidget(widget)">
                         <span class="lnr lnr-circle-minus"></span>
                     </button>
-				    <h4 class="card-title">[[ widget.content.balance.balance ]] [[ widget.content.currency.dec | decUnicode ]]</h4>
-                    <h6 class="card-subtitle text-muted">[[ widget.content.name || 'cash' | translate ]]</h6>
+				    <h4 class="card-title">[[ widget.data.balance.value ]] [[ widget.data.currency.dec | decUnicode ]]</h4>
+                    <h6 class="card-subtitle text-muted">[[ widget.data.name || 'cash' | translate ]]</h6>
 				</div>
 			</div>
 		</div>
