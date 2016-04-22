@@ -151,3 +151,29 @@ select {
 .border-primary {
 	border-color: @color-primary;
 }
+
+.pointer {
+	cursor: pointer;
+}
+
+@-moz-document url-prefix() {
+	.table {
+		display: table;
+	}
+}
+
+.action-buttons-group {
+	& > div {
+		padding-bottom: 0.5em;
+	}
+}
+
+[uib-tooltip] {
+	& + div.tooltip {
+		& > .tooltip-inner {
+			color: @color-primary;
+			background-color: white;
+			border: 1px solid @color-primary-muted;
+		}
+	}
+}

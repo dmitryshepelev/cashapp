@@ -130,6 +130,19 @@ select.form-control:disabled {
 .border-primary {
   border-color: #0275d8;
 }
-.po-widget {
-  height: 6em;
+.pointer {
+  cursor: pointer;
+}
+@-moz-document url-prefix() {
+  .table {
+    display: table;
+  }
+}
+.action-buttons-group > div {
+  padding-bottom: 0.5em;
+}
+[uib-tooltip] + div.tooltip > .tooltip-inner {
+  color: #0275d8;
+  background-color: white;
+  border: 1px solid #7db8ea;
 }

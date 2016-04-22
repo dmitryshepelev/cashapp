@@ -48,7 +48,17 @@
     }
 
     angular
-        .module('CashAppSett', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate', 'ui.bootstrap.tabs', 'ui.bootstrap.dropdown', 'ui.bootstrap.position', 'LocalStorageModule', 'ngMask']);
+        .module('CashAppSett', [
+            'ui.router',
+            'pascalprecht.translate',
+            'CashApp.Service',
+            'ngAnimate',
+            'ui.bootstrap.tabs',
+            'ui.bootstrap.dropdown',
+            'ui.bootstrap.position',
+            'LocalStorageModule',
+            'ngMask'
+        ]);
     angular
         .module('CashAppSett')
         .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);

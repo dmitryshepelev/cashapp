@@ -5,68 +5,101 @@
 	<div class="form-group col-lg-12">
 		<div class="row">
 			<div class="col-lg-12 indent-2">
-                <h5 class="indent-1">[[ 'bank_cards' | translate ]]
-                    <small class="nowrap">
-						<button class="btn btn-link btn-sm" ng-click="cardsModel.save()">
-							<span class="lnr lnr-checkmark-circle"></span> [[ 'save' | translate ]]
-						</button>
-						<button class="btn btn-link btn-sm" ng-click="cardsModel.reset()">
-							<span class="lnr lnr-cross-circle"></span> [[ 'reset' | translate ]]
-						</button>
-					</small>
-                </h5>
-                <form class="form-inline">
-                    <div ng-repeat="card in cardsModel.cards track by $index">
-                        <fieldset ng-disabled="card.guid">
-	                        <div class="form-group indent-05" ng-class="{'has-danger': card.error}">
-	                            <input type="text" class="form-control form-control-sm" ng-change="card.error = ''" mask="%" mask-repeat="20" ng-model="card.name" placeholder="[[ 'card_name' | translate ]]" autocomplete="off">
-	                        </div>
-	                        <div class="form-group indent-05" ng-class="{'has-danger': card.error}">
-	                            <input type="text" class="form-control form-control-sm" ng-change="card.error = ''" ng-model="card.balance" currency-mask placeholder="[[ 'balance' | translate ]]" autocomplete="off">
-	                        </div>
-		                    <div class="form-group indent-05 pull-right">
-			                    <select class="form-control form-control-sm minimal" ng-options="currency.dec | decUnicode for currency in currencies track by currency.code" ng-model="card.currency"></select>
-		                    </div>
-	                        <button type="submit" class="btn btn-link btn-sm indent-05 pull-right" title="[[ 'delete' | translate ]]" ng-if="$index != 0" ng-click="cardsModel.removeCard(card)">
-	                            <span class="lnr lnr-circle-minus"></span>
-	                        </button>
-                        </fieldset>
+                <div class="card text-xs-center canvas-border" ng-if="pos.length === 0">
+                    <div class="card-block">
+	                    <div class="card-title text-muted m-b-0">
+		                    <button type="button" class="btn btn-link" ng-click="">[[ 'add_po' | translate ]]</button>
+	                    </div>
                     </div>
-                </form>
-                <button class="btn btn-link btn-sm" type="button" ng-click="cardsModel.addCard()" ng-if="cardsModel.addingEnable">
-                    <span class="lnr lnr-plus-circle"></span> [[ 'add_more' | translate ]]
-                </button>
-			</div>
-			<div class="col-lg-12 indent-2">
-                <h5 class="indent-1"> [[ 'cash' | translate ]]
-                    <small class="nowrap">
-						<button class="btn btn-link btn-sm" ng-click="cashesModel.save()">
-							<span class="lnr lnr-checkmark-circle"></span> [[ 'save' | translate ]]
-						</button>
-						<button class="btn btn-link btn-sm" ng-click="cashesModel.reset()">
-							<span class="lnr lnr-cross-circle"></span> [[ 'reset' | translate ]]
-						</button>
-					</small>
-                </h5>
-				<form class="form-inline">
-                    <div ng-repeat="cash in cashesModel.cashes track by $index">
-	                    <fieldset ng-disabled="cash.guid">
-	                        <div class="form-group indent-05" ng-class="{'has-danger': cash.error}">
-	                            <input type="text" class="form-control form-control-sm" currency-mask ng-model="cash.balance" ng-change="cash.error = ''" placeholder="[[ 'balance' | translate ]]" autocomplete="off">
-	                        </div>
-		                    <div class="form-group indent-05">
-			                    <select class="form-control form-control-sm minimal" ng-options="currency.dec | decUnicode for currency in currencies track by currency.code" ng-model="cash.currency"></select>
-		                    </div>
-	                        <button type="submit" class="btn btn-link btn-sm indent-05" title="[[ 'delete' | translate ]]" ng-if="$index != 0" ng-click="cashesModel.removeCash(cash)">
-	                            <span class="lnr lnr-circle-minus"></span>
-	                        </button>
-	                    </fieldset>
-                    </div>
-                </form>
-                <button class="btn btn-link btn-sm" type="button" ng-click="cashesModel.addCash()" ng-if="cashesModel.addingEnable">
-                    <span class="lnr lnr-plus-circle"></span> [[ 'add_more' | translate ]]
-                </button>
+                </div>
+				<div ng-if="pos.length > 0">
+					<div class="action-buttons-group">
+						<div class="pull-sm-right">
+							<button class="btn btn-link btn-sm" ng-click="cardsModel.save()">
+								<span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]
+							</button>
+						</div>
+					</div>
+					<table class="table table-hover table-sm table-responsive">
+						<tbody>
+							<tr class="pointer" ng-repeat="po in pos track by $index">
+								<td><span uib-tooltip="[[ 'primary' | translate ]]" ng-class="{'lnr lnr-checkmark-circle': po.primary }"></span></td>
+								<td>[[ po.name ]]</td>
+								<td>[[ po.type.name | translate | lowercase ]]</td>
+								<td>[[ po.currency.dec | decUnicode ]]</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
 			</div>
 		</div>
 	</div>
+{#	<div class="form-group col-lg-12">#}
+{#		<div class="row">#}
+{#			<div class="col-lg-12 indent-2">#}
+{#                <h5 class="indent-1">[[ 'bank_cards' | translate ]]#}
+{#                    <small class="nowrap">#}
+{#						<button class="btn btn-link btn-sm" ng-click="cardsModel.save()">#}
+{#							<span class="lnr lnr-checkmark-circle"></span> [[ 'save' | translate ]]#}
+{#						</button>#}
+{#						<button class="btn btn-link btn-sm" ng-click="cardsModel.reset()">#}
+{#							<span class="lnr lnr-cross-circle"></span> [[ 'reset' | translate ]]#}
+{#						</button>#}
+{#					</small>#}
+{#                </h5>#}
+{#                <form class="form-inline">#}
+{#                    <div ng-repeat="card in cardsModel.cards track by $index">#}
+{#                        <fieldset ng-disabled="card.guid">#}
+{#	                        <div class="form-group indent-05" ng-class="{'has-danger': card.error}">#}
+{#	                            <input type="text" class="form-control form-control-sm" ng-change="card.error = ''" mask="%" mask-repeat="20" ng-model="card.name" placeholder="[[ 'card_name' | translate ]]" autocomplete="off">#}
+{#	                        </div>#}
+{#	                        <div class="form-group indent-05" ng-class="{'has-danger': card.error}">#}
+{#	                            <input type="text" class="form-control form-control-sm" ng-change="card.error = ''" ng-model="card.balance" currency-mask placeholder="[[ 'balance' | translate ]]" autocomplete="off">#}
+{#	                        </div>#}
+{#		                    <div class="form-group indent-05 pull-right">#}
+{#			                    <select class="form-control form-control-sm minimal" ng-options="currency.dec | decUnicode for currency in currencies track by currency.code" ng-model="card.currency"></select>#}
+{#		                    </div>#}
+{#	                        <button type="submit" class="btn btn-link btn-sm indent-05 pull-right" title="[[ 'delete' | translate ]]" ng-if="$index != 0" ng-click="cardsModel.removeCard(card)">#}
+{#	                            <span class="lnr lnr-circle-minus"></span>#}
+{#	                        </button>#}
+{#                        </fieldset>#}
+{#                    </div>#}
+{#                </form>#}
+{#                <button class="btn btn-link btn-sm" type="button" ng-click="cardsModel.addCard()" ng-if="cardsModel.addingEnable">#}
+{#                    <span class="lnr lnr-plus-circle"></span> [[ 'add_more' | translate ]]#}
+{#                </button>#}
+{#			</div>#}
+{#			<div class="col-lg-12 indent-2">#}
+{#                <h5 class="indent-1"> [[ 'cash' | translate ]]#}
+{#                    <small class="nowrap">#}
+{#						<button class="btn btn-link btn-sm" ng-click="cashesModel.save()">#}
+{#							<span class="lnr lnr-checkmark-circle"></span> [[ 'save' | translate ]]#}
+{#						</button>#}
+{#						<button class="btn btn-link btn-sm" ng-click="cashesModel.reset()">#}
+{#							<span class="lnr lnr-cross-circle"></span> [[ 'reset' | translate ]]#}
+{#						</button>#}
+{#					</small>#}
+{#                </h5>#}
+{#				<form class="form-inline">#}
+{#                    <div ng-repeat="cash in cashesModel.cashes track by $index">#}
+{#	                    <fieldset ng-disabled="cash.guid">#}
+{#	                        <div class="form-group indent-05" ng-class="{'has-danger': cash.error}">#}
+{#	                            <input type="text" class="form-control form-control-sm" currency-mask ng-model="cash.balance" ng-change="cash.error = ''" placeholder="[[ 'balance' | translate ]]" autocomplete="off">#}
+{#	                        </div>#}
+{#		                    <div class="form-group indent-05">#}
+{#			                    <select class="form-control form-control-sm minimal" ng-options="currency.dec | decUnicode for currency in currencies track by currency.code" ng-model="cash.currency"></select>#}
+{#		                    </div>#}
+{#	                        <button type="submit" class="btn btn-link btn-sm indent-05" title="[[ 'delete' | translate ]]" ng-if="$index != 0" ng-click="cashesModel.removeCash(cash)">#}
+{#	                            <span class="lnr lnr-circle-minus"></span>#}
+{#	                        </button>#}
+{#	                    </fieldset>#}
+{#                    </div>#}
+{#                </form>#}
+{#                <button class="btn btn-link btn-sm" type="button" ng-click="cashesModel.addCash()" ng-if="cashesModel.addingEnable">#}
+{#                    <span class="lnr lnr-plus-circle"></span> [[ 'add_more' | translate ]]#}
+{#                </button>#}
+{#			</div>#}
+{#		</div>#}
+{#	</div>#}
 </div>

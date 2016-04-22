@@ -1,10 +1,12 @@
 from decimal import Decimal
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.core import serializers
 from django.db.models import Q
 from django.views.decorators.http import require_http_methods
 
 from cashapp import settings
+from cashapp.decorators import api_authorized, request_wrapper
 from cashapp.libs.Message import Message
 from cashapp.libs.Request import Request
 from cashapp.libs.ServerResponse import ServerResponse
@@ -36,7 +38,9 @@ def manage_currency(request):
 	return ServerResponse.ok(data=data)
 
 
+@api_authorized()
 @require_http_methods(['GET', 'PUT', 'POST', 'DELETE'])
+@request_wrapper()
 def manage_po(request, po_type=None):
 	"""
 	Manage the payment objects depending on HTTP method
@@ -48,11 +52,6 @@ def manage_po(request, po_type=None):
 	:param po_type: payment object type
 	:return: ServerResponse instance
 	"""
-	request = Request(request)
-
-	if not request.user.is_authenticated():
-		return ServerResponse.unauthorized()
-
 	if request.is_GET:
 		if po_type:
 			# Get by type
@@ -72,7 +71,7 @@ def manage_po(request, po_type=None):
 			payment_objects = request.user.paymentobject_set.all()
 
 			for po in payment_objects:
-				result['po'].append(po.get_vm())
+				result['po'].append(po.serialize())
 
 			return ServerResponse.ok(data=result)
 

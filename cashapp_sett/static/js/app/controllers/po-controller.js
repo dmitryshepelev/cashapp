@@ -12,6 +12,24 @@
         $scope.cashesModel = {};
         $scope.currencies = [];
 
+        $scope.pos = null;
+
+        /**
+         * PaymentObject prototype constructor
+         * @constructor
+         */
+        function PO () {
+            this.guid = '';
+            this.currency = {};
+            this.type = {};
+            this.name = '';
+            this.primary = false;
+            this.allowNegative = false;
+            this.balance = ''
+        }
+
+        PO.prototype = {};
+
         /**
          * Cah class
          * @constructor
@@ -304,13 +322,19 @@
                 $scope.cashesModel.toggleAdding();
             }
 
+            /**
+             * init $scope.pos
+             * @param pos
+             */
+            function initPOsModel(pos) {
+                $scope.pos = pos;
+            }
+
             data.forEach(function (item) {
                 if (item.data.hasOwnProperty('currencies')) {
                     initCurrencies(item.data.currencies)
-                } else if (item.data.hasOwnProperty('card')) {
-                    initCardsModel(item.data.card)
-                } else if (item.data.hasOwnProperty('cash')) {
-                    initCashesModel(item.data.cash)
+                } else if (item.data.hasOwnProperty('po')) {
+                    initPOsModel(item.data.po)
                 }
             });
         }
@@ -319,8 +343,7 @@
             $q
                 .all([
                     $CurrencyService.getAll(),
-                    $POService.getByType('card'),
-                    $POService.getByType('cash')
+                    $POService.getAll()
                 ])
                 .then(initScope)
                 .catch(onError);

@@ -1,43 +1,67 @@
 import hashlib
+import json
 import random
+from ast import literal_eval
+from collections import defaultdict
 
+from django.core import serializers
 from django.db import models
 
 
 class ModelBase(models.Model):
-	guid = models.CharField(max_length=40, db_index=True, unique=True)
-	exist = models.BooleanField(default=True)
+	guid = models.CharField(max_length = 40, db_index = True, unique = True)
+	exist = models.BooleanField(default = True)
 
 	class Meta:
 		abstract = True
 
-	def get_vm(self, *args, **kwargs):
+	def natural_key(self, *args, **kwargs):
 		"""
-		Returns VM of requested args
-		If args are defined returns dict of keys = args and model values
-		Else returns default models (all fields exclude pk and fields begins with underscore)
-		If kwargs has 'include_pk=True' the result will contain pk value
-		Override this method in child class to customize default VM
-		:return: dict
+		Returns natural key to serialize
+		if {args} is specified, dicts are merged
+		:return: {dict}
 		"""
-		vm = dict()
+		default_keys = {'guid': self.guid}
+		natural_keys = defaultdict(set)
 
-		if args:
-			for arg in args:
-				if arg in self.__dict__.keys():
-					vm.__setitem__(arg, self.__dict__.get(arg))
+		for d in args + (default_keys,):
+			for key, value in d.iteritems():
+				natural_keys[key] = value
 
-		else:
-			for key in self.__dict__.keys():
-				if not key.startswith('_'):
-					if key == 'id' and not kwargs.get('include_pk', False):
-						continue
-					else:
-						vm.__setitem__(key, self.__dict__.get(key))
+		return natural_keys
 
-		return vm
+	def serialize(self, format = 'json', include_fields = (), exclude_fields = (), use_natural_foreign_keys = True,
+					use_natural_primary_keys = True):
+		"""
+		Serialize object
+		:param format: format to serialize
+		:param include_fields: fields to include. All fields are serialized by default
+		:param exclude_fields: fields to exclude. 'exist' field is excluded by default
+		:param use_natural_primary_keys:
+		:param use_natural_foreign_keys:
+		:return:
+		"""
+		options = {
+			'use_natural_foreign_keys': use_natural_foreign_keys,
+			'use_natural_primary_keys': use_natural_primary_keys
+		}
 
-	def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+		if include_fields:
+			options['fields'] = include_fields
+
+		serialized = json.loads(
+			serializers.serialize(format, [self], **options))
+
+		serialized = serialized[0].get('fields', {})
+
+		exclude_fields = tuple(set(exclude_fields) | {'exist'})
+		for key in exclude_fields:
+			if key in serialized.keys():
+				serialized.__delitem__(key)
+
+		return serialized
+
+	def save(self, force_insert = False, force_update = False, using = None, update_fields = None):
 		"""
 		Overrides base save method
 		:param force_insert:

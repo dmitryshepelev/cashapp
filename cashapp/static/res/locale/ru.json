@@ -44,6 +44,7 @@
 	"po_cash_template": "Наличные: [[balance]] [[currency | decUnicode]]",
 	"choose_po": "Выберите платежный объект",
 	"invalid_data": "Неправильные данные",
-	"cash": "Наличные",
-	"card": "Карта"
+	"card": "Карта",
+	"primary": "Основной",
+	"add_po": "Добавить платежный объект"
 }
