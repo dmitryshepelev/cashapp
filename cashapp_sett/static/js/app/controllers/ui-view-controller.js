@@ -15,7 +15,7 @@
                 var toState = (requestState && requestState != 'sett.redirect') ? requestState : $scope.tabs[0].toState;
 
                 var activeTab = $scope.tabs.filter(function (item) {
-                    return item.toState == toState;
+                    return toState.match(new RegExp(item.toState)) !== null;
                 })[0];
                 activeTab.active = true;
 

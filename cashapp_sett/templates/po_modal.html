@@ -1,0 +1,60 @@
+{% extends 'modal/modal_base.html' %}
+
+{% block modal-header %}
+	<h5 class="modal-title">[[ 'po_title' | translate ]]</h5>
+{% endblock %}
+
+{% block modal-body %}
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'name' | translate ]]:</label>
+				<input class="form-control form-control-sm" ng-model="po.name">
+			</div>
+		</div>
+		<div class="col-sm-3 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'currency' | translate ]]:</label>
+				<select class="form-control form-control-sm" ng-model="po.currency" ng-options="currency.dec | decUnicode for currency in currencies track by currency.guid"></select>
+			</div>
+		</div>
+		<div class="col-sm-3 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'type' | translate ]]:</label>
+				<select class="form-control form-control-sm" ng-model="po.type" ng-options="type.name | translate for type in types track by type.guid"></select>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'allow_negative' | translate ]]:</label>
+			</div>
+		</div>
+		<div class="col-sm-4 col-xs-12">
+			<div class="form-group" align="center">
+				<switch ng-model="po.allow_negative" class="switch-default switch-primary pull-sm-right pull-xs-none"></switch>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'make_primary' | translate ]]:</label>
+			</div>
+		</div>
+		<div class="col-sm-4 col-xs-12">
+			<div class="form-group" align="center">
+				<switch ng-model="po.primary" class="switch-default switch-primary pull-sm-right pull-xs-none"></switch>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+{% block modal-footer %}
+	<button type="button" class="btn btn-link" ng-click="poModel.addPO()">
+		<span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]
+	</button>
+{% endblock %}

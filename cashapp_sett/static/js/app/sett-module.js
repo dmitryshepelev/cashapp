@@ -44,7 +44,19 @@
                 data: {
                     title: 'po_title'
                 }
-            });
+            })
+            .state('sett.po.action', {
+                url: '/{action}/{guid}',
+                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'po/modal/',
+                        controller: 'po-modal-controller'
+                    })
+                        .result.finally(function () {
+                        $state.go('sett.po');
+                    })
+                }]
+            })
     }
 
     angular
@@ -53,11 +65,10 @@
             'pascalprecht.translate',
             'CashApp.Service',
             'ngAnimate',
-            'ui.bootstrap.tabs',
-            'ui.bootstrap.dropdown',
-            'ui.bootstrap.position',
+            'ui.bootstrap',
             'LocalStorageModule',
-            'ngMask'
+            'ngMask',
+            'uiSwitch'
         ]);
     angular
         .module('CashAppSett')

@@ -45,3 +45,14 @@ def manage_po(request):
 	:return: HttpResponse
 	"""
 	return render(request, 'manage_po.html', {})
+
+
+@require_http_methods(['GET'])
+@login_required
+def po_modal(request):
+	"""
+	Set initial cash page
+	:param request: http request
+	:return: HttpResponse
+	"""
+	return render(request, 'po_modal.html', {})

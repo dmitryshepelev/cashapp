@@ -46,5 +46,10 @@
 	"invalid_data": "Invalid data",
 	"card": "Card",
 	"primary": "Primary",
-	"add_po": "Add a payment object"
+	"add_po": "Add a payment object",
+	"name": "Name",
+	"currency": "Currency",
+	"type": "Type",
+	"allow_negative": "Allow negative values",
+	"make_primary": "Mark as primary"
 }

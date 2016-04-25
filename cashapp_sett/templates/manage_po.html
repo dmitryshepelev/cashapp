@@ -5,26 +5,25 @@
 	<div class="form-group col-lg-12">
 		<div class="row">
 			<div class="col-lg-12 indent-2">
-                <div class="card text-xs-center canvas-border" ng-if="pos.length === 0">
+                <div class="card text-xs-center canvas-border" ng-if="pos.data.length === 0">
                     <div class="card-block">
 	                    <div class="card-title text-muted m-b-0">
-		                    <button type="button" class="btn btn-link" ng-click="">[[ 'add_po' | translate ]]</button>
+		                    <a ui-sref="sett.po.action({ action: 'add'})" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add_po' | translate ]]</a>
 	                    </div>
                     </div>
                 </div>
-				<div ng-if="pos.length > 0">
+				<div ng-if="pos.data.length > 0">
 					<div class="action-buttons-group">
 						<div class="pull-sm-right">
-							<button class="btn btn-link btn-sm" ng-click="cardsModel.save()">
-								<span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]
-							</button>
+							<a ui-sref="sett.po.action({ action: 'add'})" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]</a>
 						</div>
 					</div>
 					<table class="table table-hover table-sm table-responsive">
 						<tbody>
-							<tr class="pointer" ng-repeat="po in pos track by $index">
+							<tr class="pointer" ng-repeat="po in pos.data track by $index" ng-click="pos.edit(po.guid)">
 								<td><span uib-tooltip="[[ 'primary' | translate ]]" ng-class="{'lnr lnr-checkmark-circle': po.primary }"></span></td>
 								<td>[[ po.name ]]</td>
+								<td><span uib-tooltip="[[ 'allow_negative' | translate ]]" ng-class="{'lnr lnr-circle-minus': po.allow_negative }"></span></td>
 								<td>[[ po.type.name | translate | lowercase ]]</td>
 								<td>[[ po.currency.dec | decUnicode ]]</td>
 							</tr>

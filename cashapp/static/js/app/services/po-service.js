@@ -9,16 +9,23 @@
              * @returns {*}
              */
             create: function (data, type) {
-                var method = type + '/';
-                return $http.post(baseUrl + method, data);
+                var params = type + '/';
+                return $http.post(baseUrl + params, data);
             },
             /**
              * Get PO by type
              * @param type
              */
             getByType: function (type) {
-                var method = type + '/';
-                return $http.get(baseUrl + method);
+                var params = type + '/';
+                return $http.get(baseUrl + params);
+            },
+            /**
+             * Get PO by its guid
+             */
+            getPO: function (guid) {
+                var params = guid + '/';
+                return $http.get(baseUrl + params)
             },
             /**
              * Get all PO

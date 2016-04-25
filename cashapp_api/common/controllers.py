@@ -14,34 +14,39 @@ from cashapp_api.server_errors import ServerErrorText
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.POModel import PaymentObject
 from cashapp_models.models.PORegisterModel import PORegister
+from cashapp_models.models.POTypeModel import POType
 
 
+@api_authorized()
 @require_http_methods(['GET'])
+@request_wrapper()
 def manage_currency(request):
 	"""
 	Get list of available currencies
 	:param request: HttpRequest
 	:return: ServerResponse instance
 	"""
-	if not request.user.is_authenticated():
-		return ServerResponse.unauthorized()
+	data = {'currencies': [currency.serialize() for currency in Currency.objects.all()]}
+	return ServerResponse.ok(data=data)
 
-	data = {
-		'currencies': [{
-			'code': currency.code,
-			'hex': currency.hex,
-			'dec': currency.dec,
-			'label': currency.label
-		} for currency in Currency.objects.all()]
-	}
 
+@api_authorized()
+@require_http_methods(['GET'])
+@request_wrapper()
+def manage_po_types(request):
+	"""
+	Get list of available po types
+	:param request: HttpRequest
+	:return: ServerResponse instance
+	"""
+	data = {'types': [type.serialize() for type in POType.objects.all()]}
 	return ServerResponse.ok(data=data)
 
 
 @api_authorized()
 @require_http_methods(['GET', 'PUT', 'POST', 'DELETE'])
 @request_wrapper()
-def manage_po(request, po_type=None):
+def manage_po(request, guid=None):
 	"""
 	Manage the payment objects depending on HTTP method
 	GET: return already created PO
@@ -53,17 +58,12 @@ def manage_po(request, po_type=None):
 	:return: ServerResponse instance
 	"""
 	if request.is_GET:
-		if po_type:
-			# Get by type
-			result = {po_type: []}
-
-			payment_objects = request.user.paymentobject_set.filter(type_id=po_type)
-
-			for po in payment_objects:
-				result[po_type].append(dict(guid=po.guid, name=po.name, currency=po.currency_id, balance=po.get_last_register().balance))
+		if guid:
+			# Get by guid
+			payment_object = request.user.paymentobject_set.get(guid=guid)
+			result = {'po': payment_object.serialize()}
 
 			return ServerResponse.ok(data=result)
-
 		else:
 			# Get all
 			result = {'po': []}
