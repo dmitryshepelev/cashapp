@@ -36,6 +36,9 @@ module.exports = function(config) {
             '../cashapp/static/js/libs/angular-ui-position.js',
             '../cashapp/static/js/libs/angular-ui-tabs.js',
             '../cashapp/static/js/libs/angular-ui-dropdown.js',
+            '../cashapp/static/js/libs/angular-ui-tpls-1.3.2.min.js',
+            '../cashapp/static/js/libs/angular-ui-tooltip.js',
+            '../cashapp/static/js/libs/angular-ui-stackedMap.js',
 
             '../cashapp/static/js/app/services-module.js',
             '../cashapp/static/js/app/directives/*.js',
@@ -83,7 +86,7 @@ module.exports = function(config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_DEBUG,
+        logLevel: config.LOG_INFO,
 
 
         // enable / disable watching file and executing tests whenever any file changes

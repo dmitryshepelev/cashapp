@@ -1,0 +1,18 @@
+{% extends 'modal/modal_base.html' %}
+
+{% block modal-header %}
+	<h5 class="modal-title">[[ 'po_title' | translate ]]</h5>
+{% endblock %}
+
+{% block modal-body %}
+	<div class="form-group">
+		<label class="form-control-label">[[ 'payment_object' | translate ]]:</label>
+		<select class="form-control form-control-sm" ng-model="poModel.selected" ng-options="(po.type === 'card' ? 'po_card_template' : 'po_cash_template') | translate: {name: po.name, balance: po.balance.balance, currency: po.currency.dec} for po in poModel.objects track by po.guid"></select>
+	</div>
+{% endblock %}
+
+{% block modal-footer %}
+	<button type="button" class="btn btn-link" ng-click="poModel.addPO()">
+		<span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]
+	</button>
+{% endblock %}

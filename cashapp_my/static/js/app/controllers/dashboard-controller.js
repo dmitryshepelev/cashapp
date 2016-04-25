@@ -26,10 +26,6 @@
          */
         function onAddWidgetSuccess (widget) {
             this.widgets.unshift(widget);
-
-            $PORegisterService.get(widget.content.guid, 'w', 'e')
-                .then()
-                .catch();
         }
 
         /**
@@ -61,7 +57,7 @@
                         .open('po_modal', 'po-modal-controller', { PaymentObjects: function () {
                             return {
                                 exclude: thus.widgets.map(function (item) {
-                                    return item.content.guid;
+                                    return item.data.guid;
                                 })
                             }
                         }})

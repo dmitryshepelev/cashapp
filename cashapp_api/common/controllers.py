@@ -237,9 +237,12 @@ def manage_register(request, po_guid):
 		result = {result_item_name: dict(owner=payment_object.guid, type=reg_params.reg_type, data=list())}
 
 		query = Q() if reg_params.period == reg_params.Period.current else Q(Q(date__gte=reg_params.start_date), Q(date__lte=reg_params.end_date))
-		query.add(Q(payment_object_id=payment_object.guid), Q.AND)
+		query.add(Q(object_id=payment_object.guid), Q.AND)
 
 		registers = PORegister.objects.filter(query)
+
+		if reg_params.period == reg_params.Period.current:
+			registers = [registers.latest('date')]
 
 		for register in registers:
 			result[result_item_name]['data'].append(register.get_vm())
