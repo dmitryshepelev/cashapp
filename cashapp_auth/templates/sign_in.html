@@ -4,6 +4,7 @@
 	</div>
 	<div class="col-md-4">
 		<form novalidate="" name="signinModel.form" ng-submit="signinModel.signin()" class="form-horizontal">
+            {% csrf_token %}
 			<div class="form-group">
 				<input type="text" name="username" placeholder="[[ 'username'|translate ]]" autocomplete="off" required autofocus ng-model="signinModel.data.username" class="form-control">
 			</div>

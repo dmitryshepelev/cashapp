@@ -97,7 +97,7 @@ nav > .container {
   margin-bottom: 5em !important;
 }
 select {
-  background: #ffffff url(images/lnr-arrow-down.svg) no-repeat 96% 50% !important;
+  background: #fff url(images/lnr-arrow-down.svg) no-repeat 96% 50% !important;
   background-size: 0.9em !important;
   margin: 0;
   overflow: hidden;
@@ -129,7 +129,7 @@ select.form-control:disabled {
   border: 0.0625rem dashed #e5e5e5;
 }
 .border-primary {
-  border-color: #0275d8;
+  border-color: #0275D8;
 }
 .pointer {
   cursor: pointer;
@@ -143,7 +143,7 @@ select.form-control:disabled {
   padding-bottom: 0.5em;
 }
 [uib-tooltip] + div.tooltip > .tooltip-inner {
-  color: #0275d8;
+  color: #0275D8;
   background-color: white;
-  border: 1px solid #7db8ea;
+  border: 1px solid #7DB8EA;
 }

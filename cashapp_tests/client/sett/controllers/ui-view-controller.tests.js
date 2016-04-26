@@ -38,17 +38,5 @@ describe('UIViewController tests', function () {
             $httpBackend.whenGET('/sett/general/').respond(200, 'general html');
             $httpBackend.whenGET('/sett/po/').respond(200, 'po html');
         });
-
-        it('should be an error getting tabs', function () {
-            $httpBackend.whenGET('/api/sett/getUiTabs/').respond(500);
-
-            $httpBackend.flush();
-        });
-
-        it('should be getting tabs success', function () {
-            $httpBackend.whenGET('/api/sett/getUiTabs/').respond(200, { tabs: tabs });
-
-            $httpBackend.flush();
-        });
     })
 });
