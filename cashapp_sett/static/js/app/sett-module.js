@@ -53,7 +53,7 @@
                         controller: 'po-modal-controller'
                     })
                         .result.finally(function () {
-                        $state.go('sett.po');
+                            $state.go('sett.po');
                     })
                 }]
             })

@@ -3,7 +3,7 @@
         $scope.currencies = [];
         $scope.types = [];
         $scope.po = {};
-
+        console.log($uibModalInstance);
         /**
          * Init PO
          * @param response

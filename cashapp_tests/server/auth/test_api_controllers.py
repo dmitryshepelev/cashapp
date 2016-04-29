@@ -2,6 +2,8 @@ from unittest import TestCase
 from django.contrib.auth.models import User
 from django.test import Client
 
+from cashapp_tests.server import Dummies
+
 
 class TestSignUp(TestCase):
 	def setUp(self):
@@ -64,16 +66,15 @@ class TestSignIn(TestCase):
 		"""
 		Tests setups
 		"""
+		user = Dummies.get_or_create_user()
+
 		self.url = '/api/auth/signin/'
 		self.request_content_type = 'application/json'
 		self.client = Client()
 		self.data = {
-			'username': 'exampler',
-			'password': '1234567890',
+			'username': 'tester',
+			'password': 'test_pass',
 		}
-
-		if not User.objects.exists():
-			User.objects.create_user(self.data['username'], 'some@email.test', self.data['password'])
 
 	def test_sign_in_bad_request(self):
 		"""
@@ -97,7 +98,7 @@ class TestSignIn(TestCase):
 		"""
 		Test to call status 500. Invalid username
 		"""
-		self.data['username'] = 'tester'
+		self.data['username'] = 'dummy'
 
 		response = self.client.post(self.url, self.data, content_type=self.request_content_type)
 

@@ -54,24 +54,25 @@ def manage_po(request, guid=None):
 	PUT:
 	POST: create new PO
 	:param request: HTTP request
-	:param po_type: payment object type
+	:param guid: payment object guid
 	:return: ServerResponse instance
 	"""
 	if request.is_GET:
+		field_name = 'po'
+
 		if guid:
 			# Get by guid
 			payment_object = request.user.paymentobject_set.get(guid=guid)
-			result = {'po': payment_object.serialize()}
+			result = {field_name: payment_object.serialize()}
 
 			return ServerResponse.ok(data=result)
 		else:
 			# Get all
-			result = {'po': []}
-
+			result = {field_name: []}
 			payment_objects = request.user.paymentobject_set.all()
 
 			for po in payment_objects:
-				result['po'].append(po.serialize())
+				result[field_name].append(po.serialize())
 
 			return ServerResponse.ok(data=result)
 
@@ -82,34 +83,7 @@ def manage_po(request, guid=None):
 		pass
 
 	if request.is_POST:
-		if not po_type:
-			return ServerResponse.bad_request(message=Message.error(ServerErrorText.TYPE_ISNT_SPECIFIED))
-
-		if not isinstance(request.data, list):
-			return ServerResponse.bad_request(message=Message.error(ServerErrorText.NOT_AN_ARRAY))
-
-		instances = []
-		try:
-			for index, value in enumerate(request.data):
-				instance = PaymentObject.parse(value, po_type, request.user.pk)
-
-				if instance is not None:
-					inst = dict(id=value.get('id', index))
-					try:
-						instance.save(balance=Decimal(value.get('balance')))
-						inst.__setitem__('guid', instance.guid)
-					except Exception as e:
-						inst.__setitem__('error', True)
-					finally:
-						instances.append(inst)
-
-			if len(instances) == 0:
-				return ServerResponse.bad_request(message=Message.warning(ServerErrorText.NO_PO_CREATED))
-
-		except Exception as e:
-			return ServerResponse.internal_server_error(message=Message.error(e.message)) if settings.DEBUG else ServerResponse.internal_server_error()
-
-		return ServerResponse.created(data={'instances': instances})
+		pass
 
 
 @require_http_methods(['GET'])
