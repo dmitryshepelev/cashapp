@@ -5,11 +5,12 @@
 {% endblock %}
 
 {% block modal-body %}
+<form novalidate name="poForm">
 	<div class="row">
 		<div class="col-sm-6 col-xs-12">
 			<div class="form-group">
 				<label class="form-control-label">[[ 'name' | translate ]]:</label>
-				<input class="form-control form-control-sm" ng-model="po.name">
+				<input class="form-control form-control-sm" ng-model="po.name" required name="name" autocomplete="off">
 			</div>
 		</div>
 		<div class="col-sm-3 col-xs-12">
@@ -49,12 +50,12 @@
 			</div>
 		</div>
 	</div>
-
+</form>
 
 {% endblock %}
 
 {% block modal-footer %}
-	<button type="button" class="btn btn-link" ng-click="poModel.addPO()">
-		<span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]
+	<button type="button" class="btn btn-link" ng-click="managePO()">
+		<span class="lnr lnr-plus-circle"></span> [[ isEditMode ? 'save' : 'add' | translate ]]
 	</button>
 {% endblock %}

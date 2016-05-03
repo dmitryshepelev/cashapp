@@ -1,7 +1,4 @@
-from decimal import Decimal
-
 from django.core.exceptions import ObjectDoesNotExist
-from django.core import serializers
 from django.db.models import Q
 from django.views.decorators.http import require_http_methods
 
@@ -15,6 +12,7 @@ from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.POModel import PaymentObject
 from cashapp_models.models.PORegisterModel import PORegister
 from cashapp_models.models.POTypeModel import POType
+from cashapp_sett.forms.ManagePOForm import ManagePOForm
 
 
 @api_authorized()
@@ -57,9 +55,9 @@ def manage_po(request, guid=None):
 	:param guid: payment object guid
 	:return: ServerResponse instance
 	"""
-	if request.is_GET:
-		field_name = 'po'
+	field_name = 'po'
 
+	if request.is_GET:
 		if guid:
 			# Get by guid
 			payment_object = request.user.paymentobject_set.get(guid=guid)
@@ -80,10 +78,29 @@ def manage_po(request, guid=None):
 		pass
 
 	if request.is_PUT:
-		pass
+		po_guid = request.data.get('guid')
+
+		po = PaymentObject.objects.get(guid=po_guid)
+
+
 
 	if request.is_POST:
-		pass
+		form = ManagePOForm(request.data)
+
+		if form.errors:
+			return ServerResponse.bad_request(data = form.errors)
+
+		po = PaymentObject(
+			name = request.data.get('name'),
+			allow_negative = request.data.get('allow_negative', False),
+			currency_id = request.data.get('currency'),
+			primary = request.data.get('primary', False),
+			user = request.user,
+			type_id = request.data.get('type')
+		)
+		po.save()
+
+		return ServerResponse.created(data = {field_name: po.serialize()})
 
 
 @require_http_methods(['GET'])

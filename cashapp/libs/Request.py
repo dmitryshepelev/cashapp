@@ -1,3 +1,4 @@
+import json
 from ast import literal_eval
 
 
@@ -10,8 +11,16 @@ class Request(object):
 		Class constructor
 		:param request: HTTP request
 		"""
-		self.__data = literal_eval(request.body) if request.body else dict()
+		self.__data = None
 		self.__request = request
+
+		if request.body:
+			try:
+				self.__data = literal_eval(request.body)
+			except ValueError as e:
+				self.__data = json.loads(request.body)
+		else:
+			self.__data = dict()
 
 	@property
 	def data(self):

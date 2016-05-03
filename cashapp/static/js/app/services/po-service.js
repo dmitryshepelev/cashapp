@@ -4,13 +4,18 @@
         return {
             /**
              * Save PO data
-             * @param data
-             * @param type
+             * @param po
              * @returns {*}
              */
-            create: function (data, type) {
-                var params = type + '/';
-                return $http.post(baseUrl + params, data);
+            add: function (po) {
+                return $http.post(baseUrl, po);
+            },
+            /**
+             * Edit po
+             * @param po
+             */
+            edit: function (po) {
+                return $http.put(baseUrl, po);
             },
             /**
              * Get PO by type

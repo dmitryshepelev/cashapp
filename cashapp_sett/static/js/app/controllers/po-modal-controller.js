@@ -1,9 +1,48 @@
 (function (angular) {
-    function POModalCtrl ($scope, $translate, $uibModalInstance, $CurrencyService, $q, $ToastrService, $POTypesService, $stateParams, $POService) {
+    function POModalCtrl ($scope, $rootScope, $translate, $uibModalInstance, $CurrencyService, $q, $ToastrService, $POTypesService, $stateParams, $POService, $validator, $CommonService) {
         $scope.currencies = [];
         $scope.types = [];
         $scope.po = {};
-        console.log($uibModalInstance);
+
+        var action = $stateParams.action;
+        $scope.isEditMode = action === 'edit';
+        
+        /**
+         * Callback to execute on manage error
+         */
+        function onManagePOError(response) {
+            try {
+                $validator.validateFormResponse(response);
+            } catch (e) {
+                $ToastrService.messageFromResponse(response)
+            }
+        }
+
+        /**
+         * Callback to execute on manage success 
+         */
+        function onManagePOSuccess(response) {
+            var po = response.data.po;
+            $rootScope.$broadcast('PO.' + action + 'Success', po);
+            $uibModalInstance.close();
+        }
+
+        /**
+         * Manage PO
+         */
+        $scope.managePO = function () {
+            var action = $stateParams.action;
+
+            var validationResult = $validator.validateForm($scope.poForm);
+            if (validationResult.status) {
+                var po = $CommonService.createFlatCopy($scope.po);
+                
+                $POService[action](po)
+                    .then(onManagePOSuccess)
+                    .catch(onManagePOError)
+            }
+        };
+
         /**
          * Init PO
          * @param response
@@ -24,6 +63,11 @@
                     .getPO($stateParams.guid)
                         .then(initPO)
                         .catch(onError)
+            } else {
+                $scope.po = {
+                    currency: $scope.currencies[0],
+                    type: $scope.types[0]
+                }
             }
         }
 
@@ -50,7 +94,7 @@
         loadInitialData()
     }
 
-    POModalCtrl.$inject = ['$scope', '$translate', '$uibModalInstance', '$CurrencyService', '$q', '$ToastrService', '$POTypesService', '$stateParams', '$POService'];
+    POModalCtrl.$inject = ['$scope', '$rootScope', '$translate', '$uibModalInstance', '$CurrencyService', '$q', '$ToastrService', '$POTypesService', '$stateParams', '$POService', '$validator', '$CommonService'];
 
     angular
         .module('CashAppSett')

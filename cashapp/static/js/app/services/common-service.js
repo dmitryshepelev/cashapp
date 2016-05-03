@@ -32,6 +32,21 @@
 
                     return strings.join('&');
                 }
+            },
+            /**
+             * Creates flat copy of object
+             * @param obj
+             * @returns {{}}
+             */
+            createFlatCopy: function (obj) {
+                var copy = {};
+                angular.copy(obj, copy);
+                for (var prop in copy) {
+                    if (copy.hasOwnProperty(prop) && typeof copy[prop] === 'object' && copy[prop].hasOwnProperty('guid')) {
+                        copy[prop] = copy[prop].guid;
+                    }
+                }
+                return copy;
             }
         }
     }

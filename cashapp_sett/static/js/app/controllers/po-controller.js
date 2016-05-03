@@ -7,7 +7,7 @@
 
 (function (angular) {
 
-    function POCtrl ($scope, $q, $CommonService, $POService, $CurrencyService, $ToastrService, $state) {
+    function POCtrl ($scope, $rootScope, $q, $CommonService, $POService, $CurrencyService, $ToastrService, $state) {
         $scope.cardsModel = {};
         $scope.cashesModel = {};
         $scope.currencies = [];
@@ -30,34 +30,6 @@
             this.allowNegative = false;
             this.balance = ''
         }
-
-        PO.prototype = {};
-
-        /**
-         * Cash class
-         * @constructor
-         */
-        function Cash () {
-            this.id = 0;
-            this.balance = '';
-            this.currency = {};
-            this.error = '';
-            this.guid = ''
-        }
-
-        Cash.prototype = {};
-
-        /**
-         * Card class
-         * @constructor
-         */
-        function Card () {
-            this.name = '';
-
-            Cash.call(this);
-        }
-
-        $CommonService.extendBase(Cash, Card);
 
         /**
          * Opens edit PO modal
@@ -106,6 +78,17 @@
                     initPOsModel(item.data.po)
                 }
             });
+
+            $rootScope.$on('PO.addSuccess', function (event, newPO) {
+                if (!Array.isArray($scope.pos.data)) {
+                    $scope.pos.data = [];
+                }
+                $scope.pos.data.push(newPO);
+            });
+            
+            $rootScope.$on('PO.editSuccess', function (event, editedPO) {
+
+            })
         }
 
         function loadInitialData () {
@@ -121,7 +104,7 @@
         loadInitialData();
     }
 
-    POCtrl.$inject = ['$scope', '$q', '$CommonService', '$POService', '$CurrencyService', '$ToastrService', '$state'];
+    POCtrl.$inject = ['$scope', '$rootScope', '$q', '$CommonService', '$POService', '$CurrencyService', '$ToastrService', '$state'];
 
     angular
         .module('CashAppSett')
