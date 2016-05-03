@@ -32,6 +32,20 @@
 
                     return strings.join('&');
                 }
+            },
+            /**
+             * Creates copy with flat 'guid's
+             * @param data
+             */
+            createFlatObjectCopy: function (data) {
+                var _copy = {};
+                angular.copy(data, _copy);
+                for (var p in _copy) {
+                    if (_copy.hasOwnProperty(p) && typeof _copy[p] === 'object' && _copy[p].hasOwnProperty('guid')) {
+                        _copy[p] = _copy[p].guid;
+                    }
+                }
+                return _copy;
             }
         }
     }

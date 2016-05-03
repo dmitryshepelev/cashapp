@@ -1,10 +1,3 @@
-/**
- * TODO issues:
- *  1. Setting default currency as a default select value
- *  2. Helps around the controls
- *  3. Ability to edit card names
- */
-
 (function (angular) {
 
     function POCtrl ($scope, $q, $CommonService, $POService, $CurrencyService, $ToastrService, $state) {
@@ -14,8 +7,22 @@
 
         $scope.pos = {
             data: null,
-            edit: _editPOModal
+            edit: _editPOModal,
+            getPOIndexByGuid: _getPOIndexByGuid
         };
+
+        $scope.$watch(function () {
+            return $POService.tempPO();
+        }, function (po) {
+            if (Array.isArray($scope.pos.data)) {
+                var index = $scope.pos.getPOIndexByGuid(po.guid);
+                if (index >= 0) {
+                    $scope.pos.data[index] = po;
+                } else {
+                    $scope.pos.data.push(po);
+                }
+            }
+        });
 
         /**
          * PaymentObject prototype constructor
@@ -34,30 +41,22 @@
         PO.prototype = {};
 
         /**
-         * Cash class
-         * @constructor
+         * Get PO index by guid
+         * @param guid
+         * @returns {number}
+         * @private
          */
-        function Cash () {
-            this.id = 0;
-            this.balance = '';
-            this.currency = {};
-            this.error = '';
-            this.guid = ''
+        function _getPOIndexByGuid (guid) {
+            var po = null;
+            var pos = $scope.pos.data.filter(function (item) {
+                return item.guid === guid;
+            });
+            if (pos.length === 1) {
+                po = pos[0];
+                return $scope.pos.data.indexOf(po)
+            }
+            return -1;
         }
-
-        Cash.prototype = {};
-
-        /**
-         * Card class
-         * @constructor
-         */
-        function Card () {
-            this.name = '';
-
-            Cash.call(this);
-        }
-
-        $CommonService.extendBase(Cash, Card);
 
         /**
          * Opens edit PO modal

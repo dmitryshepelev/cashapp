@@ -1,7 +1,4 @@
-from decimal import Decimal
-
 from django.core.exceptions import ObjectDoesNotExist
-from django.core import serializers
 from django.db.models import Q
 from django.views.decorators.http import require_http_methods
 
@@ -15,6 +12,7 @@ from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.POModel import PaymentObject
 from cashapp_models.models.PORegisterModel import PORegister
 from cashapp_models.models.POTypeModel import POType
+from cashapp_sett.froms.ManagePOForm import ManagePOForm
 
 
 @api_authorized()
@@ -49,7 +47,7 @@ def manage_po_types(request):
 def manage_po(request, guid=None):
 	"""
 	Manage the payment objects depending on HTTP method
-	GET: return already created PO
+	GET: return already created PO. if {guid} is defined returns 1 record
 	DELETE:
 	PUT:
 	POST: create new PO
@@ -57,9 +55,9 @@ def manage_po(request, guid=None):
 	:param guid: payment object guid
 	:return: ServerResponse instance
 	"""
-	if request.is_GET:
-		field_name = 'po'
+	field_name = 'po'
 
+	if request.is_GET:
 		if guid:
 			# Get by guid
 			payment_object = request.user.paymentobject_set.get(guid=guid)
@@ -80,10 +78,33 @@ def manage_po(request, guid=None):
 		pass
 
 	if request.is_PUT:
-		pass
+		form = ManagePOForm(request.data)
+
+		if form.errors:
+			return ServerResponse.bad_request(form.errors)
+
+		po = PaymentObject.objects.get(guid=request.data.get('guid'))
+		po.update_and_save(request.data)
+
+		return ServerResponse.ok(data = {field_name: po.serialize()})
 
 	if request.is_POST:
-		pass
+		form = ManagePOForm(request.data)
+
+		if form.errors:
+			return ServerResponse.bad_request(form.errors)
+
+		po = PaymentObject(
+			name = request.get('name'),
+			allow_negative = request.data.get('allow_negative', False),
+			currency_id = request.get('currency'),
+			primary = request.data.get('primary', False),
+			type_id = request.get('type'),
+			user = request.user
+		)
+		po.save()
+
+		return ServerResponse.ok(data = {field_name: po.serialize()})
 
 
 @require_http_methods(['GET'])

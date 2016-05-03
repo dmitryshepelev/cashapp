@@ -150,14 +150,16 @@
                 angular.forEach(errors, function (value, key) {
                     var $element = angular.element(document.querySelector('[name=' + key + ']'));
 
-                    var cssClasses = _resolveCssClasses();
-                    // add styles
-                    _showError($element, cssClasses, value[0]);
-                    // set clearance handler
-                    _setClearanceHandler($element, cssClasses);
+                    if ($element.length > 0) {
+                        var cssClasses = _resolveCssClasses();
+                        // add styles
+                        _showError($element, cssClasses, value[0]);
+                        // set clearance handler
+                        _setClearanceHandler($element, cssClasses);
 
-                    if (i++ === 0) {
-                        _setFocus($element)
+                        if (i++ === 0) {
+                            _setFocus($element)
+                        }
                     }
                 })
             }

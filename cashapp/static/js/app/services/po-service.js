@@ -1,16 +1,30 @@
 (function (angular) {
     function POSrv ($http) {
         var baseUrl = '/api/cmn/po/';
+        var _tempPO = {};
         return {
+            tempPO: function (po) {
+                if (po) {
+                    _tempPO = po;
+                } else {
+                    return _tempPO;
+                }
+            },
             /**
              * Save PO data
-             * @param data
-             * @param type
+             * @param po
              * @returns {*}
              */
-            create: function (data, type) {
-                var params = type + '/';
-                return $http.post(baseUrl + params, data);
+            addPO: function (po) {
+                return $http.post(baseUrl, po);
+            },
+            /**
+             * Edit PO
+             * @param po
+             * @returns {*}
+             */
+            editPO: function (po) {
+                return $http.put(baseUrl, po)
             },
             /**
              * Get PO by type
