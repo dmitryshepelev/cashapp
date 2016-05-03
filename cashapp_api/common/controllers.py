@@ -47,7 +47,7 @@ def manage_po_types(request):
 def manage_po(request, guid=None):
 	"""
 	Manage the payment objects depending on HTTP method
-	GET: return already created PO
+	GET: return already created PO. if {guid} is defined returns 1 record
 	DELETE:
 	PUT:
 	POST: create new PO

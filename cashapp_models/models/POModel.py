@@ -1,5 +1,6 @@
 import datetime
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Max
 from cashapp_models.models.CurrencyModel import Currency

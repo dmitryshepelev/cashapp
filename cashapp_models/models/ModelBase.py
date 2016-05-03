@@ -74,3 +74,16 @@ class ModelBase(models.Model):
 			self.guid = hashlib.sha1(str(random.random())).hexdigest()
 
 		super(ModelBase, self).save(force_insert, force_update, using, update_fields)
+
+	def update_and_save(self, data):
+		"""
+		Update object by props
+		:return:
+		"""
+		for prop in data:
+			if prop in ('id', 'guid', 'exist'):
+				continue
+
+			self.__dict__[prop] = data.get(prop)
+
+		self.save()

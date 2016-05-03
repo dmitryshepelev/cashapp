@@ -1,10 +1,3 @@
-/**
- * TODO issues:
- *  1. Setting default currency as a default select value
- *  2. Helps around the controls
- *  3. Ability to edit card names
- */
-
 (function (angular) {
 
     function POCtrl ($scope, $rootScope, $q, $CommonService, $POService, $CurrencyService, $ToastrService, $state) {

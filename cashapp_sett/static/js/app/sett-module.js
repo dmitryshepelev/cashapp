@@ -39,6 +39,7 @@
             })
             .state('sett.po', {
                 url: '/po',
+                cache: false,
                 templateUrl: _baseUrl + '/po/',
                 controller: 'po-controller',
                 data: {
@@ -52,9 +53,10 @@
                         templateUrl: 'po/modal/',
                         controller: 'po-modal-controller'
                     })
-                        .result.finally(function () {
-                            $state.go('sett.po');
-                    })
+                        .result
+                            .finally(function (po) {
+                                $state.go('sett.po')
+                            })
                 }]
             })
     }
