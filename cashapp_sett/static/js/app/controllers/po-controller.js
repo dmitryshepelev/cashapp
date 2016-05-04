@@ -7,29 +7,15 @@
 
         $scope.pos = {
             data: null,
-            edit: _editPOModal,
+            manage: _managePOModal,
             getIndexByGuid: _getIndexByGuid
         };
-
-        /**
-         * PaymentObject prototype constructor
-         * @constructor
-         */
-        function PO () {
-            this.guid = '';
-            this.currency = {};
-            this.type = {};
-            this.name = '';
-            this.primary = false;
-            this.allowNegative = false;
-            this.balance = ''
-        }
 
         /**
          * Opens edit PO modal
          * @private
          */
-        function _editPOModal(guid) {
+        function _managePOModal(guid) {
             if (!guid) {
                 $ToastrService.error();
             } else {

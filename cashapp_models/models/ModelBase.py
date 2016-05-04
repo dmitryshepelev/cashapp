@@ -7,13 +7,14 @@ from collections import defaultdict
 from datetime import datetime
 from django.core import serializers
 from django.db import models
+from django.utils import timezone
 
 
 class ModelBase(models.Model):
 	guid = models.CharField(max_length = 40, db_index = True, unique = True)
 	exist = models.BooleanField(default = True)
-	creation_datetime = models.DateTimeField(default = datetime.now)
-	last_edited_datetime = models.DateTimeField(default = datetime.now)
+	creation_datetime = models.DateTimeField(default = timezone.now)
+	last_edited_datetime = models.DateTimeField(default = timezone.now)
 
 	class Meta:
 		abstract = True
@@ -76,7 +77,7 @@ class ModelBase(models.Model):
 		if not self.guid:
 			self.guid = hashlib.sha1(str(random.random())).hexdigest()
 
-		current_datetime = datetime.now()
+		current_datetime = timezone.now()
 
 		if not self.creation_datetime:
 			self.creation_datetime = current_datetime

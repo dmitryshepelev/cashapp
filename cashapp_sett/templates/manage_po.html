@@ -20,7 +20,7 @@
 					</div>
 					<table class="table table-hover table-sm table-responsive">
 						<tbody>
-							<tr class="pointer animate enter" ng-repeat="po in pos.data | orderBy: '-creation_datetime' track by $index" ng-click="pos.edit(po.guid)">
+							<tr class="pointer" ng-repeat="po in pos.data | orderBy: '-creation_datetime' track by $index" ng-click="pos.manage(po.guid)">
 								<td><span uib-tooltip="[[ 'primary' | translate ]]" ng-class="{'lnr lnr-checkmark-circle': po.primary }"></span></td>
 								<td>[[ po.name ]]</td>
 								<td><span uib-tooltip="[[ 'allow_negative' | translate ]]" ng-class="{'lnr lnr-circle-minus': po.allow_negative }"></span></td>

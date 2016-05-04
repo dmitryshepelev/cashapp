@@ -51,7 +51,7 @@ class Dummies():
 			dummy = PaymentObject.objects.get(name='dummy')
 		except Exception as e:
 			po = {
-				'name': 'Visa',
+				'name': 'dummy',
 				'allow_negative': False,
 				'primary': True,
 				'currency_id': Dummies.get_or_create_currency().guid,

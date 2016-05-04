@@ -39,6 +39,7 @@ module.exports = function(config) {
             '../cashapp/static/js/libs/angular-ui-tpls-1.3.2.min.js',
             '../cashapp/static/js/libs/angular-ui-tooltip.js',
             '../cashapp/static/js/libs/angular-ui-stackedMap.js',
+            '../cashapp/static/js/libs/angular-ui-switch.min.js',
 
             '../cashapp/static/js/app/services-module.js',
             '../cashapp/static/js/app/directives/*.js',
