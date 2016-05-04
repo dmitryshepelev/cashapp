@@ -4,6 +4,7 @@ import random
 from ast import literal_eval
 from collections import defaultdict
 
+from datetime import datetime
 from django.core import serializers
 from django.db import models
 
@@ -11,6 +12,8 @@ from django.db import models
 class ModelBase(models.Model):
 	guid = models.CharField(max_length = 40, db_index = True, unique = True)
 	exist = models.BooleanField(default = True)
+	creation_datetime = models.DateTimeField(default = datetime.now)
+	last_edited_datetime = models.DateTimeField(default = datetime.now)
 
 	class Meta:
 		abstract = True
@@ -73,17 +76,29 @@ class ModelBase(models.Model):
 		if not self.guid:
 			self.guid = hashlib.sha1(str(random.random())).hexdigest()
 
+		current_datetime = datetime.now()
+
+		if not self.creation_datetime:
+			self.creation_datetime = current_datetime
+
+		self.last_edited_datetime = current_datetime
+
 		super(ModelBase, self).save(force_insert, force_update, using, update_fields)
 
-	def update_and_save(self, data):
+	def get_protected_fields(self):
+		"""
+		Returns the filds which shouldn't be changed
+		:return: {tuple}
+		"""
+		return 'id', 'guid', 'exist', 'creation_datetime', 'last_edited_datetime'
+
+	def update(self, data):
 		"""
 		Update object by props
 		:return:
 		"""
 		for prop in data:
-			if prop in ('id', 'guid', 'exist'):
+			if prop in self.get_protected_fields():
 				continue
 
 			self.__dict__[prop] = data.get(prop)
-
-		self.save()

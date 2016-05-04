@@ -7,7 +7,8 @@
 
         $scope.pos = {
             data: null,
-            edit: _editPOModal
+            edit: _editPOModal,
+            getIndexByGuid: _getIndexByGuid
         };
 
         /**
@@ -34,6 +35,24 @@
             } else {
                 $state.go('sett.po.action', { action: 'edit', guid: guid });
             }
+        }
+
+        /**
+         * Get PO index in pos by guid
+         * @private
+         */
+        function _getIndexByGuid(guid) {
+            if (!guid) {
+                throw new Error('Guid must be defined')
+            }
+            var po = $scope.pos.data.filter(function (item) {
+                return item.guid === guid;
+            });
+
+            if (po.length > 1) {
+                throw new Error('Multiple objects found');
+            }
+            return po.length == 1 ? $scope.pos.data.indexOf(po[0]) : -1;
         }
 
         /**
@@ -80,7 +99,12 @@
             });
             
             $rootScope.$on('PO.editSuccess', function (event, editedPO) {
-
+                var index = $scope.pos.getIndexByGuid(editedPO.guid);
+                if (index >= 0) {
+                    $scope.pos.data[index] = editedPO;
+                } else {
+                    throw new Error('Invalid instance was edited');
+                }
             })
         }
 

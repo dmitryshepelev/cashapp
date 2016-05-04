@@ -59,3 +59,11 @@ class PaymentObject(ModelBase):
 		:return: PORegister model
 		"""
 		return self.poregister_set.annotate(max_date = Max('date')).first()
+
+	def get_protected_fields(self):
+		"""
+		Overrides base class method
+		:return:
+		"""
+		fields = super(PaymentObject, self).get_protected_fields()
+		return fields + ('user_id',)

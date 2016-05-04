@@ -43,7 +43,8 @@
                 angular.copy(obj, copy);
                 for (var prop in copy) {
                     if (copy.hasOwnProperty(prop) && typeof copy[prop] === 'object' && copy[prop].hasOwnProperty('guid')) {
-                        copy[prop] = copy[prop].guid;
+                        copy[prop + '_id'] = copy[prop].guid;
+                        delete copy[prop];
                     }
                 }
                 return copy;

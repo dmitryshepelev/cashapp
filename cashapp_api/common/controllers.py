@@ -81,8 +81,10 @@ def manage_po(request, guid=None):
 		po_guid = request.data.get('guid')
 
 		po = PaymentObject.objects.get(guid=po_guid)
+		po.update(request.data)
+		po.save()
 
-
+		return ServerResponse.ok(data = {field_name: po.serialize()})
 
 	if request.is_POST:
 		form = ManagePOForm(request.data)
@@ -93,12 +95,12 @@ def manage_po(request, guid=None):
 		po = PaymentObject(
 			name = request.data.get('name'),
 			allow_negative = request.data.get('allow_negative', False),
-			currency_id = request.data.get('currency'),
+			currency_id = request.data.get('currency_id'),
 			primary = request.data.get('primary', False),
 			user = request.user,
-			type_id = request.data.get('type')
+			type_id = request.data.get('type_id')
 		)
-		po.save()
+		# po.save()
 
 		return ServerResponse.created(data = {field_name: po.serialize()})
 
