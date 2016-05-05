@@ -36,23 +36,3 @@ def general(request):
 	return render(request, 'general.html', {})
 
 
-@require_http_methods(['GET'])
-@login_required
-def manage_po(request):
-	"""
-	Set initial cash page
-	:param request: http request
-	:return: HttpResponse
-	"""
-	return render(request, 'manage_po.html', {})
-
-
-@require_http_methods(['GET'])
-@login_required
-def po_modal(request):
-	"""
-	Set initial cash page
-	:param request: http request
-	:return: HttpResponse
-	"""
-	return render(request, 'po_modal.html', {})

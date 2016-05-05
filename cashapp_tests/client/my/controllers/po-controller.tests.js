@@ -2,7 +2,7 @@ describe('POController tests', function () {
     var $controller;
     var $httpBackend;
 
-    beforeEach(module('CashAppSett'));
+    beforeEach(module('CashAppMy'));
 
     beforeEach(inject(function (_$controller_, _$httpBackend_) {
         $controller = _$controller_;
@@ -25,7 +25,8 @@ describe('POController tests', function () {
             });
     
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
-            $httpBackend.expectGET('/sett/uiview/').respond(200, {});
+            $httpBackend.expectGET('/my/uiview/').respond(200, {});
+            $httpBackend.expectGET('/my/dashboard/').respond(200, {});
             $httpBackend.whenGET('/api/cmn/currency/').respond(200, { currencies: [{ code: 'USD' }, { code: 'BYR' }]});
             $httpBackend.whenGET('/api/cmn/po/').respond(500, {});
 
@@ -43,11 +44,12 @@ describe('POController tests', function () {
         beforeEach(function () {
             $scope = {};
             controller = $controller('po-controller', {
-                $scope: $scope,
+                $scope: $scope
             });
             
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
-            $httpBackend.expectGET('/sett/uiview/').respond(200, {});
+            $httpBackend.expectGET('/my/uiview/').respond(200, {});
+            $httpBackend.expectGET('/my/dashboard/').respond(200, {});
             $httpBackend.whenGET('/api/cmn/currency/').respond(200, { currencies: [{ code: 'USD' }, { code: 'BYR' }]});
             $httpBackend.whenGET('/api/cmn/po/').respond(200, { po: [{ name: 'test', guid: '1234567890' }]});
             $httpBackend.whenGET('po/modal/').respond(200, '');

@@ -30,11 +30,40 @@
                 data: {
                     title: 'dashboard_title'
                 }
-            });
+            })
+            .state('my.po', {
+                url: '/po',
+                cache: false,
+                templateUrl: _baseUrl + '/po/',
+                controller: 'po-controller',
+                data: {
+                    title: 'po_title'
+                }
+            })
+            .state('my.po.action', {
+                url: '/{action}/{guid}',
+                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'po/modal/',
+                        controller: 'po-modal-controller'
+                    })
+                        .result
+                            .finally(function (po) {
+                                $state.go('my.po')
+                            })
+                }]
+            })
     }
 
     angular
-        .module('CashAppMy', ['ui.router', 'pascalprecht.translate', 'CashApp.Service', 'ngAnimate', 'ui.bootstrap']);
+        .module('CashAppMy', [
+            'ui.router',
+            'pascalprecht.translate',
+            'CashApp.Service',
+            'ngAnimate',
+            'ui.bootstrap',
+            'uiSwitch'
+        ]);
     angular
         .module('CashAppMy')
         .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);

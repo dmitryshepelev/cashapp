@@ -19,7 +19,7 @@
             if (!guid) {
                 $ToastrService.error();
             } else {
-                $state.go('sett.po.action', { action: 'edit', guid: guid });
+                $state.go('my.po.action', { action: 'edit', guid: guid });
             }
         }
 
@@ -110,7 +110,7 @@
     POCtrl.$inject = ['$scope', '$rootScope', '$q', '$CommonService', '$POService', '$CurrencyService', '$ToastrService', '$state'];
 
     angular
-        .module('CashAppSett')
+        .module('CashAppMy')
         .controller('po-controller', POCtrl)
 
 })(angular);

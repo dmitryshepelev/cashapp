@@ -16,8 +16,7 @@ def get_ui_tabs(request):
 	user = request.user
 
 	default_tab_values = [
-		['general_title', 'sett.general', False, False],
-		['po_title', 'sett.po', False, False]
+		['general_title', 'sett.general', False, False]
 	]
 
 	generate_tabs_result = services.generate_ui_tab_collection(default_tab_values)

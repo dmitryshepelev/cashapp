@@ -119,6 +119,9 @@ select.form-control:disabled {
   border-radius: 0.2em;
   padding: 0 10px;
 }
+.modal-backdrop.in {
+  opacity: .2 !important;
+}
 .btn-xs {
   padding: .25rem .75rem;
   font-size: 0.65rem;

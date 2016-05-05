@@ -97,7 +97,7 @@
     POModalCtrl.$inject = ['$scope', '$rootScope', '$translate', '$uibModalInstance', '$CurrencyService', '$q', '$ToastrService', '$POTypesService', '$stateParams', '$POService', '$validator', '$CommonService'];
 
     angular
-        .module('CashAppSett')
+        .module('CashAppMy')
         .controller('po-modal-controller', POModalCtrl)
 
 })(angular);

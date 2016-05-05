@@ -4,7 +4,7 @@ from django.views.decorators.http import require_http_methods
 from cashapp.decorators import api_authorized, request_wrapper
 from cashapp.libs.ServerResponse import ServerResponse
 from cashapp_models.models.POModel import PaymentObject
-from cashapp_sett.forms.ManagePOForm import ManagePOForm
+from cashapp_my.forms.ManagePOForm import ManagePOForm
 
 
 @api_authorized()
