@@ -134,13 +134,33 @@ select.form-control:disabled {
 .border-primary {
   border-color: #0275d8;
 }
-.pointer {
+.cursor-pointer {
   cursor: pointer;
+}
+.cursor-default {
+  cursor: default;
 }
 @-moz-document url-prefix() {
   .table {
     display: table;
   }
+}
+.row-action-td {
+  opacity: 0;
+  max-width: 1.5em;
+}
+.row-action-td > .row-action-button {
+  float: right;
+  margin-top: 3px;
+}
+.row-action-td > .row-action-button:hover {
+  color: #0275d8;
+}
+.action-text:hover {
+  color: #0275d8;
+}
+tr:hover .row-action-td {
+  opacity: 1;
 }
 .action-buttons-group > div {
   padding-bottom: 0.5em;

@@ -38,17 +38,6 @@ def dashboard(request):
 
 @require_http_methods(['GET'])
 @login_required
-def po_widget(request):
-	"""
-	Partial page to show widget
-	:param request: http request
-	:return: HttpResponse
-	"""
-	return render(request, 'po_widget.html', {})
-
-
-@require_http_methods(['GET'])
-@login_required
 def manage_po(request):
 	"""
 	Set initial cash page
@@ -62,8 +51,20 @@ def manage_po(request):
 @login_required
 def po_modal(request):
 	"""
-	Set initial cash page
+	Get manage po modal template
 	:param request: http request
 	:return: HttpResponse
 	"""
 	return render(request, 'po_modal.html', {})
+
+
+@require_http_methods(['GET'])
+@login_required
+def po_details(request):
+	"""
+	PO details page
+	:param request: http request
+	:return: HttpResponse
+	"""
+	return render(request, 'po_details.html', {})
+

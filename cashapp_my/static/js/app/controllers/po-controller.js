@@ -1,21 +1,34 @@
 (function (angular) {
 
     function POCtrl ($scope, $rootScope, $q, $CommonService, $POService, $CurrencyService, $ToastrService, $state) {
-        $scope.cardsModel = {};
-        $scope.cashesModel = {};
         $scope.currencies = [];
 
         $scope.pos = {
             data: null,
             manage: _managePOModal,
-            getIndexByGuid: _getIndexByGuid
+            getIndexByGuid: _getIndexByGuid,
+            details: _goToDetails
         };
 
         /**
-         * Opens edit PO modal
+         * Go to details
          * @private
          */
-        function _managePOModal(guid) {
+        function _goToDetails($event, guid) {
+            $event.stopImmediatePropagation();
+            if (!guid) {
+                $ToastrService.error();
+            } else {
+                $state.go('my.po.details', {guid: guid});
+            }
+        }
+
+        /**
+         * Opens manage PO modal
+         * @private
+         */
+        function _managePOModal($event, guid) {
+            $event.stopImmediatePropagation();
             if (!guid) {
                 $ToastrService.error();
             } else {

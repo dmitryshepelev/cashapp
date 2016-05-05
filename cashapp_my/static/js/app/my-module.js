@@ -33,7 +33,6 @@
             })
             .state('my.po', {
                 url: '/po',
-                cache: false,
                 templateUrl: _baseUrl + '/po/',
                 controller: 'po-controller',
                 data: {
@@ -52,6 +51,14 @@
                                 $state.go('my.po')
                             })
                 }]
+            })
+            .state('my.po.details', {
+                url: '/{guid}',
+                templateUrl: _baseUrl + '/po/details/',
+                controller: 'po-details-controller',
+                data: {
+                    title: 'po_details_title'
+                }
             })
     }
 

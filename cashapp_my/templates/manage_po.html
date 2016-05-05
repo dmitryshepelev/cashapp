@@ -1,4 +1,4 @@
-<div>
+<ui-view>
 	<div class="form-group">
 		<h3>[[ 'po_title' | translate ]]</h3>
 	</div>
@@ -8,21 +8,21 @@
                 <div class="card text-xs-center canvas-border" ng-if="pos.data.length === 0">
                     <div class="card-block">
 	                    <div class="card-title text-muted m-b-0">
-		                    <a ui-sref="my.po.action({ action: 'add'})" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add_po' | translate ]]</a>
+		                    <a ui-sref="my.po.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add_po' | translate ]]</a>
 	                    </div>
                     </div>
                 </div>
 				<div ng-if="pos.data.length > 0">
 					<div class="action-buttons-group">
 						<div class="pull-sm-right">
-							<a ui-sref="my.po.action({ action: 'add'})" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]</a>
+							<a ui-sref="my.po.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]</a>
 						</div>
 					</div>
 					<table class="table table-hover table-sm table-responsive">
 						<tbody>
-							<tr class="pointer" ng-repeat="po in pos.data | orderBy: '-creation_datetime' track by $index" ng-click="pos.manage(po.guid)">
-								<td><span uib-tooltip="[[ 'primary' | translate ]]" ng-class="{'lnr lnr-checkmark-circle': po.primary }"></span></td>
-								<td>[[ po.name ]]</td>
+							<tr class="cursor-pointer" ng-repeat="po in pos.data | orderBy: '-creation_datetime' track by $index" ng-click="pos.manage($event, po.guid)">
+								<td><po-primarity-icon is-primary="po.primary"></po-primarity-icon></td>
+								<td><span class="action-text" ng-click="pos.details($event, po.guid)">[[ po.name ]]</span></td>
 								<td><span uib-tooltip="[[ 'allow_negative' | translate ]]" ng-class="{'lnr lnr-circle-minus': po.allow_negative }"></span></td>
 								<td>[[ po.type.name | translate | lowercase ]]</td>
 								<td>[[ po.currency.dec | decUnicode ]]</td>
@@ -30,8 +30,7 @@
 						</tbody>
 					</table>
 				</div>
-
 			</div>
 		</div>
 	</div>
-</div>
+</ui-view>

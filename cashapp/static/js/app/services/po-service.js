@@ -18,14 +18,6 @@
                 return $http.put(baseUrl, po);
             },
             /**
-             * Get PO by type
-             * @param type
-             */
-            getByType: function (type) {
-                var params = type + '/';
-                return $http.get(baseUrl + params);
-            },
-            /**
              * Get PO by its guid
              */
             getPO: function (guid) {

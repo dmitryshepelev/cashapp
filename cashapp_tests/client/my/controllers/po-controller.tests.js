@@ -40,6 +40,10 @@ describe('POController tests', function () {
     describe('PO Controller', function () {
         var $scope;
         var controller;
+        var $event = {
+            stopImmediatePropagation: function () {
+            }
+        };
 
         beforeEach(function () {
             $scope = {};
@@ -87,7 +91,7 @@ describe('POController tests', function () {
         });
         
         it('should be an error transfer to manage po modal', function () {
-            expect($scope.pos.manage());
+            expect($scope.pos.manage($event));
         });
     });
 });

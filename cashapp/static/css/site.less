@@ -158,13 +158,45 @@ select {
 	border-color: @color-primary;
 }
 
-.pointer {
+.cursor-pointer {
 	cursor: pointer;
+}
+
+.cursor-default {
+	cursor: default;
 }
 
 @-moz-document url-prefix() {
 	.table {
 		display: table;
+	}
+}
+
+.row-action-td {
+	opacity: 0;
+	max-width: 1.5em;
+
+	& > .row-action-button {
+		float: right;
+		margin-top: 3px;
+
+		&:hover {
+			color: @color-primary;
+		}
+	}
+}
+
+.action-text {
+	&:hover {
+		color: @color-primary;
+	}
+}
+
+tr {
+	&:hover {
+		& .row-action-td {
+			opacity: 1;
+		}
 	}
 }
 
