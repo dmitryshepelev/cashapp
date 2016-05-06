@@ -1,0 +1,47 @@
+{% extends 'modal/modal_base.html' %}
+
+{% block modal-header %}
+	<h5 class="modal-title">[[ 'income_transaction' | translate ]]</h5>
+{% endblock %}
+
+{% block modal-body %}
+<form novalidate name="transactionForm">
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'payment_object' | translate ]]:</label>
+				<select class="form-control form-control-sm" ng-model="transaction.payment_object" ng-options="po.name for po in pos track by po.guid" ng-disabled="isPOPredefined"></select>
+			</div>
+		</div>
+		<div class="col-sm-6 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'date' | translate ]]:</label>
+                <datetimepicker ng-model="transaction.date"></datetimepicker>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'sum' | translate ]]:</label>
+				<money-input name="value" ng-model="transaction.value" currency="transaction.payment_object.currency"></money-input>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'description' | translate ]]:</label>
+				<textarea class="form-control form-control-sm" ng-model="transaction.description" maxlength="1000"></textarea>
+			</div>
+		</div>
+	</div>
+</form>
+
+{% endblock %}
+
+{% block modal-footer %}
+	<button type="button" class="btn btn-link" ng-click="createTransaction()">
+		<span class="lnr lnr-plus-circle"></span> [[ 'create' | translate ]]
+	</button>
+{% endblock %}

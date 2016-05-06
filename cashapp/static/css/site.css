@@ -170,3 +170,95 @@ tr:hover .row-action-td {
   background-color: white;
   border: 1px solid #7db8ea;
 }
+.uib-day .btn-default,
+.uib-daypicker .btn-default,
+.uib-time .btn-default,
+.uib-monthpicker .btn-default,
+.uib-yearpicker .btn-default {
+  font-weight: normal;
+  color: #0275d8;
+  background-color: transparent;
+}
+.uib-day .btn-default.active,
+.uib-daypicker .btn-default.active,
+.uib-time .btn-default.active,
+.uib-monthpicker .btn-default.active,
+.uib-yearpicker .btn-default.active {
+  border-color: #0275d8;
+  color: #0275d8 !important;
+}
+.uib-day .btn-default.active:hover,
+.uib-daypicker .btn-default.active:hover,
+.uib-time .btn-default.active:hover,
+.uib-monthpicker .btn-default.active:hover,
+.uib-yearpicker .btn-default.active:hover,
+.uib-day .btn-default.active:focus,
+.uib-daypicker .btn-default.active:focus,
+.uib-time .btn-default.active:focus,
+.uib-monthpicker .btn-default.active:focus,
+.uib-yearpicker .btn-default.active:focus {
+  background-color: transparent;
+}
+.uib-day .btn-default.uib-left > i,
+.uib-daypicker .btn-default.uib-left > i,
+.uib-time .btn-default.uib-left > i,
+.uib-monthpicker .btn-default.uib-left > i,
+.uib-yearpicker .btn-default.uib-left > i,
+.uib-day .btn-default.uib-right > i,
+.uib-daypicker .btn-default.uib-right > i,
+.uib-time .btn-default.uib-right > i,
+.uib-monthpicker .btn-default.uib-right > i,
+.uib-yearpicker .btn-default.uib-right > i {
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Linearicons-Free';
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+  speak: none;
+  text-transform: none;
+}
+.uib-day .btn-default.uib-left > i:before,
+.uib-daypicker .btn-default.uib-left > i:before,
+.uib-time .btn-default.uib-left > i:before,
+.uib-monthpicker .btn-default.uib-left > i:before,
+.uib-yearpicker .btn-default.uib-left > i:before {
+  content: "\e875";
+}
+.uib-day .btn-default.uib-right > i:before,
+.uib-daypicker .btn-default.uib-right > i:before,
+.uib-time .btn-default.uib-right > i:before,
+.uib-monthpicker .btn-default.uib-right > i:before,
+.uib-yearpicker .btn-default.uib-right > i:before {
+  content: "\e876";
+}
+.uib-time input {
+  padding: .275rem .75rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  border-radius: .2rem !important;
+}
+.uib-increment > a > span,
+.uib-decrement > a > span {
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Linearicons-Free';
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+  speak: none;
+  text-transform: none;
+}
+.uib-increment > a > span:before {
+  content: "\e873";
+}
+.uib-decrement > a > span:before {
+  content: "\e874";
+}
+.uib-title strong {
+  font-weight: normal;
+}
+.input-group-addon {
+  background-color: transparent;
+  border: none;
+}

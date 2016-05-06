@@ -20,4 +20,3 @@
         .directive('poPrimarityIcon', POPrimarity)
 
 })(angular);
-

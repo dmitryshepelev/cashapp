@@ -47,8 +47,8 @@
                         controller: 'po-modal-controller'
                     })
                         .result
-                            .finally(function (po) {
-                                $state.go('my.po')
+                            .finally(function () {
+                                $state.go('my.po');
                             })
                 }]
             })
@@ -59,6 +59,20 @@
                 data: {
                     title: 'po_details_title'
                 }
+            })
+            .state('my.po.details.transact', {
+                url: '/{type}/',
+                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                    // TODO: if no state params specified redirect to 404 page
+                    $uibModal.open({
+                        templateUrl: 'transaction/modal/' + $stateParams.type + '/',
+                        controller: 'transaction-modal-income-controller'
+                    })
+                        .result
+                            .finally(function () {
+                                $state.go('my.po.details', { guid: $stateParams.guid });
+                            })
+                }]
             })
     }
 

@@ -53,5 +53,18 @@
 	"currency": "Currency",
 	"type": "Type",
 	"allow_negative": "Allow negative values",
-	"make_primary": "Mark as primary"
+	"make_primary": "Mark as primary",
+	"income_transaction": "Income transaction",
+	"expense_transaction": "Expense transaction",
+	"transfer_transaction": "Transfer transaction",
+	"income": "Income",
+	"expense": "Expense",
+	"transfer": "Transfer",
+	"date": "Date",
+	"time": "Time",
+	"today": "Today",
+	"close": "Close",
+	"description": "Description",
+	"sum": "Amount",
+	"create": "Create"
 }

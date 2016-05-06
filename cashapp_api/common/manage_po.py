@@ -2,6 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_http_methods
 
 from cashapp.decorators import api_authorized, request_wrapper
+from cashapp.libs.Message import Message
 from cashapp.libs.ServerResponse import ServerResponse
 from cashapp_models.models.POModel import PaymentObject
 from cashapp_my.forms.ManagePOForm import ManagePOForm
@@ -29,7 +30,7 @@ def manage_po(request, guid=None):
 			try:
 				payment_object = request.user.paymentobject_set.get(guid=guid)
 			except ObjectDoesNotExist as e:
-				return ServerResponse.not_found(message = 'The object {guid} is\'n found'.format(guid=guid))
+				return ServerResponse.not_found(message = Message.error('The object {guid} is\'n found'.format(guid=guid)))
 
 			result = {field_name: payment_object.serialize()}
 
@@ -51,16 +52,16 @@ def manage_po(request, guid=None):
 		po_guid = request.data.get('guid', None)
 
 		if not po_guid:
-			return ServerResponse.bad_request(message = 'Guid is not defined')
+			return ServerResponse.bad_request(message = Message.error('Guid is not defined'))
 
 		try:
 			po = PaymentObject.objects.get(guid=po_guid)
 			po.update(request.data)
 			po.save()
 		except ObjectDoesNotExist as e:
-			return ServerResponse.not_found(message = 'The object {guid} is\'n found'.format(guid=po_guid))
+			return ServerResponse.not_found(message = Message.error('The object {guid} is\'n found'.format(guid=po_guid)))
 		except Exception as e:
-			return ServerResponse.internal_server_error(message = 'The error was occured during saving process')
+			return ServerResponse.internal_server_error(message = Message.error('The error was occured during saving process'))
 
 		return ServerResponse.ok(data = {field_name: po.serialize()})
 
@@ -81,6 +82,6 @@ def manage_po(request, guid=None):
 		try:
 			po.save()
 		except Exception as e:
-			return ServerResponse.internal_server_error(message = 'The error was occured during saving process')
+			return ServerResponse.internal_server_error(message = Message.error('The error was occured during saving process'))
 
 		return ServerResponse.created(data = {field_name: po.serialize()})

@@ -215,3 +215,98 @@ tr {
 		}
 	}
 }
+
+.uib-day, .uib-daypicker, .uib-time, .uib-monthpicker, .uib-yearpicker {
+	& .btn-default {
+		font-weight: normal;
+		color: #0275d8;
+		background-color: transparent;
+
+		&.active {
+			border-color: @color-primary;
+			color: @color-primary !important;
+
+			&:hover, &:focus {
+				background-color: transparent;
+			}
+		}
+
+		&.uib-left, &.uib-right {
+			& > i {
+				-webkit-font-smoothing: antialiased;
+				font-family: 'Linearicons-Free';
+				font-style: normal;
+				font-variant: normal;
+				font-weight: normal;
+				line-height: 1;
+				speak: none;
+				text-transform: none;
+			}
+		}
+
+		&.uib-left {
+			& > i {
+				&:before {
+					content: "\e875";
+				}
+			}
+		}
+
+		&.uib-right {
+			& > i {
+				&:before {
+					content: "\e876";
+				}
+			}
+		}
+	}
+}
+
+.uib-time {
+	& input {
+		padding: .275rem .75rem;
+		font-size: .875rem;
+		line-height: 1.5;
+		border-radius: .2rem !important;
+	}
+}
+
+& .uib-increment, & .uib-decrement {
+	& > a > span {
+		-webkit-font-smoothing: antialiased;
+		font-family: 'Linearicons-Free';
+		font-style: normal;
+		font-variant: normal;
+		font-weight: normal;
+		line-height: 1;
+		speak: none;
+		text-transform: none;
+	}
+}
+
+& .uib-increment {
+	& > a > span {
+		&:before {
+			content: "\e873";
+		}
+	}
+}
+
+& .uib-decrement {
+	& > a > span {
+		&:before {
+			content: "\e874";
+		}
+	}
+}
+
+.uib-title {
+	& strong {
+		font-weight: normal;
+	}
+}
+
+.input-group-addon {
+	background-color: transparent;
+	border: none;
+}

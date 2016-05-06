@@ -68,3 +68,14 @@ def po_details(request):
 	"""
 	return render(request, 'po_details.html', {})
 
+
+@require_http_methods(['GET'])
+@login_required
+def transaction_modal(request, transaction_type):
+	"""
+	Get transact modal template of specified type
+	:param request: http request
+	:param transaction_type: income|expense|transfer
+	:return: HttpResponse
+	"""
+	return render(request, 'transaction_modal_{type}.html'.format(type=transaction_type))

@@ -5,7 +5,9 @@
 			[[ po.name ]]
 			<small>[[ po.type.name | translate ]]</small>
 			<div class="pull-md-right">
-                <span uib-tooltip="[[ 'income_transaction' | translate ]]" class="lnr lnr-plus-circle cursor-default"></span>
+				<button type="button" class="btn btn-link" uib-tooltip="[[ 'income' | translate ]]" ng-click="incomeTransactionModal()">
+					<span class="lnr lnr-plus-circle cursor-default"></span>
+				</button>
 			</div>
 
 		</h3>

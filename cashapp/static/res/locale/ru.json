@@ -53,5 +53,18 @@
 	"currency": "Валюта",
 	"type": "Тип",
 	"allow_negative": "Позволить отрицательные значения",
-	"make_primary": "Сделать основным"
+	"make_primary": "Сделать основным",
+	"income_transaction": "Пополнение",
+	"expense_transaction": "Расход",
+	"transfer_transaction": "Перевод",
+	"income": "Пополнение",
+	"expense": "Расход",
+	"transfer": "Перевод",
+	"date": "Дата",
+	"time": "Время",
+	"today": "Сегодня",
+	"close": "Закрыть",
+	"description": "Описание",
+	"sum": "Сумма",
+	"create": "Создать"
 }
