@@ -25,7 +25,11 @@ class ModelBase(models.Model):
 		if {args} is specified, dicts are merged
 		:return: {dict}
 		"""
-		default_keys = {'guid': self.guid}
+		default_keys = {
+			'guid': self.guid,
+			'creation_datetime': self.creation_datetime,
+			'last_edited_datetime': self.last_edited_datetime
+		}
 		natural_keys = defaultdict(set)
 
 		for d in args + (default_keys,):

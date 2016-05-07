@@ -18,7 +18,7 @@
              * Build query string from object
              */
             encodeQueryData: function (data) {
-                if (typeof data !== "object" || Array.isArray(data) || data === null) {
+                if (typeof data !== 'object' || Array.isArray(data) || data === null) {
                     throw new TypeError('The parameter \'data\' is not an object')
 
                 } else {

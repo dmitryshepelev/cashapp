@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 
 from cashapp_models.models.ModelBase import ModelBase
@@ -12,3 +13,40 @@ class IncomeTransaction(ModelBase, TransactionModelBase):
 
 	class Meta:
 		app_label = 'cashapp_models'
+
+	def natural_key(self):
+		"""
+		Overrides base class method
+		:return:
+		"""
+		self_keys = {
+			'value': self.value,
+		}
+		natural_keys = super(IncomeTransaction, self).natural_key(self_keys)
+		return natural_keys
+
+	def serialize(self, format = 'json', include_fields = (), exclude_fields = (), use_natural_foreign_keys = True, use_natural_primary_keys = True,
+					include_user = False):
+		"""
+		Overrides base class method
+		:param format:
+		:param include_fields:
+		:param exclude_fields:
+		:param use_natural_foreign_keys:
+		:param use_natural_primary_keys:
+		:return:
+		"""
+		exclude_fields = tuple(set(exclude_fields) | {'user'})
+		serialized = super(IncomeTransaction, self).serialize(format, include_fields, exclude_fields, use_natural_foreign_keys,
+															use_natural_primary_keys)
+		return serialized
+
+	def set_register_value(self, register_record):
+		"""
+		Set register value
+		:param register_record:
+		:return:
+		"""
+		super(IncomeTransaction, self).set_register_value(register_record)
+
+		register_record.value += Decimal(self.value)

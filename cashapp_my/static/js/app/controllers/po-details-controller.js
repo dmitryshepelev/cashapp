@@ -1,6 +1,6 @@
 (function (angular) {
 
-    function POCtrl ($scope, $rootScope, $q, $CommonService, $POService, $CurrencyService, $ToastrService, $state, $stateParams) {
+    function POCtrl ($scope, $rootScope, $q, $CommonService, $POService, $CurrencyService, $ToastrService, $state, $stateParams, $TransactionService) {
         var guid = $stateParams.guid || '';
 
         $scope.po = {};
@@ -39,7 +39,8 @@
         function loadInitialData () {
             $q
                 .all([
-                    $POService.getPO(guid)
+                    $POService.getPO(guid),
+                    $POService.getTransactions(guid, '', 5)
                 ])
                 .then(initScope)
                 .catch(onError);
@@ -48,7 +49,18 @@
         loadInitialData();
     }
 
-    POCtrl.$inject = ['$scope', '$rootScope', '$q', '$CommonService', '$POService', '$CurrencyService', '$ToastrService', '$state', '$stateParams'];
+    POCtrl.$inject = [
+        '$scope',
+        '$rootScope',
+        '$q',
+        '$CommonService',
+        '$POService',
+        '$CurrencyService',
+        '$ToastrService',
+        '$state',
+        '$stateParams',
+        '$TransactionService'
+    ];
 
     angular
         .module('CashAppMy')

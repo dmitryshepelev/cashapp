@@ -23,7 +23,7 @@
             var result = $validator.validateForm($scope.transactionForm);
             if (result.status) {
                 var transaction = $CommonService.createFlatCopy($scope.transaction);
-                transaction.date = transaction.date.getDate();
+                transaction.date = transaction.date.getTime();
                 
                 $TransactionService.createIncomeTransaction(transaction)
                     .then(onCreateTransactionSuccess)

@@ -78,6 +78,14 @@ class Request(object):
 		"""
 		return self.__request.user
 
+	@property
+	def get_params(self):
+		"""
+		Request GET params
+		:return: {QueryDict}
+		"""
+		return self.__request.GET
+
 	def get(self, prop_name, default_type=dict):
 		"""
 		Returns a property of data if exist, else returns {}
