@@ -190,6 +190,7 @@ select {
 	&:hover {
 		color: @color-primary;
 	}
+	.cursor-pointer
 }
 
 tr {
@@ -309,4 +310,54 @@ tr {
 .input-group-addon {
 	background-color: transparent;
 	border: none;
+}
+
+ul.icon-list {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+
+	& li {
+		position: relative;
+		height: 40px;
+		vertical-align: middle;
+
+		& span.transaction-icon {
+			display: block;
+			float: left;
+			width: 20px !important;
+			height: 35px !important;
+			margin: 2px;
+			line-height: 35px !important;
+			text-align: center;
+		}
+
+		& .description {
+			height: 40px;
+			margin-left: 30px;
+
+			& .title {
+				padding: 2px 0 0;
+				margin: 0;
+			}
+
+			& small {
+				display: block;
+				margin-top: -4px;
+				color: #818a91;
+			}
+		}
+
+		& .value {
+			position: absolute;
+			top: 2px;
+			right: 5px;
+			text-align: right;
+
+			& strong {
+				display: block;
+				margin-top: -3px;
+			}
+		}
+	}
 }

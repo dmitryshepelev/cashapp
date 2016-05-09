@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from cashapp_api.common.manage_currency import manage_currency
-from cashapp_api.common.manage_po import manage_po, manage_po_transaction
+from cashapp_api.common.manage_po import manage_po
+from cashapp_api.common.manage_po_transactions import manage_po_transaction
 from cashapp_api.common.manage_po_types import manage_po_types
 from cashapp_api.common.manage_transaction import manage_transaction
 

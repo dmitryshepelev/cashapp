@@ -4,6 +4,7 @@
         var guid = $stateParams.guid || '';
 
         $scope.po = {};
+        $scope.transactions = [];
 
         $scope.incomeTransactionModal = function () {
             $state.go('my.po.details.transact', { type: 'income' })
@@ -28,19 +29,32 @@
             function initPO(po) {
                 $scope.po = po;
             }
+            
+            function initTransactions(transactions) {
+                $scope.transactions = transactions;
+            }
 
             data.forEach(function (item) {
                 if (item.data.hasOwnProperty('po')) {
-                    initPO(item.data.po)
+                    initPO(item.data.po);
+                } else if (item.data.hasOwnProperty('transactions')) {
+                    initTransactions(item.data.transactions);
                 }
             });
+
+            $rootScope.$on('Transaction.createSuccess', function (event, transaction) {
+                if (!Array.isArray($scope.transactions)) {
+                    $scope.transactions = [];
+                }
+                $scope.transactions.push(transaction);
+            })
         }
 
         function loadInitialData () {
             $q
                 .all([
                     $POService.getPO(guid),
-                    $POService.getTransactions(guid, '', 5)
+                    $POService.getTransactions(guid, { type: 'income', count: 5 })
                 ])
                 .then(initScope)
                 .catch(onError);

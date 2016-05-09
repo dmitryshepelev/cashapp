@@ -156,6 +156,9 @@ select.form-control:disabled {
 .row-action-td > .row-action-button:hover {
   color: #0275D8;
 }
+.action-text {
+  cursor: pointer;
+}
 .action-text:hover {
   color: #0275D8;
 }
@@ -261,4 +264,46 @@ tr:hover .row-action-td {
 .input-group-addon {
   background-color: transparent;
   border: none;
+}
+ul.icon-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+ul.icon-list li {
+  position: relative;
+  height: 40px;
+  vertical-align: middle;
+}
+ul.icon-list li span.transaction-icon {
+  display: block;
+  float: left;
+  width: 20px !important;
+  height: 35px !important;
+  margin: 2px;
+  line-height: 35px !important;
+  text-align: center;
+}
+ul.icon-list li .description {
+  height: 40px;
+  margin-left: 30px;
+}
+ul.icon-list li .description .title {
+  padding: 2px 0 0;
+  margin: 0;
+}
+ul.icon-list li .description small {
+  display: block;
+  margin-top: -4px;
+  color: #818a91;
+}
+ul.icon-list li .value {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  text-align: right;
+}
+ul.icon-list li .value strong {
+  display: block;
+  margin-top: -3px;
 }

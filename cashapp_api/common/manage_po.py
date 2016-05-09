@@ -4,6 +4,7 @@ from django.views.decorators.http import require_http_methods
 from cashapp.decorators import api_authorized, request_wrapper
 from cashapp.libs.Message import Message
 from cashapp.libs.ServerResponse import ServerResponse
+from cashapp_models.models.IncomeTransactionModel import IncomeTransaction
 from cashapp_models.models.POModel import PaymentObject
 from cashapp_my.forms.ManagePOForm import ManagePOForm
 
@@ -85,26 +86,3 @@ def manage_po(request, guid=None):
 			return ServerResponse.internal_server_error(message = Message.error('The error was occured during saving process'))
 
 		return ServerResponse.created(data = {field_name: po.serialize()})
-
-
-@api_authorized()
-@require_http_methods(['GET'])
-@request_wrapper()
-def manage_po_transaction(request, guid):
-	"""
-	Gets po assoiciated transactions
-	:param request:
-	:param guid:
-	:return:
-	"""
-	try:
-		payment_object = request.user.paymentobject_set.get(guid=guid)
-	except ObjectDoesNotExist as e:
-		return ServerResponse.not_found(message=Message.error('The object {guid} is\'n found'.format(guid=guid)))
-
-	transaction_type = request.get_params.get('type', None)
-	count = request.get_params.get('count', None)
-
-	transactions = payment_object.get_transactions(transaction_type, count)
-
-	return ServerResponse.ok(data={'transactions': [t.serialize() for t in transactions]})

@@ -1,6 +1,6 @@
 (function (angular) {
 
-    function TransactModalIncomeCtrl ($scope, $rootScope, $q, $CommonService, $POService, $TransactionService, $ToastrService, $state, $stateParams, $validator) {
+    function TransactModalIncomeCtrl ($scope, $rootScope, $q, $CommonService, $POService, $TransactionService, $ToastrService, $uibModalInstance, $stateParams, $validator) {
         var poGuid = $stateParams.guid || '';
 
         $scope.isPOPredefined = poGuid ? true : false;
@@ -13,7 +13,9 @@
          * Callback to execute on success creation
          */
         function onCreateTransactionSuccess(response) {
-            console.log(response);
+            var transaction = response.data.transaction;
+            $rootScope.$broadcast('Transaction.createSuccess', transaction);
+            $uibModalInstance.close();
         }
 
         /**
@@ -76,7 +78,7 @@
         loadInitialData();
     }
 
-    TransactModalIncomeCtrl.$inject = ['$scope', '$rootScope', '$q', '$CommonService', '$POService', '$TransactionService', '$ToastrService', '$state', '$stateParams', '$validator'];
+    TransactModalIncomeCtrl.$inject = ['$scope', '$rootScope', '$q', '$CommonService', '$POService', '$TransactionService', '$ToastrService', '$uibModalInstance', '$stateParams', '$validator'];
 
     angular
         .module('CashAppMy')

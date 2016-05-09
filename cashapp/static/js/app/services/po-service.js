@@ -33,14 +33,17 @@
             },
             /**
              * Get associated transactions
-             * @param guid
-             * @param type
-             * @param count
+             * @param guid: po guid
+             * @param params: {}
              */
-            getTransactions: function (guid, type, count) {
-                var params = $CommonService.encodeQueryData({ type: type, count: count });
-                var url = guid + '/transactions/';
-                return $http.get(baseUrl + url + (params ? '?' + params : ''));
+            getTransactions: function (guid, params) {
+                var defaultParams = {};
+                if (angular.isObject(params)) {
+                    angular.extend(defaultParams, params)    
+                }
+                var paramsString = $CommonService.encodeQueryData(defaultParams);
+                var url = guid + '/transactions/' + (paramsString ? '?' + paramsString : '');
+                return $http.get(baseUrl + url);
             }
         }
     }
