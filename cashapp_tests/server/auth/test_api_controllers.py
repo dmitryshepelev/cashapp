@@ -20,8 +20,6 @@ class TestSignUp(TestCase):
 			'confirm_password': '1234567890'
 		}
 
-		User.objects.all().delete()
-
 	def test_sign_up_bad_request(self):
 		"""
 		Test to call status 400
@@ -37,7 +35,9 @@ class TestSignUp(TestCase):
 		Test to call status 200. New user created
 		"""
 		users_count = len(User.objects.all())
-		response = self.client.post(self.url, self.data, content_type=self.request_content_type)
+		post_data = self.data
+		post_data['username'] = 'exampler_1'
+		response = self.client.post(self.url, post_data, content_type=self.request_content_type)
 
 		self.assertEqual(response.status_code, 200, response.content)
 		self.assertEqual(len(User.objects.all()), users_count + 1, 'User dosen\'t created')

@@ -45,12 +45,19 @@ class IncomeTransaction(ModelBase, TransactionModelBase):
 		serialized['type'] = 'income'
 		return serialized
 
-	def set_register_value(self, register_record):
+	def create_register_record(self):
 		"""
-		Set register value
-		:param register_record:
-		:return:
+		Overrides base class method
+		:return: {PORegister} instance
 		"""
-		super(IncomeTransaction, self).set_register_value(register_record)
+		last_register_record = self.payment_object.get_last_register_record()
 
+		from cashapp_models.models.PORegisterModel import PORegister
+		register_record = PORegister(
+			payment_object_id = self.payment_object.guid,
+			value = last_register_record.value if last_register_record else Decimal(0),
+			date = self.date
+		)
 		register_record.value += Decimal(self.value)
+
+		return register_record

@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
 from django.views.decorators.http import require_http_methods
 
 from cashapp.decorators import request_wrapper, api_authorized
@@ -43,11 +45,18 @@ def manage_transaction(request, transaction_type = None):
 		if form.errors:
 			return ServerResponse.bad_request(data = form.errors)
 
-		model = transaction.create_model_instance(request.user)
-		TransactionStatus.set_success(model)
-		model.save()
+		try:
+			model = transaction.create_model_instance(request.user)
+			TransactionStatus.set_success(model)
+			model.save()
 
-		register_record = model.payment_object.create_register_record(model)
+		except IntegrityError as e:
+			return ServerResponse.bad_request(message = 'Paymnet object does not exist')
+
+		except Exception as e:
+			return ServerResponse.bad_request(message = 'Invalid POST data')
+
+		register_record = model.create_register_record()
 		register_record.save()
 
-		return ServerResponse.ok(data={field_name: model.serialize()})
+		return ServerResponse.created(data={field_name: model.__class__.objects.get(guid=model.guid).serialize()})

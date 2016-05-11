@@ -1,18 +1,7 @@
 from django.db import models
 
+from cashapp_models.managers.TransactionStatusManager import TransactionStatusManager
 from cashapp_models.models.ModelBase import ModelBase
-
-
-class TransactionStatusManager(models.Manager):
-	"""
-	Model manager
-	"""
-	def get_success_status(self):
-		"""
-		Returns success transaction status
-		:return:
-		"""
-		return self.get(name = 'success')
 
 
 class TransactionStatus(ModelBase):

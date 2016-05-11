@@ -1,5 +1,3 @@
-from itertools import chain
-
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Max
@@ -7,10 +5,9 @@ from django.db.models import Max
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.ModelBase import ModelBase
 from cashapp_models.models.POTypeModel import POType
-from cashapp_my.libs.IRegistrable import IRegistrable
 
 
-class PaymentObject(ModelBase, IRegistrable):
+class PaymentObject(ModelBase):
 	"""
 	Represents Payment object table
 	"""
@@ -55,32 +52,12 @@ class PaymentObject(ModelBase, IRegistrable):
 															use_natural_primary_keys)
 		return serialized
 
-	def create_register_record(self, transaction):
-		"""
-		Creates {PORegister} record
-		:param transaction: {TransactionModelBase} instance
-		:return: {PORegister} instance
-		"""
-		super(PaymentObject, self).create_register_record(transaction)
-
-		last_register_record = self.get_last_register_record()
-
-		from cashapp_models.models.PORegisterModel import PORegister
-		register_record = PORegister(
-			payment_object_id=self.guid,
-			value=last_register_record.value if last_register_record else .0
-		)
-		transaction.set_register_value(register_record)
-		transaction.set_register_date(register_record)
-
-		return register_record
-
 	def get_last_register_record(self):
 		"""
 		Overrides base class method
 		:return: {PORegister} instance
 		"""
-		return self.poregister_set.annotate(max_date = Max('creation_datetime')).first()
+		return self.poregister_set.annotate(max_date = Max('creation_datetime')).last()
 
 	def get_protected_fields(self):
 		"""

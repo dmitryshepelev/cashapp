@@ -19,23 +19,9 @@ class TransactionModelBase(models.Model):
 	class Meta:
 		abstract = True
 
-	def set_register_value(self, register_record):
+	def create_register_record(self):
 		"""
-		Set register record value.
-		To be overrides in child classes
-		:param register_record: {RegisterModelBase} instance
-		:return:
+		Needs to be override
+		:return: RegisterModelBase manager
 		"""
-		if not isinstance(register_record, RegisterModelBase):
-			raise TypeError('Argument is not an instance of RegisterModelBase type')
-
-	def set_register_date(self, register_record):
-		"""
-		Set register record date. Register record date is equals to transaction date
-		:param register_record: {RegisterModelBase} instance
-		:return:
-		"""
-		if not isinstance(register_record, RegisterModelBase):
-			raise TypeError('Argument is not an instance of RegisterModelBase type')
-
-		register_record.date = self.date
+		raise NotImplementedError()

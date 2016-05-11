@@ -51,7 +51,7 @@ class TestManage_po(TestCase):
 		self.assertEqual(response.status_code, 404, response.content)
 
 		content = json.loads(response.content)
-		self.assertEqual(content.get('message'), 'The object {guid} is\'n found'.format(guid=guid))
+		self.assertEqual(content.get('message').get('text'), 'The object {guid} is\'n found'.format(guid=guid))
 
 	def test_delete_po(self):
 		response = self.client.delete(self.url, content_type = self.request_content_type)
@@ -104,7 +104,7 @@ class TestManage_po(TestCase):
 		self.assertEqual(response.status_code, 500, response.content)
 
 		content = json.loads(response.content)
-		self.assertEqual(content.get('message'), 'The error was occured during saving process')
+		self.assertEqual(content.get('message').get('text'), 'The error was occured during saving process')
 
 	def test_update_po_success(self):
 		data = {

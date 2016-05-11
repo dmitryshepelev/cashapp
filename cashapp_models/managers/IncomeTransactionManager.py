@@ -12,3 +12,4 @@ class IncomeTransactionManager(TransactionModelBaseManager):
 		:return:
 		"""
 		return self.filter(payment_object = payment_object).order_by('-date')
+

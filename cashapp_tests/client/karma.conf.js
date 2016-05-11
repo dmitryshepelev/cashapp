@@ -40,6 +40,7 @@ module.exports = function(config) {
             '../cashapp/static/js/libs/angular-ui-tooltip.js',
             '../cashapp/static/js/libs/angular-ui-stackedMap.js',
             '../cashapp/static/js/libs/angular-ui-switch.min.js',
+            '../cashapp/static/js/libs/angular-ui-datetimepicker.min.js',
 
             '../cashapp/static/js/app/services-module.js',
             '../cashapp/static/js/app/directives/*.js',
@@ -53,6 +54,10 @@ module.exports = function(config) {
             '../cashapp_sett/static/js/app/controllers/general-controller.js',
             '../cashapp_my/static/js/app/my-module.js',
             '../cashapp_my/static/js/app/controllers/po-controller.js',
+            '../cashapp_my/static/js/app/controllers/dashboard-controller.js',
+            '../cashapp_my/static/js/app/controllers/po-details-controller.js',
+            '../cashapp_my/static/js/app/controllers/po-modal-controller.js',
+            '../cashapp_my/static/js/app/controllers/transaction-modal-income-controller.js',
 
             'client/auth/**/*.js',
             'client/sett/**/*.js',

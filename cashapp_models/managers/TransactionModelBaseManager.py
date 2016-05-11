@@ -7,7 +7,7 @@ class TransactionModelBaseManager(models.Manager):
 	"""
 	def get_po_associated(self, payment_object):
 		"""
-		Needs to be overrides
+		Needs to be override
 		Returns associated transactions
 		:param payment_object:
 		:return:
