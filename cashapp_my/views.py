@@ -79,3 +79,14 @@ def transaction_modal(request, transaction_type):
 	:return: HttpResponse
 	"""
 	return render(request, 'transaction_modal_{type}.html'.format(type=transaction_type))
+
+
+@require_http_methods(['GET'])
+@login_required
+def category(request):
+	"""
+	Category page
+	:param request: http request
+	:return: HttpResponse
+	"""
+	return render(request, 'category.html', {})

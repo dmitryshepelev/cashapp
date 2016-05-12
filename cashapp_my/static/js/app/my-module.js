@@ -74,6 +74,14 @@
                             })
                 }]
             })
+            .state('my.category', {
+                url: '/category',
+                templateUrl: _baseUrl + '/category/',
+                controller: 'category-controller',
+                data: {
+                    title: 'category_title'
+                }
+            })
     }
 
     angular
