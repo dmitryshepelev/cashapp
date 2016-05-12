@@ -66,5 +66,7 @@
 	"close": "Close",
 	"description": "Description",
 	"sum": "Amount",
-	"create": "Create"
+	"create": "Create",
+	"recent_transactions": "Recent transactions",
+	"no_transactions": "No transactions"
 }

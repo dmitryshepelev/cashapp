@@ -5,6 +5,7 @@
 
         $scope.po = {};
         $scope.transactions = [];
+        $scope.register = {};
 
         $scope.incomeTransactionModal = function () {
             $state.go('my.po.details.transact', { type: 'income' })
@@ -29,14 +30,37 @@
             function initPO(po) {
                 $scope.po = po;
             }
-            
+
+            /**
+             * Init Transactions list
+             * @param transactions
+             */
             function initTransactions(transactions) {
                 $scope.transactions = transactions;
+            }
+
+            /**
+             * Init register form http response
+             * @param value
+             */
+            function initRegisterFormResponse(value) {
+                $scope.register = value.data.register;
+            }
+
+            /**
+             * Update register
+             */
+            function updateRegister() {
+                $POService.getLastRegisterRecord(guid)
+                    .then(initRegisterFormResponse)
+                    .catch(onError)
             }
 
             data.forEach(function (item) {
                 if (item.data.hasOwnProperty('po')) {
                     initPO(item.data.po);
+                } else if (item.data.hasOwnProperty('register')) {
+                    initRegisterFormResponse(item);
                 } else if (item.data.hasOwnProperty('transactions')) {
                     initTransactions(item.data.transactions);
                 }
@@ -47,6 +71,7 @@
                     $scope.transactions = [];
                 }
                 $scope.transactions.push(transaction);
+                updateRegister();
             })
         }
 
@@ -54,6 +79,7 @@
             $q
                 .all([
                     $POService.getPO(guid),
+                    $POService.getLastRegisterRecord(guid),
                     $POService.getTransactions(guid, { type: 'income', count: 5 })
                 ])
                 .then(initScope)

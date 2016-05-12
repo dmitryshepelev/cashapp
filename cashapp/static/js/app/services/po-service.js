@@ -44,6 +44,14 @@
                 var paramsString = $CommonService.encodeQueryData(defaultParams);
                 var url = guid + '/transactions/' + (paramsString ? '?' + paramsString : '');
                 return $http.get(baseUrl + url);
+            },
+            /**
+             * Get last associated po register record
+             * @param guid po guid
+             */
+            getLastRegisterRecord: function (guid) {
+                var url = guid + '/register/?last=true';
+                return $http.get(baseUrl + url);
             }
         }
     }

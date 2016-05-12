@@ -361,3 +361,51 @@ ul.icon-list {
 		}
 	}
 }
+
+.popover {
+	font-family: inherit;
+
+	& > .arrow, .arrow::after {
+		position: absolute;
+		display: block;
+		width: 0;
+		height: 0;
+		border-color: transparent;
+		border-style: solid;
+		border-width: 10px;
+	}
+}
+
+.popover.bottom {
+	& > .arrow {
+		top: -11px;
+		left: 50%;
+		margin-left: -11px;
+		border-top-width: 0;
+		border-bottom-color: #999;
+		border-bottom-color: rgba(0, 0, 0, .25);
+
+		&::after {
+	    	top: 1px;
+			margin-left: -10px;
+			content: " ";
+			border-top-width: 0;
+			border-bottom-color: #fff;
+		}
+	}
+}
+
+.icon-btn-group {
+	& > .btn {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+
+		&:first-child {
+			padding-left: 1rem;
+		}
+
+		&:last-child {
+			padding-right: 1em;
+		}
+	}
+}

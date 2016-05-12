@@ -66,5 +66,7 @@
 	"close": "Закрыть",
 	"description": "Описание",
 	"sum": "Сумма",
-	"create": "Создать"
+	"create": "Создать",
+	"recent_transactions": "Недавние транзакции",
+	"no_transactions": "Нет транзакций"
 }

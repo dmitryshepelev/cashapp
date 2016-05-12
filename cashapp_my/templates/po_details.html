@@ -4,24 +4,30 @@
 			<po-primarity-icon is-primary="po.primary"></po-primarity-icon>
 			[[ po.name ]]
 			<small>[[ po.type.name | translate ]]</small>
-			<div class="pull-md-right">
+			<div class="btn-group icon-btn-group">
 				<button type="button" class="btn btn-link" uib-tooltip="[[ 'income' | translate ]]" ng-click="incomeTransactionModal()">
-					<span class="lnr lnr-plus-circle cursor-default"></span>
+					<span class="lnr lnr-arrow-down-circle cursor-default"></span>
+				</button>
+				<button type="button" class="btn btn-link" uib-tooltip="[[ 'expense' | translate ]]" ng-click="expenseTransactionModal()">
+					<span class="lnr lnr-arrow-up-circle cursor-default"></span>
 				</button>
 			</div>
-
+			<div class="pull-md-right">
+				<span>[[ register.value | ngCurrency: po.currency.code : po.currency.dec ]]</span>
+			</div>
 		</h3>
 	</div>
 	<div class="form-group col-lg-12">
         <div class="col-lg-4">
             <ul class="icon-list">
-                <li ng-repeat="transaction in transactions | orderBy: '-date' track by $index">
+	            <li><label class="text-uppercase text-muted">[[ 'recent_transactions' | translate ]]</label></li>
+                <li ng-repeat="transaction in transactions | orderBy: '-date' | limitTo: 5 track by $index">
                     <transaction-icon type="transaction.type"></transaction-icon>
                     <div class="description">
                         <div class="title"><span class="action-text">[[ transaction.date | date: 'MM/dd/yyyy HH:mm']]</span></div>
                         <small>
                             [[ transaction.description | limitTo: '16' ]][[ transaction.description.length > 16 ? '...' : '' ]]
-                            <span uib-tooltip="[[ transaction.description ]]" tooltip-placement="bottom" ng-if="transaction.description.length > 16" class="lnr lnr-question-circle"></span>
+                            <span uib-tooltip="[[ transaction.description ]]" tooltip-placement="bottom" ng-if="transaction.description.length > 16" class="lnr lnr-question-circle action-text"></span>
                         </small>
                     </div>
                     <div class="value">

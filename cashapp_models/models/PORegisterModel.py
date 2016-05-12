@@ -13,3 +13,19 @@ class PORegister(ModelBase, RegisterModelBase):
 
 	class Meta:
 		app_label = 'cashapp_models'
+
+	def serialize(self, format = 'json', include_fields = (), exclude_fields = (), use_natural_foreign_keys = True,
+					use_natural_primary_keys = True):
+		"""
+		Overrides base class method
+		:param format:
+		:param include_fields:
+		:param exclude_fields:
+		:param use_natural_foreign_keys:
+		:param use_natural_primary_keys:
+		:return:
+		"""
+		exclude_fields = tuple(set(exclude_fields) | {'payment_object'})
+		serialized = super(PORegister, self).serialize(format, include_fields, exclude_fields, use_natural_foreign_keys,
+														use_natural_primary_keys)
+		return serialized
