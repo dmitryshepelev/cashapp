@@ -1,0 +1,44 @@
+{% extends 'modal/modal_base.html' %}
+
+{% block modal-header %}
+	<h5 class="modal-title">[[ 'category' | translate ]]</h5>
+{% endblock %}
+
+{% block modal-body %}
+<form novalidate name="categoryForm">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'name' | translate ]]</label>
+				<input class="form-control form-control-sm" ng-model="category.name" required name="name" autocomplete="off">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'subcategory' | translate ]]:</label>
+			</div>
+		</div>
+		<div class="col-sm-4 col-xs-12">
+			<div class="form-group" align="center">
+				<switch ng-model="category.isSub" class="switch-default switch-primary pull-sm-right pull-xs-none"></switch>
+			</div>
+		</div>
+	</div>
+</form>
+
+{% endblock %}
+
+{% block modal-footer %}
+	<button type="button" class="btn btn-link" ng-click="">
+		<span class="lnr lnr-plus-circle"></span> [[ 'create' | translate ]]
+	</button>
+{% endblock %}

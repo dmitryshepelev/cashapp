@@ -90,3 +90,14 @@ def category(request):
 	:return: HttpResponse
 	"""
 	return render(request, 'category.html', {})
+
+
+@require_http_methods(['GET'])
+@login_required
+def category_modal(request):
+	"""
+	Category modal template
+	:param request: http request
+	:return: HttpResponse
+	"""
+	return render(request, 'category_modal.html', {})

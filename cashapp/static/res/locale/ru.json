@@ -69,5 +69,9 @@
 	"sum": "Сумма",
 	"create": "Создать",
 	"recent_transactions": "Недавние транзакции",
-	"no_transactions": "Нет транзакций"
+	"no_transactions": "Нет транзакций",
+	"categories": "Категории",
+	"add_category": "Add category",
+	"category": "Категория",
+	"subcategory": "Подкатегория"
 }

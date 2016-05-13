@@ -69,5 +69,9 @@
 	"sum": "Amount",
 	"create": "Create",
 	"recent_transactions": "Recent transactions",
-	"no_transactions": "No transactions"
+	"no_transactions": "No transactions",
+	"categories": "Categories",
+	"add_category": "Add category",
+	"category": "Category",
+	"subcategory": "Sub-category"
 }

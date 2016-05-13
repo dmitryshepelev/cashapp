@@ -10,6 +10,7 @@ class Currency(ModelBase):
 	hex = models.CharField(max_length=10)
 	dec = models.CharField(max_length=20)
 	label = models.CharField(max_length=30, null=True)
+	left_side = models.BooleanField(null = False, default = False)
 
 	class Meta:
 		app_label = 'cashapp_models'
@@ -23,7 +24,8 @@ class Currency(ModelBase):
 			'code': self.code,
 			'hex': self.hex,
 			'dec': self.dec,
-			'label': self.label
+			'label': self.label,
+			'left_side': self.left_side
 		}
 		natural_keys = super(Currency, self).natural_key(self_keys)
 		return natural_keys

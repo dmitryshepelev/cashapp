@@ -78,7 +78,18 @@
         loadInitialData();
     }
 
-    TransactModalIncomeCtrl.$inject = ['$scope', '$rootScope', '$q', '$CommonService', '$POService', '$TransactionService', '$ToastrService', '$uibModalInstance', '$stateParams', '$validator'];
+    TransactModalIncomeCtrl.$inject = [
+        '$scope',
+        '$rootScope',
+        '$q',
+        '$CommonService',
+        '$POService',
+        '$TransactionService',
+        '$ToastrService',
+        '$uibModalInstance',
+        '$stateParams',
+        '$validator'
+    ];
 
     angular
         .module('CashAppMy')

@@ -167,3 +167,5 @@ NOSE_ARGS = [
 	'--cover-package=cashapp,cashapp_auth,cashapp_api',
 	'--cover-html',
 ]
+
+MAX_CATEGORY_NESTING = 10

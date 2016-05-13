@@ -82,6 +82,19 @@
                     title: 'category_title'
                 }
             })
+            .state('my.category.action', {
+                url: '/{action}/{guid}',
+                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'category/modal/',
+                        controller: 'category-modal-controller'
+                    })
+                        .result
+                            .finally(function () {
+                                $state.go('my.category');
+                            })
+                }]
+            })
     }
 
     angular

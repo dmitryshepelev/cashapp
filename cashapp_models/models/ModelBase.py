@@ -1,10 +1,8 @@
 import hashlib
 import json
 import random
-from ast import literal_eval
 from collections import defaultdict
 
-from datetime import datetime
 from django.core import serializers
 from django.db import models
 from django.utils import timezone
