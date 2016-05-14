@@ -18,12 +18,11 @@
 				    '<span ng-if="rightIcon" class="input-group-addon">[[ currency.dec | decUnicode ]]</span>' +
 				'</div>',
             link: function (scope, element, attrs, controller, transcludeFn) {
-                // TODO: store side of currency in db
                 scope.$watch(function () {
                     return scope.currency;
                 }, function (value) {
                     if (value) {
-                        if (value.code == 'USD' || value.code == 'EUR') {
+                        if (value.left_side) {
                             scope.leftIcon = true;
                         } else {
                             scope.rightIcon = true;

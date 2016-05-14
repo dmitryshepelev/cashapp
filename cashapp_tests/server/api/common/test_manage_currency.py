@@ -1,4 +1,4 @@
-from ast import literal_eval
+import json
 from unittest import TestCase
 
 from django.test import Client
@@ -21,7 +21,7 @@ class TestManage_currency(TestCase):
 
 		self.assertEqual(response.status_code, 200, response.content)
 
-		currencies = literal_eval(response.content)
+		currencies = json.loads(response.content)
 		self.assertIsInstance(currencies, dict, currencies)
 
 		key = 'currencies'

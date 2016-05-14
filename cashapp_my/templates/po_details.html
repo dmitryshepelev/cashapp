@@ -24,7 +24,7 @@
                 <li ng-repeat="transaction in transactions | orderBy: '-date' | limitTo: 5 track by $index">
                     <transaction-icon type="transaction.type"></transaction-icon>
                     <div class="description">
-                        <div class="title"><span class="action-text">[[ transaction.date | date: 'MM/dd/yyyy HH:mm']]</span></div>
+                        <div class="title"><span class="action-text">[[ transaction.date | date: 'dd/MM/yyyy HH:mm']]</span></div>
                         <small>
                             [[ transaction.description | limitTo: '16' ]][[ transaction.description.length > 16 ? '...' : '' ]]
                             <span uib-tooltip="[[ transaction.description ]]" tooltip-placement="bottom" ng-if="transaction.description.length > 16" class="lnr lnr-question-circle action-text"></span>

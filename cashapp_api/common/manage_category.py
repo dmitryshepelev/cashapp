@@ -18,13 +18,16 @@ def manage_category(request):
 	:param request: HttpRequest
 	:return: ServerResponse
 	"""
+	field_name = 'category'
+
 	if request.is_POST:
 		form = CategoryForm(request.data)
 
 		if form.errors:
 			return ServerResponse.bad_request(data = form.errors)
 
-		parent_guid = request.data.get('guid', None)
+		name = request.data.get('name')
+		parent_guid = request.data.get('parent_guid', None)
 		if parent_guid:
 			# create subcategory
 			try:
@@ -33,16 +36,15 @@ def manage_category(request):
 				return ServerResponse.not_found(message = Message.error('Parent category does not exist'))
 
 			try:
-				category = Category.objects.create_sub(request.data.get('name'), parent_category)
+				category = Category.objects.create_sub(name, parent_category)
 			except CreationError as e:
 				return ServerResponse.internal_server_error(message = Message.error(e.message))
 
 		else:
 			# create root level category
-			category = Category.objects.create_root(request.data.get('name'))
+			category = Category.objects.create_root(name)
 
 		category.owner = request.user
 		category.save()
 
-		# TODO: return category
-		pass
+		return ServerResponse.created(data = {field_name: category.serialize()})

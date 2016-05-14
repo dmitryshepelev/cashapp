@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 
+from cashapp_models.models.CategoryLevelModel import CategoryLevel
+from cashapp_models.models.CategoryModel import Category
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.POModel import PaymentObject
 from cashapp_models.models.POTypeModel import POType
@@ -68,4 +70,25 @@ class Dummies():
 			dummy = TransactionStatus.objects.get(name=name)
 		except Exception as e:
 			dummy = TransactionStatus.objects.create(name=name)
+		return dummy
+
+	@staticmethod
+	def get_or_create_root_category_level():
+		try:
+			dummy = CategoryLevel.objects.get(name='L0')
+		except Exception as e:
+			dummy = CategoryLevel.objects.create(name='L0')
+		return dummy
+
+	@staticmethod
+	def get_or_create_root_category():
+		try:
+			dummy = Category.objects.get(name = 'test_root')
+		except Exception as e:
+			dummy = Category.objects.create(
+				name='test_root',
+				parent_guid=None,
+				owner=Dummies.get_or_create_user(),
+				level=Dummies.get_or_create_root_category_level()
+			)
 		return dummy

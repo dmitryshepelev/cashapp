@@ -16,6 +16,19 @@ class CategoryLevel(ModelBase):
 	class Meta:
 		app_label = 'cashapp_models'
 
+	def natural_key(self, *args, **kwargs):
+		"""
+		Overrides base class method
+		:param args:
+		:param kwargs:
+		:return:
+		"""
+		self_keys = {
+			'name': self.name
+		}
+		natural_keys = super(CategoryLevel, self).natural_key(self_keys)
+		return natural_keys
+
 	def next_category(self):
 		"""
 		Returns next level
