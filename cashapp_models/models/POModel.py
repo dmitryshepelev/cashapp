@@ -65,4 +65,4 @@ class PaymentObject(ModelBase):
 		:return:
 		"""
 		fields = super(PaymentObject, self).get_protected_fields()
-		return fields + ('user_id',)
+		return tuple(set(fields) | {'user_id'})

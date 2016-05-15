@@ -9,7 +9,7 @@ from cashapp_my.forms.ManagePOForm import ManagePOForm
 
 
 @api_authorized()
-@require_http_methods(['GET', 'PUT', 'POST', 'DELETE'])
+@require_http_methods(['GET', 'PUT', 'POST'])
 @request_wrapper()
 def manage_po(request, guid=None):
 	"""
@@ -44,9 +44,6 @@ def manage_po(request, guid=None):
 				result[field_name].append(po.serialize())
 
 			return ServerResponse.ok(data=result)
-
-	if request.is_DELETE:
-		return ServerResponse.bad_request()
 
 	if request.is_PUT:
 		po_guid = request.data.get('guid', None)

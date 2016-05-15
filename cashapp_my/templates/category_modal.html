@@ -14,31 +14,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="form-group">
-
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-8 col-xs-12">
-			<div class="form-group">
-				<label class="form-control-label">[[ 'subcategory' | translate ]]:</label>
-			</div>
-		</div>
-		<div class="col-sm-4 col-xs-12">
-			<div class="form-group" align="center">
-				<switch ng-model="category.isSub" class="switch-default switch-primary pull-sm-right pull-xs-none"></switch>
-			</div>
-		</div>
-	</div>
 </form>
 
 {% endblock %}
 
 {% block modal-footer %}
-	<button type="button" class="btn btn-link" ng-click="">
-		<span class="lnr lnr-plus-circle"></span> [[ 'create' | translate ]]
+	<button type="button" class="btn btn-link" ng-click="manageCategory()">
+		<span class="lnr lnr-plus-circle"></span> [[ isEditMode ? 'save' : 'add' | translate ]]
 	</button>
 {% endblock %}

@@ -83,7 +83,7 @@
                 }
             })
             .state('my.category.action', {
-                url: '/{action}/{guid}',
+                url: '/{action}/{subguid}',
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'category/modal/',
@@ -92,6 +92,27 @@
                         .result
                             .finally(function () {
                                 $state.go('my.category');
+                            })
+                }]
+            })
+            .state('my.category.details', {
+                url: '/{guid}',
+                templateUrl: _baseUrl + '/category/',
+                controller: 'category-controller',
+                data: {
+                    title: 'category_title'
+                }
+            })
+            .state('my.category.details.action', {
+                url: '/{action}/{subguid}',
+                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'category/modal/',
+                        controller: 'category-modal-controller'
+                    })
+                        .result
+                            .finally(function () {
+                                $state.go('my.category.details', { guid: $stateParams.guid });
                             })
                 }]
             })

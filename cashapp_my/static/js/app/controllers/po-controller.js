@@ -41,17 +41,7 @@
          * @private
          */
         function _getIndexByGuid(guid) {
-            if (!guid) {
-                throw new Error('Guid must be defined')
-            }
-            var po = $scope.pos.data.filter(function (item) {
-                return item.guid === guid;
-            });
-
-            if (po.length > 1) {
-                throw new Error('Multiple objects found');
-            }
-            return po.length == 1 ? $scope.pos.data.indexOf(po[0]) : -1;
+            return $CommonService.getIndexByField($scope.pos.data, guid);
         }
 
         /**

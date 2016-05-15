@@ -44,3 +44,16 @@ class CategoryManager(models.Manager):
 			level = level
 		)
 		return category
+
+	def get_roots(self, *args, **kwargs):
+		"""
+		Returns categories with root level
+		:param args:
+		:param kwargs:
+		:return:
+		"""
+		root_level = CategoryLevel.objects.get_root_level()
+		kwargs['level_id'] = root_level.guid
+
+		categories = self.filter(*args, **kwargs)
+		return categories

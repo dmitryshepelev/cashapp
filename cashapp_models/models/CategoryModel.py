@@ -34,4 +34,35 @@ class Category(ModelBase):
 		exclude_fields = tuple(set(exclude_fields) | {'owner'})
 		serialized = super(Category, self).serialize(format, include_fields, exclude_fields, use_natural_foreign_keys,
 															use_natural_primary_keys)
+		serialized['subs_count'] = len(self.get_subs())
 		return serialized
+
+	def get_subs(self, *args, **kwargs):
+		"""
+		Get sub categories
+		:param args:
+		:param kwargs:
+		:return:
+		"""
+		kwargs['parent_guid'] = self.guid
+
+		categories = Category.objects.filter(*args, **kwargs)
+		return categories
+
+	def get_parent(self):
+		"""
+		Get parent
+		:return: {CategoryModel} instance
+		"""
+		if self.parent_guid:
+			return Category.objects.get(guid = self.parent_guid)
+		else:
+			return None
+
+	def get_protected_fields(self):
+		"""
+		Overrides base class method
+		:return:
+		"""
+		fields = super(Category, self).get_protected_fields()
+		return tuple(set(fields) | {'level_id', 'parent_guid'})

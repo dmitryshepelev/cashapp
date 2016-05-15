@@ -1,20 +1,39 @@
-<div>
+<ui-view>
 	<div class="form-group">
-		<h3>
-			[[ 'categories' | translate ]]
-		</h3>
+		<h3 ng-if="!category.name">[[ 'categories' | translate ]]</h3>
+        <h3 ng-if="category.name">
+            [[ category.name ]]
+        </h3>
 	</div>
 	<div class="form-group col-lg-12">
 		<div class="row">
 			<div class="col-lg-12 indent-2">
-                <div class="card text-xs-center canvas-border">
+                <div class="card text-xs-center canvas-border" ng-if="category.subs.length === 0">
                     <div class="card-block">
 	                    <div class="card-title text-muted m-b-0">
-		                    <a ui-sref="my.category.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add_category' | translate ]]</a>
+                            <a ng-if="isRoot" ui-sref="my.category.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add_category' | translate ]]</a>
+		                    <a ng-if="!isRoot" ui-sref="my.category.details.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add_category' | translate ]]</a>
 	                    </div>
                     </div>
+                </div>
+                <div ng-if="category.subs.length > 0">
+                    <div class="action-buttons-group">
+						<div class="pull-sm-right">
+                            <a ng-if="isRoot" ui-sref="my.category.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]</a>
+		                    <a ng-if="!isRoot" ui-sref="my.category.details.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]</a>
+						</div>
+					</div>
+                    <table class="table table-hover table-sm table-responsive">
+                        <tbody>
+                            <tr class="cursor-pointer" ng-repeat="category in category.subs | orderBy: 'name' track by $index" ng-click="manage($event, category.guid)">
+                                <td></td>
+                                <td><span class="action-text" ng-click="details($event, category.guid)">[[ category.name ]]</span></td>
+                                <td>[[ category.subs_count > 0 ? category.subs_count : '' ]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 			</div>
 		</div>
 	</div>
-</div>
+</ui-view>

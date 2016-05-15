@@ -17,5 +17,6 @@ urlpatterns = [
 	url(r'^po/(?P<guid>[a-zA-z0-9]{40})/register/$', manage_po_register),
 	url(r'^transaction/$', manage_transaction),
 	url(r'^transaction/(?P<transaction_type>income|expense|transfer)/$', manage_transaction),
-	url(r'^category/$', manage_category)
+	url(r'^category/$', manage_category),
+	url(r'^category/(?P<guid>[a-zA-z0-9]{40})/$', manage_category)
 ]

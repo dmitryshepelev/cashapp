@@ -48,6 +48,26 @@
                     }
                 }
                 return copy;
+            },
+            /**
+             * Get instance index in array
+             * Default field name - 'guid'
+             */
+            getIndexByField: function (array, fieldValue, fieldName) {
+                fieldName = fieldName || 'guid';
+                
+                if (!fieldValue) {
+                    throw new Error('Field value must be defined')
+                }
+                
+                var obj = array.filter(function (item) {
+                    return item[fieldName] === fieldValue;
+                });
+                
+                if (obj.length > 1) {
+                    throw new Error('Multiple objects found');
+                }
+                return obj.length == 1 ? array.indexOf(obj[0]) : -1;
             }
         }
     }

@@ -104,4 +104,5 @@ class ModelBase(models.Model):
 			if prop in self.get_protected_fields():
 				continue
 
-			self.__dict__[prop] = data.get(prop)
+			if prop in self.__dict__.keys():
+				self.__dict__[prop] = data.get(prop)
