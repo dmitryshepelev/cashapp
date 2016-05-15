@@ -1,8 +1,15 @@
 <ui-view>
 	<div class="form-group">
-		<h3 ng-if="!category.name">[[ 'categories' | translate ]]</h3>
-        <h3 ng-if="category.name">
-            [[ category.name ]]
+		<h3>
+            <span ng-if="isRoot || !category.parent_guid" class="action-text" ng-click="up()">[[ 'categories' | translate ]]</span>
+            <span ng-if="category.parent_guid">
+                <small class="action-text" ng-click="up(true)"><span class="lnr lnr-layers"></span></small>
+                <small ng-if="!isRoot"><span class="lnr lnr-chevron-right"></span></small>
+                <span class="action-text" ng-click="up()">[[ category.parent.name ]]</span>
+
+            </span>
+            <small ng-if="!isRoot"><span class="lnr lnr-chevron-right"></span></small>
+            <span>[[ category.name ]]</span>
         </h3>
 	</div>
 	<div class="form-group col-lg-12">
@@ -25,9 +32,9 @@
 					</div>
                     <table class="table table-hover table-sm table-responsive">
                         <tbody>
-                            <tr class="cursor-pointer" ng-repeat="category in category.subs | orderBy: 'name' track by $index" ng-click="manage($event, category.guid)">
+                            <tr class="cursor-pointer" ng-repeat="category in category.subs | orderBy: 'name' track by $index" ng-click="details($event, category.guid)">
                                 <td></td>
-                                <td><span class="action-text" ng-click="details($event, category.guid)">[[ category.name ]]</span></td>
+                                <td><span class="action-text" ng-click="manage($event, category.guid)">[[ category.name ]]</span></td>
                                 <td>[[ category.subs_count > 0 ? category.subs_count : '' ]]</td>
                             </tr>
                         </tbody>

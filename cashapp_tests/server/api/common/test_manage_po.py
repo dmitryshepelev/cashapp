@@ -56,7 +56,7 @@ class TestManage_po(TestCase):
 	def test_delete_po(self):
 		response = self.client.delete(self.url, content_type = self.request_content_type)
 
-		self.assertEqual(response.status_code, 400)
+		self.assertEqual(response.status_code, 405)
 
 	def test_create_new_po_success(self):
 		post_data = {

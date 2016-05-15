@@ -27,6 +27,7 @@ def manage_category(request, guid = None):
 
 	if request.is_GET:
 		subs_field_name = 'subs'
+		parent_field_name = 'parent'
 
 		if guid:
 			try:
@@ -39,10 +40,10 @@ def manage_category(request, guid = None):
 			if request.request.GET.get(subs_field_name, False):
 				result[field_name][subs_field_name] = [s.serialize() for s in category.get_subs()]
 
-			if request.request.GET.get('parent', False):
+			if request.request.GET.get(parent_field_name, False):
 				parent_category = category.get_parent()
 
-				result[field_name]['parent'] = parent_category.serialize() if parent_category else None
+				result[field_name][parent_field_name] = parent_category.serialize() if parent_category else None
 
 			return ServerResponse.ok(data = result)
 

@@ -15,7 +15,16 @@
         function onError(response) {
             $ToastrService.messageFromResponse(response);
         }
-        
+
+        $scope.up = function (toRoot) {
+            var options = { reload: true };
+            if ($scope.category.parent_guid && !toRoot) {
+                $state.go('my.category.details', { guid: $scope.category.parent_guid }, options)
+            } else {
+                $state.go('my.category', {}, options)
+            }
+        };
+
         /**
          * Opens manage PO modal
          * @private
