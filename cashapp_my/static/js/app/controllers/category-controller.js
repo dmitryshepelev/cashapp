@@ -16,6 +16,10 @@
             $ToastrService.messageFromResponse(response);
         }
 
+        /**
+         * Go to up category
+         * @param toRoot go to root directly
+         */
         $scope.up = function (toRoot) {
             var options = { reload: true };
             if ($scope.category.parent_guid && !toRoot) {
@@ -31,12 +35,16 @@
          */
         $scope.manage = function($event, guid) {
             $event.stopImmediatePropagation();
+            var state = 'my.category';
+            var params = {};
             if (!guid) {
-                $ToastrService.error();
+                params.action = 'add';
+                state += ($scope.isRoot ? '.action' : '.details.action');
             } else {
-                var state = 'my.category.' + ($scope.isRoot ? '' : 'details.') + 'action';
-                $state.go(state, { action: 'edit', subguid: guid });
+                state = 'my.category.' + ($scope.isRoot ? '' : 'details.') + 'action';
+                params = { action: 'edit', subguid: guid };
             }
+            $state.go(state, params);
         };
 
         /**

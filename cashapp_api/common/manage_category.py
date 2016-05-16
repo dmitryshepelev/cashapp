@@ -52,10 +52,15 @@ def manage_category(request, guid = None):
 			return ServerResponse.ok(data = {field_name: {subs_field_name: [c.serialize() for c in categories]}})
 
 	if request.is_PUT:
+		form = CategoryForm(request.data)
+
+		if form.errors:
+			return ServerResponse.bad_request(data = form.errors)
+
 		category_guid = request.data.get('guid', None)
 
 		if not category_guid:
-			return ServerResponse.bad_request(message=Message.error('Guid is not defined'))
+			return ServerResponse.bad_request(message = Message.error('Guid is not defined'))
 
 		try:
 			category = Category.objects.get(guid = category_guid, owner_id = request.user.pk)

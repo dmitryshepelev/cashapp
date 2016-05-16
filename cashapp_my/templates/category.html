@@ -18,16 +18,14 @@
                 <div class="card text-xs-center canvas-border" ng-if="category.subs.length === 0">
                     <div class="card-block">
 	                    <div class="card-title text-muted m-b-0">
-                            <a ng-if="isRoot" ui-sref="my.category.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add_category' | translate ]]</a>
-		                    <a ng-if="!isRoot" ui-sref="my.category.details.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add_category' | translate ]]</a>
+		                    <button ng-click="manage($event)" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add_category' | translate ]]</button>
 	                    </div>
                     </div>
                 </div>
                 <div ng-if="category.subs.length > 0">
                     <div class="action-buttons-group">
 						<div class="pull-sm-right">
-                            <a ng-if="isRoot" ui-sref="my.category.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]</a>
-		                    <a ng-if="!isRoot" ui-sref="my.category.details.action({ action: 'add' })" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]</a>
+							<button ng-click="manage($event)" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]</button>
 						</div>
 					</div>
                     <table class="table table-hover table-sm table-responsive">

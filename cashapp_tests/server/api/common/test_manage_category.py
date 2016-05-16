@@ -1,3 +1,4 @@
+import json
 from unittest import TestCase
 
 from django.test import Client
@@ -28,6 +29,89 @@ class TestManage_category(TestCase):
 			self.post_data['name'] = name
 		if parent_guid:
 			self.post_data['parent_guid'] = parent_guid
+
+	def test_get_all_root_categories(self):
+		response = self.client.get(self.url, content_type=self.request_content_type)
+		self.assertEqual(response.status_code, 200, response.content)
+
+		root_count = len(Category.objects.get_roots(owner_id=self.user.pk))
+		self.assertIn('subs', response.content)
+
+		content = json.loads(response.content)
+		self.assertEqual(root_count, len(content['category']['subs']))
+
+	def test_get_category_by_guid_not_found(self):
+		response = self.client.get(self.url + self.root_category.guid[:5:] + 'test1/', content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 404, response.content)
+
+	def test_get_category_by_guid(self):
+		response = self.client.get(self.url + self.root_category.guid + '/', content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 200, response.content)
+		self.assertNotIn('"subs"', response.content)
+		self.assertNotIn('"parent"', response.content)
+		self.assertIn(self.root_category.guid, response.content)
+
+	def test_get_category_by_guid_with_subs(self):
+		response = self.client.get(self.url + self.root_category.guid + '/?subs=true', content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 200, response.content)
+		self.assertIn('"subs"', response.content)
+		self.assertNotIn('"parent"', response.content)
+		self.assertIn(self.root_category.guid, response.content)
+
+	def test_get_category_by_guid_with_parent(self):
+		response = self.client.get(self.url + self.root_category.guid + '/?parent=true', content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 200, response.content)
+		self.assertNotIn('"subs"', response.content)
+		self.assertIn('"parent"', response.content)
+		self.assertIn(self.root_category.guid, response.content)
+
+	def test_get_category_by_guid_with_parent_and_subs(self):
+		response = self.client.get(self.url + self.root_category.guid + '/?subs=true&parent=true', content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 200, response.content)
+		self.assertIn('"subs"', response.content)
+		self.assertIn('"parent"', response.content)
+		self.assertIn(self.root_category.guid, response.content)
+
+	def test_edit_category_guid_error(self):
+		self.set_post_data('test')
+
+		response = self.client.put(self.url, self.post_data, content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 400, response.content)
+		self.assertIn('Guid is not defined', response.content)
+
+	def test_edit_category_name_error(self):
+		self.set_post_data()
+
+		response = self.client.put(self.url, self.post_data, content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 400, response.content)
+		self.assertIn('This field is required', response.content)
+
+	def test_edit_category_not_found(self):
+		self.set_post_data('test')
+		data = self.post_data
+		data['guid'] = self.root_category.guid[:5:] + 'test1'
+
+		response = self.client.put(self.url, data, content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 404, response.content)
+
+	def test_edit_category(self):
+		self.set_post_data('test_edited')
+		data = self.post_data
+		data['guid'] = self.root_category.guid
+
+		response = self.client.put(self.url, data, content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 200, response.content)
+		self.assertIn('"name": "test_edited"', response.content)
+		self.assertEqual(Category.objects.get(guid=self.root_category.guid).name, 'test_edited')
 
 	def test_create_new_category_form_error(self):
 		self.set_post_data()
