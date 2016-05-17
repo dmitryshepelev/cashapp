@@ -62,7 +62,8 @@ module.exports = function(config) {
 
             'client/auth/**/*.js',
             'client/sett/**/*.js',
-            'client/my/**/*.js'
+            'client/my/**/*.js',
+            'client/services/**/*.js'
         ],
 
 
@@ -84,9 +85,9 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'coverage', 'teamcity'],
-
-
+        // reporters: ['progress', 'coverage', 'teamcity'],
+        reporters: ['progress', 'coverage'],
+        
         // web server port
         port: 9876,
 
