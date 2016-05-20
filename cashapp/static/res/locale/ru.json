@@ -78,5 +78,6 @@
 	"category": "Категория",
 	"subcategory": "Подкатегория",
 	"add_supplier": "Добавить поставщика",
-	"recent": "Недавние"
+	"recent": "Недавние",
+	"nothing_is_found": "Ничего не найдено"
 }

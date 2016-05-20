@@ -78,5 +78,6 @@
 	"category": "Category",
 	"subcategory": "Sub-category",
 	"add_supplier": "Add a supplier",
-	"recent": "Recent"
+	"recent": "Recent",
+	"nothing_is_found": "Nothing is found"
 }

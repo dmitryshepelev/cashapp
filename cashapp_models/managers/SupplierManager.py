@@ -16,4 +16,4 @@ class SupplierManager(models.Manager, ISearchable):
 		:param kwargs:
 		:return:
 		"""
-		return self.filter(name__contains = q, **kwargs)
+		return self.filter(name__icontains = q, **kwargs)
