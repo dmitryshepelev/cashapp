@@ -31,6 +31,9 @@
 .ng-hide {
   display: none !important;
 }
+button:focus {
+  outline: 0 none !important;
+}
 .ui-view-container {
   margin: 20px 0;
 }
@@ -97,7 +100,7 @@ nav > .container {
   margin-bottom: 5em !important;
 }
 select {
-  background: #fff url(images/lnr-arrow-down.svg) no-repeat 96% 50% !important;
+  background: #ffffff url(images/lnr-arrow-down.svg) no-repeat 96% 50% !important;
   background-size: 0.9em !important;
   margin: 0;
   overflow: hidden;
@@ -132,7 +135,7 @@ select.form-control:disabled {
   border: 0.0625rem dashed #e5e5e5;
 }
 .border-primary {
-  border-color: #0275D8;
+  border-color: #0275d8;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -154,13 +157,13 @@ select.form-control:disabled {
   margin-top: 3px;
 }
 .row-action-td > .row-action-button:hover {
-  color: #0275D8;
+  color: #0275d8;
 }
 .action-text {
   cursor: pointer;
 }
 .action-text:hover {
-  color: #0275D8;
+  color: #0275d8;
 }
 tr:hover .row-action-td {
   opacity: 1;
@@ -169,9 +172,9 @@ tr:hover .row-action-td {
   padding-bottom: 0.5em;
 }
 [uib-tooltip] + div.tooltip > .tooltip-inner {
-  color: #0275D8;
+  color: #0275d8;
   background-color: white;
-  border: 1px solid #7DB8EA;
+  border: 1px solid #7db8ea;
 }
 .uib-day .btn-default,
 .uib-daypicker .btn-default,
@@ -187,8 +190,8 @@ tr:hover .row-action-td {
 .uib-time .btn-default.active,
 .uib-monthpicker .btn-default.active,
 .uib-yearpicker .btn-default.active {
-  border-color: #0275D8;
-  color: #0275D8 !important;
+  border-color: #0275d8;
+  color: #0275d8 !important;
 }
 .uib-day .btn-default.active:hover,
 .uib-daypicker .btn-default.active:hover,
@@ -344,4 +347,8 @@ ul.icon-list li .value strong {
 }
 .icon-btn-group > .btn:last-child {
   padding-right: 1em;
+}
+.menu > .btn-group > button {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
 }

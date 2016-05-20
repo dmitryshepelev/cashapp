@@ -20,9 +20,9 @@
 					</div>
 					<table class="table table-hover table-sm table-responsive">
 						<tbody>
-							<tr class="cursor-pointer" ng-repeat="po in pos.data | orderBy: '-creation_datetime' track by $index" ng-click="pos.manage($event, po.guid)">
+							<tr class="cursor-pointer" ng-repeat="po in pos.data | orderBy: '-creation_datetime' track by $index" ng-click="pos.details($event, po.guid)">
 								<td><po-primarity-icon is-primary="po.primary"></po-primarity-icon></td>
-								<td><span class="action-text" ng-click="pos.details($event, po.guid)">[[ po.name ]]</span></td>
+								<td><span class="action-text" ng-click="pos.manage($event, po.guid)">[[ po.name ]]</span></td>
 								<td><span uib-tooltip="[[ 'allow_negative' | translate ]]" ng-class="{'lnr lnr-circle-minus': po.allow_negative }"></span></td>
 								<td>[[ po.type.name | translate | lowercase ]]</td>
 								<td>[[ po.currency.dec | decUnicode ]]</td>

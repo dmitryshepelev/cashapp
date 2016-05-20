@@ -34,6 +34,12 @@
     display: none !important;
 }
 
+button {
+	&:focus {
+		outline: 0 none !important;
+	}
+}
+
 .ui-view-container {
 	margin: 20px 0;
 }
@@ -406,6 +412,15 @@ ul.icon-list {
 
 		&:last-child {
 			padding-right: 1em;
+		}
+	}
+}
+
+.menu {
+	& > .btn-group {
+		& > button {
+			padding-left: 1.5em;
+			padding-right: 1.5em;
 		}
 	}
 }
