@@ -13,6 +13,9 @@
 	"po_details_title": "Детали платежного объекта",
 	"redirect_title": "Перенаправление",
 	"category_title": "Категория",
+	"expense_item_title": "Единица расхода",
+	"supplier_title": "Поставщик",
+	"suppliers": "Поставщики",
 	"interface_language": "Язык интерфейса",
 	"settings": "Настройки",
 	"bank_cards": "Банковские карты",
@@ -73,5 +76,7 @@
 	"categories": "Категории",
 	"add_category": "Add category",
 	"category": "Категория",
-	"subcategory": "Подкатегория"
+	"subcategory": "Подкатегория",
+	"add_supplier": "Добавить поставщика",
+	"recent": "Недавние"
 }

@@ -13,6 +13,9 @@
 	"po_details_title": "Payment object details",
 	"redirect_title": "Redirecting...",
 	"category_title": "Category",
+	"expense_item_title": "Expense item",
+	"supplier_title": "Supplier",
+	"suppliers": "Suppliers",
 	"interface_language": "Interface language",
 	"settings": "Settings",
 	"bank_cards": "Bank cards",
@@ -73,5 +76,7 @@
 	"categories": "Categories",
 	"add_category": "Add category",
 	"category": "Category",
-	"subcategory": "Sub-category"
+	"subcategory": "Sub-category",
+	"add_supplier": "Add a supplier",
+	"recent": "Recent"
 }

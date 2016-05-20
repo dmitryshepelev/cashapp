@@ -1,0 +1,29 @@
+{% extends 'modal/modal_base.html' %}
+
+{% block modal-header %}
+	<h5 class="modal-title">[[ 'supplier_title' | translate ]]</h5>
+{% endblock %}
+
+{% block modal-body %}
+<form novalidate name="supplierForm">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'name' | translate ]]</label>
+				<input class="form-control form-control-sm" ng-model="supplier.name" required name="name" autocomplete="off">
+			</div>
+			<div class="form-group">
+				<label class="form-control-label">[[ 'description' | translate ]]:</label>
+				<textarea class="form-control form-control-sm" ng-model="supplier.description" maxlength="1000"></textarea>
+			</div>
+		</div>
+	</div>
+</form>
+
+{% endblock %}
+
+{% block modal-footer %}
+	<button type="button" class="btn btn-link" ng-click="manageSupplier()">
+		<span class="lnr lnr-plus-circle"></span> [[ isEditMode ? 'save' : 'add' | translate ]]
+	</button>
+{% endblock %}

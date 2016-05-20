@@ -116,6 +116,35 @@
                             })
                 }]
             })
+            .state('my.supplier', {
+                url: '/supplier',
+                templateUrl: _baseUrl + '/supplier/',
+                controller: 'supplier-controller',
+                data: {
+                    title: 'supplier_title'
+                }
+            })
+            .state('my.supplier.action', {
+                url: '/{action}/{guid}',
+                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'supplier/modal/',
+                        controller: 'supplier-modal-controller'
+                    })
+                        .result
+                            .finally(function () {
+                                $state.go('my.supplier')
+                            })
+                }]
+            })
+            .state('my.expenseItem', {
+                url: '/expenseitem',
+                templateUrl: _baseUrl + '/expense_item/',
+                controller: 'expense-item-controller',
+                data: {
+                    title: 'expense_item_title'
+                }
+            })
     }
 
     angular

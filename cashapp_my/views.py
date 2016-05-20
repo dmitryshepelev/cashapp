@@ -101,3 +101,36 @@ def category_modal(request):
 	:return: HttpResponse
 	"""
 	return render(request, 'category_modal.html', {})
+
+
+@require_http_methods(['GET'])
+@login_required
+def expense_item(request):
+	"""
+	Expense item template
+	:param request: http request
+	:return: HttpResponse
+	"""
+	return render(request, 'expense_item.html', {})
+
+
+@require_http_methods(['GET'])
+@login_required
+def supplier(request):
+	"""
+	Supplier template
+	:param request: http request
+	:return: HttpResponse
+	"""
+	return render(request, 'supplier.html', {})
+
+
+@require_http_methods(['GET'])
+@login_required
+def supplier_modal(request):
+	"""
+	Supplier modal template
+	:param request: http request
+	:return: HttpResponse
+	"""
+	return render(request, 'supplier_modal.html', {})
