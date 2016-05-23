@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-lg-12 indent-2">
                 <div class="form-group">
-	                <search-input ng-model="supplierQuery" required input-name="name"></search-input>
+	                <search-input ng-model="supplierQuery" input-name="name"></search-input>
                 </div>
 			</div>
 		</div>
@@ -22,7 +22,7 @@
 						[[ 'nothing_is_found' | translate ]]
 					</div>
 					<ul class="icon-list" ng-if="suppliers.length > 0">
-		                <li ng-repeat="supplier in suppliers | orderBy: '-creation_datetime' | limitTo: 5 track by $index">
+		                <li ng-repeat="supplier in suppliers | orderBy: '-creation_datetime' | limitTo: 10 track by $index">
 		                    <div class="description m-l-0">
 		                        <div class="title"><span class="action-text"><a ui-sref="my.supplier.action({ action: 'edit', guid: supplier.guid })">[[ supplier.name ]]</a></span></div>
 		                        <small>

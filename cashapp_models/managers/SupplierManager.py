@@ -16,4 +16,9 @@ class SupplierManager(models.Manager, ISearchable):
 		:param kwargs:
 		:return:
 		"""
+		user_name = 'user'
+		if user_name in kwargs.keys():
+			kwargs.__setitem__('owner', kwargs.get(user_name))
+			del kwargs[user_name]
+
 		return self.filter(name__icontains = q, **kwargs)

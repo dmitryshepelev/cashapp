@@ -6,10 +6,12 @@
                 <small class="action-text" ng-click="up(true)"><span class="lnr lnr-layers"></span></small>
                 <small ng-if="!isRoot"><span class="lnr lnr-chevron-right"></span></small>
                 <span class="action-text" ng-click="up()">[[ category.parent.name ]]</span>
-
             </span>
             <small ng-if="!isRoot"><span class="lnr lnr-chevron-right"></span></small>
             <span>[[ category.name ]]</span>
+			<small>
+				<a ng-click="manage($event)" uib-tooltip="[[ 'add_category' | translate ]]" class="btn btn-link"><span class="lnr lnr-plus-circle"></span></a>
+			</small>
         </h3>
 	</div>
 	<div class="form-group col-lg-12">
@@ -23,11 +25,6 @@
                     </div>
                 </div>
                 <div ng-if="category.subs.length > 0">
-                    <div class="action-buttons-group">
-						<div class="pull-sm-right">
-							<button ng-click="manage($event)" class="btn btn-link"><span class="lnr lnr-plus-circle"></span> [[ 'add' | translate ]]</button>
-						</div>
-					</div>
                     <table class="table table-hover table-sm table-responsive">
                         <tbody>
                             <tr class="cursor-pointer" ng-repeat="category in category.subs | orderBy: 'name' track by $index" ng-click="details($event, category.guid)">

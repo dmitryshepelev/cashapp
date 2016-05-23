@@ -352,3 +352,16 @@ ul.icon-list li .value strong {
   padding-left: 1.5em;
   padding-right: 1.5em;
 }
+.input-icon {
+  padding-right: 3em;
+}
+.input-icon + span {
+  position: absolute;
+  padding: 0.625em 16px;
+  top: 0;
+  right: 1em;
+  cursor: pointer;
+}
+.input-icon + span:hover {
+  color: #0275d8;
+}

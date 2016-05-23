@@ -74,10 +74,11 @@
 	"recent_transactions": "Недавние транзакции",
 	"no_transactions": "Нет транзакций",
 	"categories": "Категории",
-	"add_category": "Add category",
+	"add_category": "Добавить категорию",
 	"category": "Категория",
 	"subcategory": "Подкатегория",
 	"add_supplier": "Добавить поставщика",
 	"recent": "Недавние",
-	"nothing_is_found": "Ничего не найдено"
+	"nothing_is_found": "Ничего не найдено",
+	"add_expense_item": "Добавить единицу расходов"
 }

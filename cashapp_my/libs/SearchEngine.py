@@ -51,18 +51,12 @@ class SearchEngine(object):
 		"""
 		return self.__model
 
-	def search(self, q, user = None, *args, **kwargs):
+	def search(self, q, *args, **kwargs):
 		"""
 		Execute search through model
 		:param q:
-		:param user:
 		:param args:
 		:param kwargs:
 		:return:
 		"""
-		if user:
-			if 'owner' in self.__model.__dict__.keys():
-				kwargs['owner'] = user
-			elif 'user' in self.__model.__dict__.keys():
-				kwargs['user'] = user
 		return self.__model.objects.search(q, *args, **kwargs)
