@@ -1,3 +1,4 @@
+from cashapp_models.models.CategoryModel import Category
 from cashapp_models.models.SupplierModel import Supplier
 
 
@@ -16,7 +17,8 @@ class SearchEngine(object):
 		:return:
 		"""
 		d = {
-			'supplier': Supplier
+			'supplier': Supplier,
+			'category': Category
 		}
 		if obj_type in d.keys():
 			self.__model = d[obj_type]

@@ -365,3 +365,22 @@ ul.icon-list li .value strong {
 .input-icon + span:hover {
   color: #0275d8;
 }
+ul.dropdown-menu + .no-result {
+  position: absolute;
+  top: 41px;
+  right: 30px;
+  font-size: 14px;
+  color: #0275d8;
+}
+ul.dropdown-menu > .active > a {
+  color: #0275d8;
+  text-decoration: none;
+  outline: 0;
+}
+ul.dropdown-menu > li > a {
+  display: block;
+  padding: 3px 16px;
+  clear: both;
+  color: #333;
+  white-space: nowrap;
+}

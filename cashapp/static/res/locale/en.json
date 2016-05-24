@@ -80,5 +80,9 @@
 	"add_supplier": "Add a supplier",
 	"recent": "Recent",
 	"nothing_is_found": "Nothing is found",
-	"add_expense_item": "Add expense item"
+	"add_expense_item": "Add expense item",
+	"measure": "Measure",
+	"th": "thing",
+	"kg": "kg",
+	"supplier": "Supplier"
 }

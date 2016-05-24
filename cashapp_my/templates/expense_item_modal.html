@@ -1,0 +1,77 @@
+{% extends 'modal/modal_base.html' %}
+
+{% block modal-header %}
+	<h5 class="modal-title">[[ 'expense_item_title' | translate ]]</h5>
+{% endblock %}
+
+{% block modal-body %}
+<form novalidate name="expenseItemForm">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'name' | translate ]]</label>
+				<input class="form-control form-control-sm" ng-model="expenseItem.name" required name="name" autocomplete="off">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'currency' | translate ]]:</label>
+				<select class="form-control form-control-sm" ng-model="expenseItem.currency" ng-options="currency.dec | decUnicode for currency in currencies track by currency.guid"></select>
+			</div>
+		</div>
+		<div class="col-sm-6 col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'measure' | translate ]]:</label>
+				<select class="form-control form-control-sm" ng-model="expenseItem.measure" ng-options="measure.code | translate for measure in measures track by measure.guid"></select>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'category' | translate ]]</label>
+				<input class="form-control form-control-sm"
+				       ng-model="expenseItem.category"
+				       typeahead-no-results="categoryNoResults"
+				       typeahead-template-url="categoryTypeaheadTemplate"
+				       ng-model-options="{ debounce: 1000 }"
+				       uib-typeahead="category as category.name for category in loadCategories($viewValue)"
+				       required name="category" autocomplete="off">
+				<span class="no-result" ng-if="categoryNoResults">[[ 'nothing_is_found' | translate ]]</span>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'supplier' | translate ]]</label>
+				<input class="form-control form-control-sm"
+				       ng-model="expenseItem.supplier"
+				       typeahead-no-results="supplierNoResults"
+				       typeahead-template-url="supplierTypeaheadTemplate"
+				       ng-model-options="{ debounce: 1000 }"
+				       uib-typeahead="supplier as supplier.name for supplier in loadSuppliers($viewValue)"
+				       required name="supplier" autocomplete="off">
+				<span class="no-result" ng-if="supplierNoResults">[[ 'nothing_is_found' | translate ]]</span>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="form-group">
+				<label class="form-control-label">[[ 'description' | translate ]]:</label>
+				<textarea class="form-control form-control-sm" ng-model="expenseItem.description" maxlength="1000"></textarea>
+			</div>
+		</div>
+	</div>
+</form>
+
+{% endblock %}
+
+{% block modal-footer %}
+	<button type="button" class="btn btn-link" ng-click="manageExpenseItem()">
+		<span class="lnr lnr-plus-circle"></span> [[ isEditMode ? 'save' : 'add' | translate ]]
+	</button>
+{% endblock %}

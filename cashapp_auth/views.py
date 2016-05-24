@@ -31,7 +31,6 @@ def sign_in(request):
 	:param request: http request
 	:return: HttpResponse
 	"""
-
 	return render(request, 'sign_in.html', {})
 
 

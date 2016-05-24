@@ -20,6 +20,19 @@ class Category(ModelBase):
 	class Meta:
 		app_label = 'cashapp_models'
 
+	def natural_key(self):
+		"""
+		Overrides base class method
+		:return:
+		"""
+		self_keys = {
+			'name': self.name,
+			'parent_guid': self.parent_guid,
+			'level': self.level.natural_key()
+		}
+		natural_keys = super(Category, self).natural_key(self_keys)
+		return natural_keys
+
 	def serialize(self, format = 'json', include_fields = (), exclude_fields = (), use_natural_foreign_keys = True,
 					use_natural_primary_keys = True):
 		"""

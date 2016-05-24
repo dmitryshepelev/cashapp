@@ -3,8 +3,10 @@ from django.contrib.auth.models import User
 from cashapp_models.models.CategoryLevelModel import CategoryLevel
 from cashapp_models.models.CategoryModel import Category
 from cashapp_models.models.CurrencyModel import Currency
+from cashapp_models.models.MeasureModel import Measure
 from cashapp_models.models.POModel import PaymentObject
 from cashapp_models.models.POTypeModel import POType
+from cashapp_models.models.SupplierModel import Supplier
 from cashapp_models.models.TransactionStatusModel import TransactionStatus
 
 __author__ = 'dshepelev'
@@ -90,5 +92,28 @@ class Dummies():
 				parent_guid=None,
 				owner=Dummies.get_or_create_user(),
 				level=Dummies.get_or_create_root_category_level()
+			)
+		return dummy
+
+	@staticmethod
+	def get_or_create_measure():
+		try:
+			dummy = Measure.objects.get(code = 'dum')
+		except Exception as e:
+			dummy = Measure.objects.create(
+				code = 'dum',
+				allow_floats = True
+			)
+		return dummy
+
+	@staticmethod
+	def get_or_create_supplier():
+		try:
+			dummy = Supplier.objects.get(name = 'dummy')
+		except Exception as e:
+			dummy = Supplier.objects.create(
+				name = 'dummy',
+				description = 'dummy supplier description',
+				owner = Dummies.get_or_create_user()
 			)
 		return dummy

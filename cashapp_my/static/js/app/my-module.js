@@ -145,6 +145,19 @@
                     title: 'expense_item_title'
                 }
             })
+            .state('my.expenseItem.action', {
+                url: '/{action}/{guid}',
+                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'expense_item/modal/',
+                        controller: 'expense-item-modal-controller'
+                    })
+                        .result
+                            .finally(function () {
+                                $state.go('my.expenseItem')
+                            })
+                }]
+            })
     }
 
     angular
@@ -159,5 +172,20 @@
     angular
         .module('CashAppMy')
         .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);
+
+    angular
+        .module('CashAppMy')
+        .run(['$templateCache', function ($templateCache) {
+            $templateCache
+                .put(
+                    'supplierTypeaheadTemplate',
+                    '<a><span class="action-text">[[ match.model.name ]]</span> <small class="text-muted">[[ match.model.description ]]</small></a>'
+                );
+            $templateCache
+                .put(
+                    'categoryTypeaheadTemplate',
+                    '<a><span class="action-text">[[ match.model.name ]]</span> <small class="text-muted">[[ match.model.level.name ]]</small></a>'
+                );
+        }]);
 
 })(angular);

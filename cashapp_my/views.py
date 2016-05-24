@@ -116,6 +116,17 @@ def expense_item(request):
 
 @require_http_methods(['GET'])
 @login_required
+def expense_item_modal(request):
+	"""
+	Expense item modal template
+	:param request: http request
+	:return: HttpResponse
+	"""
+	return render(request, 'expense_item_modal.html', {})
+
+
+@require_http_methods(['GET'])
+@login_required
 def supplier(request):
 	"""
 	Supplier template
