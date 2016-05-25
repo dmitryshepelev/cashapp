@@ -24,13 +24,19 @@
 					<ul class="icon-list" ng-if="expenseItems.length > 0">
 		                <li ng-repeat="expenseItem in expenseItems | orderBy: '-creation_datetime' | limitTo: 5 track by $index">
 		                    <div class="description m-l-0">
-		                        <div class="title"><span class="action-text"><a ui-sref="my.expenseItem.action({ action: 'edit', guid: expenseItem.guid })">[[ expenseItem.name ]]</a></span></div>
-		                        <small>
-		                            [[ expenseItem.description | limitTo: '20' ]][[ expenseItem.description.length > 20 ? '...' : '' ]]
-		                            <span uib-tooltip="[[ expenseItem.description ]]" tooltip-placement="bottom" ng-if="expenseItem.description.length > 20" class="lnr lnr-question-circle action-text"></span>
-		                        </small>
+		                        <div class="title">
+			                        <span class="action-text">
+				                        <a ui-sref="my.expenseItem.action({ action: 'edit', guid: expenseItem.guid })">[[ expenseItem.name ]]</a>
+				                        <span class="small text-muted">[[ expenseItem.supplier.name ]]</span>
+			                        </span>
+		                        </div>
+		                        <small>[[ expenseItem.category.name ]]</small>
 		                    </div>
 	                        <div class="value">
+		                        <div class="small text-muted">
+		                            [[ expenseItem.description | limitTo: '20' ]][[ expenseItem.description.length > 20 ? '...' : '' ]]
+		                            <span uib-tooltip="[[ expenseItem.description ]]" tooltip-placement="bottom" ng-if="expenseItem.description.length > 20" class="lnr lnr-question-circle action-text"></span>
+		                        </div>
 	                            <strong>[[ expenseItem.creation_datetime | date: 'dd/MM/yyyy HH:mm' ]]</strong>
 	                        </div>
 		                </li>
