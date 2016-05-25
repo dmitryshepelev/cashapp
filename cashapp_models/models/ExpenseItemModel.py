@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from cashapp_models.managers.ExpenseItemManager import ExpenseItemManager
 from cashapp_models.models.CategoryModel import Category
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.MeasureModel import Measure
@@ -19,6 +20,8 @@ class ExpenseItem(ModelBase):
 	supplier = models.ForeignKey(Supplier, on_delete = models.PROTECT, to_field = 'guid', null = False)
 	owner = models.ForeignKey(User, on_delete = models.CASCADE, null = False)
 	currency = models.ForeignKey(Currency, to_field = 'guid', on_delete = models.PROTECT)
+
+	objects = ExpenseItemManager()
 
 	class Meta:
 		app_label = 'cashapp_models'

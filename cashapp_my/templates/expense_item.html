@@ -18,39 +18,39 @@
 		<div class="row">
 			<div class="col-md-8 col-lg-9">
 				<div class="form-group">
-					<div align="center" ng-if="suppliers.length == 0">
+					<div align="center" ng-if="expenseItems.length == 0">
 						[[ 'nothing_is_found' | translate ]]
 					</div>
-{#					<ul class="icon-list" ng-if="suppliers.length > 0">#}
-{#		                <li ng-repeat="supplier in suppliers | orderBy: '-creation_datetime' | limitTo: 5 track by $index">#}
-{#		                    <div class="description m-l-0">#}
-{#		                        <div class="title"><span class="action-text"><a ui-sref="my.supplier.action({ action: 'edit', guid: supplier.guid })">[[ supplier.name ]]</a></span></div>#}
-{#		                        <small>#}
-{#		                            [[ supplier.description | limitTo: '20' ]][[ supplier.description.length > 20 ? '...' : '' ]]#}
-{#		                            <span uib-tooltip="[[ supplier.description ]]" tooltip-placement="bottom" ng-if="supplier.description.length > 20" class="lnr lnr-question-circle action-text"></span>#}
-{#		                        </small>#}
-{#		                    </div>#}
-{#	                        <div class="value">#}
-{#	                            <strong>[[ supplier.creation_datetime | date: 'dd/MM/yyyy HH:mm' ]]</strong>#}
-{#	                        </div>#}
-{#		                </li>#}
-{#	                </ul>#}
+					<ul class="icon-list" ng-if="expenseItems.length > 0">
+		                <li ng-repeat="expenseItem in expenseItems | orderBy: '-creation_datetime' | limitTo: 5 track by $index">
+		                    <div class="description m-l-0">
+		                        <div class="title"><span class="action-text"><a ui-sref="my.expenseItem.action({ action: 'edit', guid: expenseItem.guid })">[[ expenseItem.name ]]</a></span></div>
+		                        <small>
+		                            [[ expenseItem.description | limitTo: '20' ]][[ expenseItem.description.length > 20 ? '...' : '' ]]
+		                            <span uib-tooltip="[[ expenseItem.description ]]" tooltip-placement="bottom" ng-if="expenseItem.description.length > 20" class="lnr lnr-question-circle action-text"></span>
+		                        </small>
+		                    </div>
+	                        <div class="value">
+	                            <strong>[[ expenseItem.creation_datetime | date: 'dd/MM/yyyy HH:mm' ]]</strong>
+	                        </div>
+		                </li>
+	                </ul>
 				</div>
 			</div>
-{#			<div class="col-md-4 col-lg-3">#}
-{#				<ul class="icon-list">#}
-{#		            <li><label class="text-uppercase text-muted">[[ 'recent' | translate ]]</label></li>#}
-{#	                <li ng-repeat="supplier in recentSuppliers | orderBy: '-creation_datetime' | limitTo: 5 track by $index">#}
-{#	                    <div class="description m-l-0">#}
-{#	                        <div class="title"><span class="action-text"><a ui-sref="my.supplier.action({ action: 'edit', guid: supplier.guid })">[[ supplier.name ]]</a></span></div>#}
-{#	                        <small>#}
-{#	                            [[ supplier.description | limitTo: '20' ]][[ supplier.description.length > 20 ? '...' : '' ]]#}
-{#	                            <span uib-tooltip="[[ supplier.description ]]" tooltip-placement="bottom" ng-if="supplier.description.length > 20" class="lnr lnr-question-circle action-text"></span>#}
-{#	                        </small>#}
-{#	                    </div>#}
-{#	                </li>#}
-{#                </ul>#}
-{#			</div>#}
+			<div class="col-md-4 col-lg-3">
+				<ul class="icon-list">
+		            <li><label class="text-uppercase text-muted">[[ 'recent' | translate ]]</label></li>
+	                <li ng-repeat="expenseItem in recentExpenseItems | orderBy: '-creation_datetime' | limitTo: 5 track by $index">
+	                    <div class="description m-l-0">
+	                        <div class="title"><span class="action-text"><a ui-sref="my.expenseItem.action({ action: 'edit', guid: expenseItem.guid })">[[ expenseItem.name ]]</a></span></div>
+	                        <small>
+	                            [[ expenseItem.description | limitTo: '20' ]][[ expenseItem.description.length > 20 ? '...' : '' ]]
+	                            <span uib-tooltip="[[ expenseItem.description ]]" tooltip-placement="bottom" ng-if="expenseItem.description.length > 20" class="lnr lnr-question-circle action-text"></span>
+	                        </small>
+	                    </div>
+	                </li>
+                </ul>
+			</div>
 		</div>
 	</div>
 </div>

@@ -5,14 +5,14 @@
             /**
              * Add supplier
              */
-            add: function (category) {
-                return $http.post(baseUrl, category);
+            add: function (supplier) {
+                return $http.post(baseUrl, supplier);
             },
             /**
              * Edit supplier
              */
-            edit: function (category) {
-                return $http.put(baseUrl, category);
+            edit: function (supplier) {
+                return $http.put(baseUrl, supplier);
             },
             /**
              * Get supplier
@@ -22,7 +22,7 @@
                 return $http.get(baseUrl + guid + '/');
             },
             /**
-             * Get
+             * Get all
              */
             getAll: function (params) {
                 var defaultParams = {};

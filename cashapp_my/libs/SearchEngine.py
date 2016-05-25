@@ -1,4 +1,5 @@
 from cashapp_models.models.CategoryModel import Category
+from cashapp_models.models.ExpenseItemModel import ExpenseItem
 from cashapp_models.models.SupplierModel import Supplier
 
 
@@ -18,7 +19,8 @@ class SearchEngine(object):
 		"""
 		d = {
 			'supplier': Supplier,
-			'category': Category
+			'category': Category,
+			'expenseitem': ExpenseItem
 		}
 		if obj_type in d.keys():
 			self.__model = d[obj_type]

@@ -38,7 +38,7 @@
          */
         function onManageExpenseItemSuccess(response) {
             var expenseItem = response.data.expense_item;
-            $rootScope.$broadcast('ExpenesItem.' + action + 'Success', expenseItem);
+            $rootScope.$broadcast('ExpenseItem.' + action + 'Success', expenseItem);
             $uibModalInstance.close();
         }
 
@@ -48,7 +48,6 @@
         $scope.manageExpenseItem = function () {
             var validationResult = $validator.validateForm($scope.expenseItemForm);
             if (validationResult.status) {
-                console.log($scope.expenseItem);
                 var expenseItem = $CommonService.createFlatCopy($scope.expenseItem);
                 
                 $ExpenseItemService[action](expenseItem)
@@ -113,6 +112,14 @@
         }
 
         /**
+         * Init expense item
+         * @param response
+         */
+        function initExpenseItem(response) {
+            $scope.expenseItem = response.data.expense_item
+        }
+
+        /**
          * Init $scope with default values
          */
         function initScope(response) {
@@ -120,10 +127,10 @@
             initMeasures(response[1].data.measures);
             
             if ($stateParams.guid) {
-                // $SupplierService
-                //     .getSupplier($stateParams.guid)
-                //         .then(initSupplier)
-                //         .catch(onError)
+                $ExpenseItemService
+                    .getExpenseItem($stateParams.guid)
+                        .then(initExpenseItem)
+                        .catch(onError)
             } else {
                 $scope.expenseItem = {
                     currency: $scope.currencies[0],

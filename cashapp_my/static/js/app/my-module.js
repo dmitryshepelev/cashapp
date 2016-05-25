@@ -184,7 +184,7 @@
             $templateCache
                 .put(
                     'categoryTypeaheadTemplate',
-                    '<a><span class="action-text">[[ match.model.name ]]</span> <small class="text-muted">[[ match.model.level.name ]]</small></a>'
+                    '<a><span class="action-text">[[ match.model.name ]]</span><small ng-if="match.model.subs_count > 0" class="text-muted"><i> - [[ match.model.subs_count ]] [[ \'subs\' | translate ]]</i></small></a>'
                 );
         }]);
 

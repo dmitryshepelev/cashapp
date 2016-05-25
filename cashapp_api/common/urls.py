@@ -28,4 +28,5 @@ urlpatterns = [
 	url(r'^supplier/$', manage_supplier),
 	url(r'^supplier/(?P<guid>[a-zA-z0-9]{40})/$', manage_supplier),
 	url(r'^expenseitem/$', manage_expense_item),
+	url(r'^expenseitem/(?P<guid>[a-zA-z0-9]{40})/$', manage_expense_item),
 ]
