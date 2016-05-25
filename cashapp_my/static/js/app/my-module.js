@@ -60,19 +60,15 @@
                     title: 'po_details_title'
                 }
             })
-            .state('my.po.details.transact', {
-                url: '/{type}/',
-                onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
-                    // TODO: if no state params specified redirect to 404 page
-                    $uibModal.open({
-                        templateUrl: 'transaction/modal/' + $stateParams.type + '/',
-                        controller: 'transaction-modal-income-controller'
-                    })
-                        .result
-                            .finally(function () {
-                                $state.go('my.po.details', { guid: $stateParams.guid });
-                            })
-                }]
+            .state('my.po.details.income', {
+                url: '/income/',
+                templateUrl: 'transaction/income/',
+                controller: 'transaction-income-controller'
+            })
+            .state('my.po.details.expense', {
+                url: '/expense/',
+                templateUrl: 'transaction/expense/',
+                controller: 'transaction-expense-controller'
             })
             .state('my.category', {
                 url: '/category',
@@ -185,6 +181,11 @@
                 .put(
                     'categoryTypeaheadTemplate',
                     '<a><span class="action-text">[[ match.model.name ]]</span><small ng-if="match.model.subs_count > 0" class="text-muted"><i> - [[ match.model.subs_count ]] [[ \'subs\' | translate ]]</i></small></a>'
+                );
+            $templateCache
+                .put(
+                    'expenseItemTypeaheadTemplate',
+                    '<a><span class="text-muted">[[ match.model.category.name ]]</span> <span class="action-text">[[ match.model.name ]]</span> <small class="text-muted">[[ match.model.description ]]</small></a>'
                 );
         }]);
 

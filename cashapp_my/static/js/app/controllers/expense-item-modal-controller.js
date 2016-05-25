@@ -55,36 +55,18 @@
                     .catch(onManageExpenseItemError);
             }
         };
-
-        /**
-         * Load data for typeahead
-         * @param type obj to to load
-         * @param value
-         * @returns {*}
-         */
-        function loadTypeaheadData(type, value) {
-            return $SearchService
-                .search(type, value)
-                    .then(function (response) {
-                        return response.data.instances;
-                    })
-                    .catch(onError);
-        }
-
-        /**
-         * Load Suppliers to autocomplete
-         * @param value
-         */
-        $scope.loadSuppliers = function (value) {
-            return loadTypeaheadData('supplier', value);
-        };
         
         /**
          * Load Categories to autocomplete
          * @param value
          */
         $scope.loadCategories = function (value) {
-            return loadTypeaheadData('category', value);
+            return $SearchService
+                .search('category', value)
+                    .then(function (response) {
+                        return response.data.instances;
+                    })
+                    .catch(onError);
         };
 
         /**

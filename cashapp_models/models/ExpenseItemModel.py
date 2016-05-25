@@ -17,7 +17,6 @@ class ExpenseItem(ModelBase):
 	description = models.CharField(max_length = 1000, null = True)
 	category = models.ForeignKey(Category, on_delete = models.PROTECT, to_field = 'guid', null = False)
 	measure = models.ForeignKey(Measure, on_delete = models.PROTECT, to_field = 'guid', null = True)
-	supplier = models.ForeignKey(Supplier, on_delete = models.PROTECT, to_field = 'guid', null = False)
 	owner = models.ForeignKey(User, on_delete = models.CASCADE, null = False)
 	currency = models.ForeignKey(Currency, to_field = 'guid', on_delete = models.PROTECT)
 
@@ -36,7 +35,6 @@ class ExpenseItem(ModelBase):
 			'description': self.description,
 			'category': self.category.natural_key(),
 			'measure': self.measure.natural_key(),
-			'supplier': self.supplier.natural_key(),
 			'currency': self.currency.natural_key(),
 		}
 		natural_keys = super(ExpenseItem, self).natural_key(self_keys)

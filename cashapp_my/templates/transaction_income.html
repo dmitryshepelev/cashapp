@@ -1,0 +1,48 @@
+<div>
+	<h5 class="modal-title">
+		[[ 'income_transaction' | translate ]]
+		<span>
+			<button type="button" class="btn btn-link" ng-click="createTransaction()">
+				<span class="lnr lnr-plus-circle"></span> [[ 'create' | translate ]]
+			</button>
+		</span>
+		<span class="pull-sm-right">
+			<button type="button" class="btn btn-link" ui-sref="my.po.details({ guid: po.guid })">
+				<span class="lnr lnr-cross"></span>
+			</button>
+		</span>
+	</h5>
+</div>
+
+<form novalidate name="transactionForm">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="form-control-label">[[ 'date' | translate ]]:</label>
+		                <datetimepicker ng-model="transaction.date"></datetimepicker>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="form-control-label">[[ 'description' | translate ]]:</label>
+						<textarea class="form-control form-control-sm" ng-model="transaction.description" maxlength="1000"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label class="form-control-label">[[ 'sum' | translate ]]:</label>
+						<money-input name="value" ng-model="transaction.value" currency="transaction.payment_object.currency"></money-input>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

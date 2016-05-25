@@ -46,21 +46,6 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="form-group">
-				<label class="form-control-label">[[ 'supplier' | translate ]]</label>
-				<input class="form-control form-control-sm"
-				       ng-model="expenseItem.supplier"
-				       typeahead-no-results="supplierNoResults"
-				       typeahead-template-url="supplierTypeaheadTemplate"
-				       ng-model-options="{ debounce: 1000 }"
-				       uib-typeahead="supplier as supplier.name for supplier in loadSuppliers($viewValue)"
-				       required name="supplier" autocomplete="off">
-				<span class="no-result" ng-if="supplierNoResults">[[ 'nothing_is_found' | translate ]]</span>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="form-group">
 				<label class="form-control-label">[[ 'description' | translate ]]:</label>
 				<textarea class="form-control form-control-sm" ng-model="expenseItem.description" maxlength="1000"></textarea>
 			</div>

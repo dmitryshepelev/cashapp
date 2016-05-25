@@ -1,4 +1,4 @@
-describe('TransactionIncomeModal tests', function () {
+describe('TransactionIncome tests', function () {
     var $controller;
     var $httpBackend;
     
@@ -24,13 +24,16 @@ describe('TransactionIncomeModal tests', function () {
     
         beforeEach(function () {
             $scope = {};
-            controller = $controller('transaction-modal-income-controller', {
-                $scope: $scope,
-                $uibModalInstance: uibModalInstance
+            controller = $controller('transaction-income-controller', {
+                $scope: $scope
             });
     
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
-            $httpBackend.whenGET('/api/cmn/po/').respond(500, { types: [{ name: 'card'}, { name: 'cash'}]});
+            $httpBackend.expectGET('/my/uiview/').respond(200, {});
+            $httpBackend.expectGET('/my/dashboard/').respond(200, {});
+            $httpBackend.whenGET('/my/po/').respond(200, {});
+            $httpBackend.whenGET('/my/po/details/').respond(200, {});
+            $httpBackend.whenGET('/api/cmn/po//').respond(500, { types: [{ name: 'card'}, { name: 'cash'}]});
         });
     
         it('should be an gettin data error', function () {
@@ -47,20 +50,19 @@ describe('TransactionIncomeModal tests', function () {
             $scope = {
                 transactionForm: {name: ''}
             };
-            controller = $controller('transaction-modal-income-controller', {
+            controller = $controller('transaction-income-controller', {
                 $scope: $scope,
-                $uibModalInstance: uibModalInstance,
                 $stateParams: { guid: guid }
             });
 
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
+            $httpBackend.expectGET('/my/uiview/').respond(200, {});
+            $httpBackend.expectGET('/my/dashboard/').respond(200, {});
+            $httpBackend.whenGET('/my/po/').respond(200, {});
+            $httpBackend.whenGET('/my/po/details/').respond(200, {});
             $httpBackend.whenGET('/api/cmn/po/' + guid + '/').respond(200, { po: {name: 'test', guid: guid}});
 
             $httpBackend.flush();
-        });
-
-        it('should be predefined po', function () {
-            expect($scope.isPOPredefined).toEqual(true)
         });
 
         it('should be transaction creation success', function () {

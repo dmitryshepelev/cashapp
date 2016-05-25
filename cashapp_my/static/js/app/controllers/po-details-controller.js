@@ -7,10 +7,6 @@
         $scope.transactions = [];
         $scope.register = {};
 
-        $scope.incomeTransactionModal = function () {
-            $state.go('my.po.details.transact', { type: 'income' })
-        };
-
         /**
          * Error callback
          * @param response

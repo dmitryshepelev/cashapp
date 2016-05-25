@@ -1,10 +1,9 @@
 (function (angular) {
 
-    function TransactModalIncomeCtrl ($scope, $rootScope, $q, $CommonService, $POService, $TransactionService, $ToastrService, $uibModalInstance, $stateParams, $validator) {
+    function TransactionIncomeCtrl ($scope, $rootScope, $q, $CommonService, $POService, $TransactionService, $ToastrService, $stateParams, $validator, $state) {
         var poGuid = $stateParams.guid || '';
 
-        $scope.isPOPredefined = poGuid ? true : false;
-        $scope.pos = [];
+        $scope.po = {};
         $scope.transaction = {
             date: new Date()
         };
@@ -15,7 +14,7 @@
         function onCreateTransactionSuccess(response) {
             var transaction = response.data.transaction;
             $rootScope.$broadcast('Transaction.createSuccess', transaction);
-            $uibModalInstance.close();
+            $state.go('my.po.details', { guid: $scope.po.guid });
         }
 
         /**
@@ -47,14 +46,10 @@
         function initScope (data) {
             /**
              * Init POs model
-             * @param pos
+             * @param po
              */
-            function initPOs(pos) {
-                if (Array.isArray(pos)) {
-                    $scope.pos = pos;
-                } else {
-                    $scope.pos.push(pos)
-                }
+            function initPOs(po) {
+                $scope.po = po || {}
             }
 
             data.forEach(function (item) {
@@ -63,13 +58,13 @@
                 }
             });
 
-            $scope.transaction.payment_object = $scope.pos[0];
+            $scope.transaction.payment_object = $scope.po;
         }
 
         function loadInitialData () {
             $q
                 .all([
-                    poGuid ? $POService.getPO(poGuid) : $POService.getAll()
+                    $POService.getPO(poGuid)
                 ])
                 .then(initScope)
                 .catch(onError);
@@ -78,7 +73,7 @@
         loadInitialData();
     }
 
-    TransactModalIncomeCtrl.$inject = [
+    TransactionIncomeCtrl.$inject = [
         '$scope',
         '$rootScope',
         '$q',
@@ -86,13 +81,13 @@
         '$POService',
         '$TransactionService',
         '$ToastrService',
-        '$uibModalInstance',
         '$stateParams',
-        '$validator'
+        '$validator',
+        '$state'
     ];
 
     angular
         .module('CashAppMy')
-        .controller('transaction-modal-income-controller', TransactModalIncomeCtrl)
+        .controller('transaction-income-controller', TransactionIncomeCtrl)
 
 })(angular);
