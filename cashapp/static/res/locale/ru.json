@@ -84,5 +84,6 @@
 	"measure": "Измеритель",
 	"th": "шт.",
 	"kg": "кг",
-	"supplier": "Поставщик"
+	"supplier": "Поставщик",
+	"item_has_been_already_added": "Объект уже добавлен"
 }

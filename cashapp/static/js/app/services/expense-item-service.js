@@ -42,6 +42,14 @@
              */
             search: function (q, params) {
                 return $SearchService.search('expenseitem', q, params);
+            },
+            /**
+             * Get last associated expense item register record
+             * @param guid expense item guid
+             */
+            getLastRegisterRecord: function (guid) {
+                var url = guid + '/register/?last=true';
+                return $http.get(baseUrl + url);
             }
         }
     }

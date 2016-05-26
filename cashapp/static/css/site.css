@@ -384,3 +384,24 @@ ul.dropdown-menu > li > a {
   color: #333;
   white-space: nowrap;
 }
+.form-control.form-control-xs {
+  font-size: 0.9rem;
+  line-height: 0;
+  padding: 3px 10px;
+}
+.form-control.border-on-focus {
+  border: 1px dashed #e5e5e5;
+}
+.form-control.border-on-focus:hover {
+  border: 1px dashed #ccc;
+}
+.form-control.border-on-focus:focus {
+  border: 1px solid #66afe9;
+}
+.transaction-expense-item:hover .close-icon {
+  visibility: visible;
+}
+.close-icon {
+  visibility: hidden;
+  padding: 5px;
+}

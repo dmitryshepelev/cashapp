@@ -68,7 +68,6 @@ def manage_expense_item(request, guid = None):
 			description = request.data.get('description'),
 			category_id = request.data.get('category_id'),
 			measure_id = request.data.get('measure_id'),
-			supplier_id = request.data.get('supplier_id'),
 			currency_id = request.data.get('currency_id'),
 			owner = request.user
 		)

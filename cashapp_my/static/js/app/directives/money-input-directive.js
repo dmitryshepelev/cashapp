@@ -8,13 +8,14 @@
             restrict: 'E',
             scope: {
                 ngModel: '=',
-                currency: '=currency',
-                name: '='
+                currency: '=',
+                name: '@',
+                class: '@'
             },
             template:
                 '<div class="input-group">' +
 			        '<span ng-if="leftIcon" class="input-group-addon">[[ currency.dec | decUnicode ]]</span>' +
-				    '<input type="text" class="form-control form-control-sm" ng-model="ngModel" ng-change="mask()" name="name" required autocomplete="off">' +
+				    '<input type="text" class="form-control form-control-sm [[ class ]]" ng-model="ngModel" ng-change="mask()" name="[[ name ]]" required autocomplete="off">' +
 				    '<span ng-if="rightIcon" class="input-group-addon">[[ currency.dec | decUnicode ]]</span>' +
 				'</div>',
             link: function (scope, element, attrs, controller, transcludeFn) {
@@ -39,7 +40,7 @@
                             scope.ngModel = matchArray[0];
                             oldModelValue = scope.ngModel;
                         } else {
-                            scope.ngModel = oldModelValue
+                            scope.ngModel = oldModelValue;
                         }
                     }
                 };

@@ -11,3 +11,11 @@ class TransactionStatusManager(models.Manager):
 		:return:
 		"""
 		return self.get(name = 'success')
+
+	def get_error_status(self):
+		"""
+		Returns success transaction status
+		:return:
+		"""
+		return self.get(name = 'error')
+

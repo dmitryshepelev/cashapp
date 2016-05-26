@@ -468,3 +468,34 @@ ul.dropdown-menu {
 		}
 	}
 }
+
+.form-control {
+	&.form-control-xs {
+		font-size: 0.9rem;
+		line-height: 0;
+		padding: 3px 10px;
+	}
+
+	&.border-on-focus {
+		border: 1px dashed @color-muted;
+		&:hover {
+			border: 1px dashed #ccc;
+		}
+		&:focus {
+			border: 1px solid @color-control-focused-border;
+		}
+	}
+}
+
+.transaction-expense-item {
+	&:hover {
+		& .close-icon {
+			visibility: visible;
+		}
+	}
+}
+
+.close-icon {
+	visibility: hidden;
+	padding: 5px;
+}

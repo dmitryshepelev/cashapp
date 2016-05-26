@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 from cashapp.decorators import request_wrapper, api_authorized
 from cashapp.libs.Message import Message
 from cashapp.libs.ServerResponse import ServerResponse
+from cashapp_models.Exceptions.TransactionSaveError import TransactionSaveError
 from cashapp_models.models.TransactionStatusModel import TransactionStatus
 from cashapp_my.libs.Transaction import Transaction
 
@@ -40,21 +41,26 @@ def manage_transaction(request, transaction_type = None):
 
 		transaction = Transaction.create(transaction_type)
 		transaction.data = request.data
-		form = transaction.form
 
-		if form.errors:
-			return ServerResponse.bad_request(data = form.errors)
+		if not transaction.is_form_valid():
+			return ServerResponse.bad_request(data = transaction.form.errors)
 
 		try:
 			model = transaction.create_model_instance(request.user)
 			TransactionStatus.set_success(model)
-			model.save()
+			transaction.save_model()
 
 		except IntegrityError as e:
-			return ServerResponse.bad_request(message = 'Paymnet object does not exist')
+			return ServerResponse.bad_request(message = Message.error('Paymnet object does not exist'))
+
+		except TransactionSaveError as e:
+			TransactionStatus.set_error(transaction.model_instance)
+			transaction.model_instance.save()
+
+			return ServerResponse.internal_server_error(message = Message.error(e.message))
 
 		except Exception as e:
-			return ServerResponse.bad_request(message = 'Invalid POST data')
+			return ServerResponse.bad_request(message = Message.error('Invalid POST data'))
 
 		register_record = model.create_register_record()
 		register_record.save()

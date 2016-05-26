@@ -76,7 +76,7 @@
                 .all([
                     $POService.getPO(guid),
                     $POService.getLastRegisterRecord(guid),
-                    $POService.getTransactions(guid, { type: 'income', count: 5 })
+                    $POService.getTransactions(guid, { count: 5 })
                 ])
                 .then(initScope)
                 .catch(onError);

@@ -1,9 +1,12 @@
+from itertools import chain
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.http import require_http_methods
 
 from cashapp.decorators import request_wrapper, api_authorized
 from cashapp.libs.Message import Message
 from cashapp.libs.ServerResponse import ServerResponse
+from cashapp_models.models.ExpenseTransactionModel import ExpenseTransaction
 from cashapp_models.models.IncomeTransactionModel import IncomeTransaction
 
 
@@ -25,9 +28,12 @@ def manage_po_transaction(request, guid):
 	transaction_type = request.get_params.get('type', None)
 	count = request.get_params.get('count', None)
 
-	transactions = IncomeTransaction.objects.get_po_associated(payment_object)
+	income_transactions = IncomeTransaction.objects.get_po_associated(payment_object)
+	expense_transactions = ExpenseTransaction.objects.get_po_associated(payment_object)
+
+	transactions = sorted(chain(income_transactions, expense_transactions), key = lambda x: x.date)[::-1]
 
 	if count:
-		transactions = transactions[:count:]
+		transactions = transactions[:int(count):]
 
 	return ServerResponse.ok(data={'transactions': [t.serialize() for t in transactions]})

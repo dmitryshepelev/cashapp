@@ -82,7 +82,8 @@
 	"nothing_is_found": "Nothing is found",
 	"add_expense_item": "Add expense item",
 	"measure": "Measure",
-	"th": "thing",
+	"th": "th",
 	"kg": "kg",
-	"supplier": "Supplier"
+	"supplier": "Supplier",
+	"item_has_been_already_added": "The item has been already added"
 }

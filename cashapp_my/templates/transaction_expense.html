@@ -24,6 +24,8 @@
 		                <datetimepicker ng-model="transaction.date"></datetimepicker>
 					</div>
 				</div>
+			</div>
+			<div class="row">
 				<div class="col-xs-12">
 					<div class="form-group">
 						<label class="form-control-label">[[ 'supplier' | translate ]]</label>
@@ -54,24 +56,45 @@
 						<label class="form-control-label">[[ 'expense_item_title' | translate ]]</label>
 						<input class="form-control form-control-sm"
 						       ng-model="newExpenseItem"
-						       typeahead-no-results="expenseItemNoResults"
+						       typeahead-no-results="newExpenseItemNoResults"
 						       typeahead-template-url="expenseItemTypeaheadTemplate"
 						       ng-model-options="{ debounce: 1000 }"
 						       uib-typeahead="expenseItem as expenseItem.name for expenseItem in loadExpenseItems($viewValue)"
 						       typeahead-on-select="onNewExpenseItemSelect($item, $model, $label, $event)"
 						       name="expenseItem" autocomplete="off">
-						<span class="no-result" ng-if="expenseItemNoResults">[[ 'nothing_is_found' | translate ]]</span>
+						<span class="no-result" ng-if="newExpenseItemNoResults">[[ 'nothing_is_found' | translate ]]</span>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					<div class="row small" ng-repeat="expenseItem in transaction.expense_items track by expenseItem.guid">
+					<div>
+						<label class="pull-sm-right">[[ getTransactionSum() | ngCurrency: po.currency.code : po.currency.dec ]]</label>
+					</div>
+					<div class="row transaction-expense-item" ng-repeat="expenseItem in transaction.expense_items track by $index">
 						<div class="form-group">
-							<div class="col-sm-4">[[ expenseItem.category.name ]] [[ expenseItem.name ]]</div>
-							<div class="col-sm-3"><money-input name="value" ng-model="expenseItem.price" currency="expenseItem.currency"></money-input></div>
-							<div class="col-sm-2"><input class="form-control col-sm-1 form-control-sm" ng-model="expenseItem.count" /></div>
-							<div class="col-sm-3"><money-input name="value" ng-model="expenseItem.price * expenseItem.count" currency="expenseItem.currency"></money-input></div>
+							<div class="col-sm-12">
+								<span class="text-muted">[[ expenseItem.category ]]</span> [[ expenseItem.name ]]
+								<small class="text-muted">
+	                                [[ expenseItem.description | limitTo: '16' ]][[ expenseItem.description.length > 16 ? '...' : '' ]]
+		                            <span uib-tooltip="[[ expenseItem.description ]]" tooltip-placement="bottom" ng-if="expenseItem.description.length > 16" class="lnr lnr-question-circle action-text"></span>
+		                        </small>
+								<small class="pull-xs-right lnr lnr-cross action-text close-icon" ng-click="removeTransactionExpenseItem(expenseItem.guid)"></small>
+							</div>
+							<div class="col-xs-6 col-sm-4 col-md-6 col-lg-6 col-xl-4">
+								<money-input name="expenseItem-price-[[ $index ]]" class="form-control-xs border-on-focus" ng-model="expenseItem.price" currency="expenseItem.currency"></money-input>
+							</div>
+							<div class="col-xs-6 col-sm-4 col-md-6 col-lg-6 col-xl-4">
+								<div class="input-group">
+									<input class="form-control form-control-xs border-on-focus" ng-model="expenseItem.count" required name="expenseItem-count-[[ $index ]]" />
+									<span class="input-group-addon">[[ expenseItem.measure.code | translate ]]</span>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-4 col-md-12 col-lg-6 col-xl-4">
+								<div class="pull-sm-right">
+									[[ (expenseItem.price * expenseItem.count) || 0 | ngCurrency: po.currency.code : po.currency.dec ]]
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

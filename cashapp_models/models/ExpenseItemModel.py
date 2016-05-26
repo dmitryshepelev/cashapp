@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models import Max
 
 from cashapp_models.managers.ExpenseItemManager import ExpenseItemManager
 from cashapp_models.models.CategoryModel import Category
@@ -55,3 +56,10 @@ class ExpenseItem(ModelBase):
 		serialized = super(ExpenseItem, self).serialize(format, include_fields, exclude_fields, use_natural_foreign_keys,
 											use_natural_primary_keys)
 		return serialized
+
+	def get_last_register_record(self):
+		"""
+		Overrides base class method
+		:return: {ExpenseItemRegister} instance
+		"""
+		return self.expenseitemregister_set.annotate(max_date = Max('creation_datetime')).last()

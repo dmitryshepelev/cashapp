@@ -9,5 +9,4 @@ class ExpenseItemForm(forms.Form):
 	description = forms.CharField(max_length = 1000, required = False)
 	category_id = forms.CharField(required = True, max_length = 40)
 	measure_id = forms.CharField(required = True, max_length = 40)
-	supplier_id = forms.CharField(required = True, max_length = 40)
 	currency_id = forms.CharField(required = True, max_length = 40)

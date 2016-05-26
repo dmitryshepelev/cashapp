@@ -18,6 +18,12 @@
              */
             createIncomeTransaction: function (transaction) {
                 return _create('income', transaction);
+            },
+            /**
+             * Create income transaction
+             */
+            createExpenseTransaction: function (transaction) {
+                return _create('expense', transaction);
             }
         }
     }

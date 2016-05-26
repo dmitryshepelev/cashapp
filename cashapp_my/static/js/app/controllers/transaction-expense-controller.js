@@ -10,12 +10,14 @@
         $ToastrService,
         $stateParams,
         $validator,
-        $SearchService
+        $SearchService,
+        $ExpenseItemService,
+        $state
     ) {
         var poGuid = $stateParams.guid || '';
 
-        $scope.isPOPredefined = poGuid ? true : false;
-        $scope.pos = [];
+        $scope.newExpenseItem = '';
+        $scope.po = {};
         $scope.transaction = {
             date: new Date(),
             expense_items: []
@@ -27,7 +29,7 @@
         function onCreateTransactionSuccess(response) {
             var transaction = response.data.transaction;
             $rootScope.$broadcast('Transaction.createSuccess', transaction);
-            $uibModalInstance.close();
+            $state.go('my.po.details', { guid: $scope.po.guid })
         }
 
         /**
@@ -38,8 +40,8 @@
             if (result.status) {
                 var transaction = $CommonService.createFlatCopy($scope.transaction);
                 transaction.date = transaction.date.getTime();
-                
-                $TransactionService.createIncomeTransaction(transaction)
+
+                $TransactionService.createExpenseTransaction(transaction)
                     .then(onCreateTransactionSuccess)
                     .catch(onError)
             }
@@ -71,6 +73,46 @@
                     .catch(onError);
         };
 
+        function TransactionExpenseItem(expenseItem) {
+            this.name = expenseItem.name;
+            this.description = expenseItem.description;
+            this.category = expenseItem.category.name;
+            this.guid = expenseItem.guid;
+            this.count = 1;
+            this.currency = expenseItem.currency;
+            this.price = 0;
+            this.measure = expenseItem.measure;
+        }
+        
+        TransactionExpenseItem.prototype = {
+            constructor: TransactionExpenseItem,
+            
+            getSum: function () {
+                return this.count * this.price;
+            }
+        };
+
+        /**
+         * Get transaction overall sum
+         * @returns {number}
+         */
+        $scope.getTransactionSum = function () {
+            var sum = 0;
+            $scope.transaction.expense_items.forEach(function (item) {
+                sum += item.getSum();
+            });
+            return sum || 0;
+        };
+
+        $scope.removeTransactionExpenseItem = function (guid) {
+            var index = $CommonService.getIndexByField($scope.transaction.expense_items, guid);
+            if (index >= 0) {
+                $scope.transaction.expense_items.splice(index, 1);
+            } else {
+                $ToastrService.error()
+            }
+        };
+
         /**
          * Callback to execute on newExpenseItem typeahead is selected
          * @param $item
@@ -79,8 +121,23 @@
          * @param $event
          */
         $scope.onNewExpenseItemSelect = function ($item, $model, $label, $event) {
-            $scope.transaction.expense_items.push($item);
-        }
+            var index = $CommonService.getIndexByField($scope.transaction.expense_items, $item.guid);
+            if (index < 0) {
+                var transactionExpenseItem = new TransactionExpenseItem($item);
+
+                $ExpenseItemService
+                    .getLastRegisterRecord(transactionExpenseItem.guid)
+                        .then(function (response) {
+                            transactionExpenseItem.price = response.data.register.value || 0;
+                        })
+                        .catch(onError);
+
+                $scope.transaction.expense_items.push(transactionExpenseItem);
+            } else {
+                $ToastrService.info('item_has_been_already_added');
+            }
+            $scope.newExpenseItem = '';
+        };
         
         /**
          * Error callback
@@ -94,31 +151,15 @@
          * Function to init $scope
          */
         function initScope (data) {
-            /**
-             * Init POs model
-             * @param pos
-             */
-            function initPOs(pos) {
-                if (Array.isArray(pos)) {
-                    $scope.pos = pos;
-                } else {
-                    $scope.pos.push(pos)
-                }
-            }
 
-            data.forEach(function (item) {
-                if (item.data.hasOwnProperty('po')) {
-                    initPOs(item.data.po)
-                }
-            });
-
-            $scope.transaction.payment_object = $scope.pos[0];
+            $scope.po = data[0].data.po;
+            $scope.transaction.payment_object = $scope.po;
         }
 
         function loadInitialData () {
             $q
                 .all([
-                    poGuid ? $POService.getPO(poGuid) : $POService.getAll()
+                    $POService.getPO(poGuid)
                 ])
                 .then(initScope)
                 .catch(onError);
@@ -137,7 +178,9 @@
         '$ToastrService',
         '$stateParams',
         '$validator',
-        '$SearchService'
+        '$SearchService',
+        '$ExpenseItemService',
+        '$state'
     ];
 
     angular

@@ -25,7 +25,6 @@ class TestManage_ExpenseItem(TestCase):
 			'description': 'test description',
 			'currency_id': self.currency.guid,
 			'measure_id': self.measure.guid,
-			'supplier_id': self.supplier.guid,
 			'category_id': self.category.guid,
 		}
 
@@ -64,7 +63,7 @@ class TestManage_ExpenseItem(TestCase):
 
 	def test_create_saving_error(self):
 		post_data = self.post_data
-		post_data['supplier_id'] = self.category.guid
+		post_data['measure_id'] = self.category.guid
 
 		response = self.client.post(self.url, post_data, content_type = self.request_content_type)
 
