@@ -64,6 +64,7 @@ module.exports = function(config) {
             '../cashapp_my/static/js/app/controllers/supplier-controller.js',
             '../cashapp_my/static/js/app/controllers/supplier-modal-controller.js',
             '../cashapp_my/static/js/app/controllers/transaction-income-controller.js',
+            '../cashapp_my/static/js/app/controllers/transaction-expense-controller.js',
 
             'client/auth/**/*.js',
             'client/sett/**/*.js',

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from cashapp_models.models.CategoryLevelModel import CategoryLevel
 from cashapp_models.models.CategoryModel import Category
 from cashapp_models.models.CurrencyModel import Currency
+from cashapp_models.models.ExpenseItemModel import ExpenseItem
 from cashapp_models.models.MeasureModel import Measure
 from cashapp_models.models.POModel import PaymentObject
 from cashapp_models.models.POTypeModel import POType
@@ -115,5 +116,20 @@ class Dummies():
 				name = 'dummy',
 				description = 'dummy supplier description',
 				owner = Dummies.get_or_create_user()
+			)
+		return dummy
+
+	@staticmethod
+	def get_or_create_expense_item():
+		try:
+			dummy = ExpenseItem.objects.get(name = 'dummy')
+		except Exception as e:
+			dummy = ExpenseItem.objects.create(
+				name = 'dummy',
+				description = 'dummy description',
+				category = Dummies.get_or_create_root_category(),
+				measure = Dummies.get_or_create_measure(),
+				owner = Dummies.get_or_create_user(),
+				currency = Dummies.get_or_create_currency()
 			)
 		return dummy

@@ -101,7 +101,7 @@
             $scope.transaction.expense_items.forEach(function (item) {
                 sum += item.getSum();
             });
-            return sum || 0;
+            return sum;
         };
 
         $scope.removeTransactionExpenseItem = function (guid) {
@@ -128,7 +128,7 @@
                 $ExpenseItemService
                     .getLastRegisterRecord(transactionExpenseItem.guid)
                         .then(function (response) {
-                            transactionExpenseItem.price = response.data.register.value || 0;
+                            transactionExpenseItem.price = response.data.register.value;
                         })
                         .catch(onError);
 
