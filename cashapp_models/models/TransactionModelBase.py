@@ -25,3 +25,12 @@ class TransactionModelBase(models.Model):
 		:return: RegisterModelBase manager
 		"""
 		raise NotImplementedError()
+
+	def full_clean(self, exclude=None, validate_unique=True):
+		"""
+		Validate model fields
+		:param exclude:
+		:param validate_unique:
+		"""
+		exclude = tuple(set(exclude or tuple()) | {'description'})
+		super(TransactionModelBase, self).full_clean(exclude = exclude, validate_unique = validate_unique)

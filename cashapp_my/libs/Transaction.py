@@ -5,70 +5,51 @@ from cashapp_models.Exceptions.TransactionSaveError import TransactionSaveError
 from cashapp_models.models.ExpenseTransactionItemModel import ExpenseTransactionItem
 from cashapp_models.models.ExpenseTransactionModel import ExpenseTransaction as ETModel
 from cashapp_models.models.IncomeTransactionModel import IncomeTransaction as ITModel
-from cashapp_my.forms.ExpenseTransactionForm import ExpenseTransactionForm
-from cashapp_my.forms.ExpenseTransactionItemForm import ExpenseTransactionItemForm
-from cashapp_my.forms.IncomeTransactionForm import IncomeTransactionForm
+from cashapp_models.models.TransactionStatusModel import TransactionStatus
 
 
 class Transaction(object):
-	def __init__(self, model, form):
-		self.__data = None
-		self.__model = model
-		self.__form = form
-		self.__model_instance = None
-
-	@property
-	def data(self):
-		if not self.__data:
-			raise ReferenceError('\'data\' must be set')
-
-		return self.__data
-
-	@data.setter
-	def data(self, value):
-		self.__data = value
+	def __init__(self, model_class):
+		self.__model_class = model_class
+		self.__model = self.__model_class()
 
 	@property
 	def model(self):
+		"""
+		Model getter
+		:return:
+		"""
 		return self.__model
 
-	@property
-	def model_instance(self):
+	def set_data(self, *args, **kwargs):
 		"""
-		Getter of __model_instance
-		:return: model_instance value
-		"""
-		return self.__model_instance
-
-	@model_instance.setter
-	def model_instance(self, value):
-		self.__model_instance = value
-
-	@property
-	def form(self):
-		return self.__form(self.data)
-
-	def create_model_instance(self, user):
-		"""
-		Creates model instance
-		:param user:
+		Set model data
 		:return:
 		"""
-		raise NotImplementedError()
+		date = kwargs.get('date', None)
+		if date:
+			self.model.date = DateTimeUtil.from_timestamp(date)
 
-	def is_form_valid(self):
-		"""
-		Validate form
-		:return:
-		"""
-		return self.form.is_valid()
+		self.model.description = kwargs.get('description', self.model.description)
+		self.model.payment_object_id = kwargs.get('payment_object_id', self.model.payment_object_id)
+		self.model.user_id = kwargs.get('user_id', self.model.user_id)
+		self.model.status_id = kwargs.get('status_id', self.model.status_id)
 
-	def save_model(self):
+	def full_clean(self, exclude = None, validate_unique = True):
+		"""
+		Validate model fields
+		"""
+		self.model.full_clean(exclude = exclude, validate_unique = validate_unique)
+
+	def save(self, force_insert = False, force_update = False, using = None, update_fields = None):
 		"""
 		Saves the model instance
-		:return:
+		:param update_fields:
+		:param using:
+		:param force_update:
+		:param force_insert:
 		"""
-		return self.__model_instance.save()
+		self.model.save(force_insert, force_update, using, update_fields)
 
 	@staticmethod
 	def create(transaction_type):
@@ -89,94 +70,90 @@ class IncomeTransaction(Transaction):
 		"""
 		Income Transaction abstraction
 		"""
-		super(IncomeTransaction, self).__init__(ITModel, IncomeTransactionForm)
+		super(IncomeTransaction, self).__init__(ITModel)
 
-	def create_model_instance(self, user):
+	def set_data(self, *args, **kwargs):
 		"""
-		Create model instance
-		:param user:
+		Set model data
 		:return:
 		"""
-		model = self.model(
-			value = self.data.get('value'),
-			description = self.data.get('description'),
-			date = DateTimeUtil.from_timestamp(self.data.get('date')),
-			user_id = user.pk,
-			payment_object_id = self.data.get('payment_object_id'),
-		)
-		self.model_instance = model
-		return model
+		super(IncomeTransaction, self).set_data(*args, **kwargs)
+		self.model.value = kwargs.get('value', self.model.value)
 
 
 class ExpenseTransaction(Transaction):
 	def __init__(self):
 		"""
 		Expense transaction abstraction
-		:param model:
-		:param form:
 		"""
-		super(ExpenseTransaction, self).__init__(ETModel, ExpenseTransactionForm)
+		super(ExpenseTransaction, self).__init__(ETModel)
+		self.expense_transaction_items = []
 
-	def create_model_instance(self, user):
+	def set_data(self, *args, **kwargs):
 		"""
-		Create model instance
-		:param user:
-		:return:
+		Set model data
 		"""
-		model = self.model(
-			supplier_id = self.data.get('supplier_id'),
-			description = self.data.get('description'),
-			date = DateTimeUtil.from_timestamp(self.data.get('date')),
-			user_id = user.pk,
-			payment_object_id = self.data.get('payment_object_id'),
-		)
-		self.model_instance = model
-		return model
+		super(ExpenseTransaction, self).set_data(*args, **kwargs)
+		self.model.supplier_id = kwargs.get('supplier_id', self.model.supplier_id)
 
-	def is_form_valid(self):
+		expense_transaction_items = kwargs.get('expense_items', [])
+		for expense_transaction_item in expense_transaction_items:
+			model = ExpenseTransactionItem(
+				count = expense_transaction_item.get('count', 1),
+				expense_item_id = expense_transaction_item.get('expense_item_id', None)
+			)
+			self.expense_transaction_items.append({'model': model, 'value': expense_transaction_item.get('price', None)})
+
+	def full_clean(self, exclude = None, validate_unique = True):
 		"""
-		Override base class method
-		:return:
+		Validate the model
+		:param exclude
+		:param validate_unique
 		"""
-		is_valid = super(ExpenseTransaction, self).is_form_valid()
+		errors = {}
+		try:
+			super(ExpenseTransaction, self).full_clean()
+		except ValidationError as e:
+			errors = e.update_error_dict(errors)
 
-		expense_items = self.data['expense_items']
-		if len(expense_items) == 0:
-			self.form.add_error(None, ValidationError('Set the one expense item at least'))
-			return False
+		if len(self.expense_transaction_items) == 0:
+			errors.setdefault('expense_items', ['Transaction should contain expense item(s)'])
 
-		else:
-			is_expense_items_valid = True
-			for ei in expense_items:
-				form = ExpenseTransactionItemForm(ei)
+		exclude = 'transaction',
+		is_expense_items_valid = True
+		for expense_transaction_item in self.expense_transaction_items:
+			try:
+				expense_transaction_item.get('model').full_clean(exclude)
+				value = float(expense_transaction_item.get('value'))
+			except (ValidationError, ValueError) as e:
+				is_expense_items_valid = False
 
-				if not form.errors:
-					is_expense_items_valid = False
+		if not is_expense_items_valid:
+			errors.setdefault('expense_items', ['One or more expense items fields have errors'])
 
-			if not is_expense_items_valid:
-				self.form.add_error(None, ValidationError('One or more expense items have invalid data'))
+		if errors:
+			raise ValidationError(errors)
 
-		return is_valid
-
-	def save_model(self):
+	def save(self, force_insert = False, force_update = False, using = None, update_fields = None):
 		"""
-		Overrides base class method
-		:return:
+		Saves the model instance
+		:param update_fields:
+		:param using:
+		:param force_update:
+		:param force_insert:
 		"""
-		super(ExpenseTransaction, self).save_model()
+		super(ExpenseTransaction, self).save(force_insert, force_update, using, update_fields)
 
 		try:
-			for expense_item in self.data['expense_items']:
-				expense_item_model = ExpenseTransactionItem(
-					expense_item_id = expense_item['guid'],
-					transaction_id = self.model_instance.guid,
-					count = expense_item['count']
-				)
-				expense_item_model.save()
+			for expense_transaction_item in self.expense_transaction_items:
+				model = expense_transaction_item.get('model')
+				model.transaction_id = self.model.guid
+				model.save()
 
-				expense_item_register_record = expense_item_model.create_register_record(expense_item['price'])
-				expense_item_register_record.save()
+				register_record = model.create_register_record(expense_transaction_item.get('value'))
+				register_record.save()
 		except Exception as e:
-			raise TransactionSaveError('The error is occupied during expense items saving', e)
+			self.set_data(status_id = TransactionStatus.objects.get_error_status().guid)
+			self.model.save(force_insert, force_update, using, force_update)
 
-		return self.model_instance
+			raise TransactionSaveError('The error is occupied during expense items saving')

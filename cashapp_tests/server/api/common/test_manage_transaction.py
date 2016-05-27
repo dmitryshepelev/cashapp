@@ -40,7 +40,7 @@ class TestManageTransactionIncome(TestCase):
 		response = self.client.post(self.url + 'income/', data = post_data, content_type = self.request_content_type)
 
 		self.assertEqual(response.status_code, 400, response.content)
-		self.assertIn('Enter a number.', response.content)
+		self.assertIn('"value": ["\'error\' value must be a decimal number."]', response.content)
 
 	def test_create_transaction_poid_error_field(self):
 		post_data = dict(self.new_transaction)
@@ -49,7 +49,7 @@ class TestManageTransactionIncome(TestCase):
 		response = self.client.post(self.url + 'income/', data = post_data, content_type = self.request_content_type)
 
 		self.assertEqual(response.status_code, 400, response.content)
-		self.assertIn('Paymnet object does not exist', response.content)
+		self.assertIn('"payment_object": ["payment object instance with guid \'42\' does not exist."]', response.content)
 
 	def test_create_transaction_success(self):
 		post_data = self.new_transaction
@@ -108,7 +108,7 @@ class TestManageTransactionExpense(TestCase):
 		response = self.client.post(self.url + 'expense/', data = post_data, content_type = self.request_content_type)
 
 		self.assertEqual(response.status_code, 400, response.content)
-		self.assertIn('"date": ["This field is required."]', response.content)
+		self.assertIn('"date": ["This field cannot be null."]', response.content)
 
 	def test_create_transaction_empty_expense_items_error(self):
 		post_data = dict(self.new_transaction)
@@ -116,14 +116,14 @@ class TestManageTransactionExpense(TestCase):
 		response = self.client.post(self.url + 'expense/', data = post_data, content_type = self.request_content_type)
 
 		self.assertEqual(response.status_code, 400, response.content)
-		self.assertIn('"message": {}', response.content)
+		self.assertIn('"expense_items": ["Transaction should contain expense item(s)"]', response.content)
 
 	def test_create_transaction_success(self):
 		post_data = self.new_transaction
 		post_data['date'] = 1462964567245
 		post_data['expense_items'] = [
 			{
-				'guid': self.expense_item.guid,
+				'expense_item_id': self.expense_item.guid,
 				'count': 2,
 				'price': 100.00
 			}
@@ -141,7 +141,7 @@ class TestManageTransactionExpense(TestCase):
 		post_data['date'] = 1465463456560
 		post_data['expense_items'] = [
 			{
-				'guid': self.expense_item.guid,
+				'expense_item_id': self.expense_item.guid,
 				'count': 2,
 				'price': 150.00
 			}
@@ -157,7 +157,7 @@ class TestManageTransactionExpense(TestCase):
 		post_data['date'] = 1465634564532
 		post_data['expense_items'] = [
 			{
-				'guid': self.expense_item.guid,
+				'expense_item_id': self.expense_item.guid,
 				'count': 2,
 				'price': 123.45
 			}
@@ -173,7 +173,7 @@ class TestManageTransactionExpense(TestCase):
 		post_data['date'] = 1462969766575
 		post_data['expense_items'] = [
 			{
-				'guid': self.expense_item.guid,
+				'expense_item_id': self.expense_item.guid,
 				'count': 2,
 				'price': 100.00
 			}
@@ -186,36 +186,3 @@ class TestManageTransactionExpense(TestCase):
 		self.assertEqual(response.status_code, 201, response.content)
 		self.assertEqual(register_records_count + 1, len(PORegister.objects.filter(payment_object = self.po)))
 
-	def test_create_transaction_save_error(self):
-		post_data = self.new_transaction
-		post_data['date'] = 1462965663452
-		post_data['expense_items'] = [
-			{
-				'guid': self.expense_item.guid,
-				'count': 2,
-				'price': 'test'
-			}
-		]
-
-		response = self.client.post(self.url + 'expense/', data = post_data, content_type = self.request_content_type)
-
-		self.assertEqual(response.status_code, 500, response.content)
-		self.assertIn('"message": {"type": "error"}', response.content)
-
-	def test_create_transaction_save_error_status_changed(self):
-		post_data = self.new_transaction
-		post_data['date'] = 1462965663452
-		post_data['expense_items'] = [
-			{
-				'guid': self.expense_item.guid,
-				'count': 2,
-				'price': 'test'
-			}
-		]
-
-		response = self.client.post(self.url + 'expense/', data = post_data, content_type = self.request_content_type)
-
-		self.assertEqual(response.status_code, 500, response.content)
-
-		transaction = ExpenseTransaction.objects.all().order_by('-creation_datetime').first()
-		self.assertEqual(transaction.status.name, 'error')

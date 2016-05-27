@@ -41,6 +41,14 @@
                 var transaction = $CommonService.createFlatCopy($scope.transaction);
                 transaction.date = transaction.date.getTime();
 
+                transaction.expense_items = transaction.expense_items.map(function (item) {
+                    return {
+                        expense_item_id: item.guid,
+                        count: item.count,
+                        price: item.price
+                    }
+                });
+
                 $TransactionService.createExpenseTransaction(transaction)
                     .then(onCreateTransactionSuccess)
                     .catch(onError)

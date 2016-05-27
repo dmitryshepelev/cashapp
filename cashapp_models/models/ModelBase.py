@@ -90,7 +90,7 @@ class ModelBase(models.Model):
 
 	def get_protected_fields(self):
 		"""
-		Returns the filds which shouldn't be changed
+		Returns the fields which shouldn't be changed
 		:return: {tuple}
 		"""
 		return 'id', 'guid', 'exist', 'creation_datetime', 'last_edited_datetime'
@@ -106,3 +106,12 @@ class ModelBase(models.Model):
 
 			if prop in self.__dict__.keys():
 				self.__dict__[prop] = data.get(prop)
+
+	def full_clean(self, exclude=None, validate_unique=True):
+		"""
+		Validate model fields
+		:param exclude:
+		:param validate_unique:
+		"""
+		exclude = tuple(set(exclude or tuple()) | {'guid'})
+		super(ModelBase, self).full_clean(exclude = exclude, validate_unique = validate_unique)

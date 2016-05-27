@@ -29,9 +29,10 @@ class ServerResponse(object):
 
 	# 2xx
 	@classmethod
-	def ok(cls, data=None, message=None):
+	def ok(cls, data=None, message = None):
 		"""
 		Returns Success JsonResponse with 200 status code
+		:param message:
 		:param data: response content
 		:return: JsonResponse instance
 		"""
@@ -39,9 +40,10 @@ class ServerResponse(object):
 		return JsonResponse(status=200, data=data)
 
 	@classmethod
-	def created(cls, data=None, message=None):
+	def created(cls, data=None, message = None):
 		"""
 		Returns Success JsonResponse with 201 status code
+		:param message:
 		:param data: response content
 		:return: JsonResponse instance
 		"""
@@ -50,9 +52,10 @@ class ServerResponse(object):
 
 	# 4xx
 	@classmethod
-	def bad_request(cls, data=None, message=None):
+	def bad_request(cls, data=None, message = None):
 		"""
 		Returns Error JsonResponse with 400 status code
+		:param message:
 		:param data: response content
 		:return: JsonResponse instance
 		"""
@@ -60,9 +63,10 @@ class ServerResponse(object):
 		return JsonResponse(status=400, data=data)
 
 	@classmethod
-	def unauthorized(cls, data=None, message=None):
+	def unauthorized(cls, data=None, message = None):
 		"""
 		Returns Error JsonResponse with 401 status code
+		:param message:
 		:param data: response content
 		:return: JsonResponse instance
 		"""
@@ -70,9 +74,10 @@ class ServerResponse(object):
 		return JsonResponse(status=401, data=data)
 
 	@classmethod
-	def not_found(cls, data=None, message=None):
+	def not_found(cls, data=None, message = None):
 		"""
 		Returns Error JsonResponse with 404 status code
+		:param message:
 		:param data: response content
 		:return: JsonResponse instance
 		"""
@@ -81,9 +86,10 @@ class ServerResponse(object):
 
 	# 5xx
 	@classmethod
-	def internal_server_error(cls, data=None, message=None):
+	def internal_server_error(cls, data=None, message = None):
 		"""
 		Returns Error JsonResponse with 500 status code
+		:param message:
 		:param data: response content
 		:return: JsonResponse instance
 		"""
