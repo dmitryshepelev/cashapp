@@ -1,6 +1,9 @@
 from django.core.exceptions import ValidationError
 
+from cashapp.decorators import payment_object_permission
 from cashapp.libs.DateTimeUtil import DateTimeUtil
+from cashapp_models.Exceptions.PaymentObjectLockedError import PaymentObjectLockedError
+from cashapp_models.Exceptions.PaymentObjectValueError import PaymentObjectValueError
 from cashapp_models.Exceptions.TransactionSaveError import TransactionSaveError
 from cashapp_models.models.ExpenseTransactionItemModel import ExpenseTransactionItem
 from cashapp_models.models.ExpenseTransactionModel import ExpenseTransaction as ETModel
@@ -41,6 +44,7 @@ class Transaction(object):
 		"""
 		self.model.full_clean(exclude = exclude, validate_unique = validate_unique)
 
+	@payment_object_permission()
 	def save(self, force_insert = False, force_update = False, using = None, update_fields = None):
 		"""
 		Saves the model instance
@@ -142,7 +146,10 @@ class ExpenseTransaction(Transaction):
 		:param force_update:
 		:param force_insert:
 		"""
-		super(ExpenseTransaction, self).save(force_insert, force_update, using, update_fields)
+		try:
+			super(ExpenseTransaction, self).save(force_insert, force_update, using, update_fields)
+		except (PaymentObjectValueError, PaymentObjectLockedError) as e:
+			raise TransactionSaveError(e.message)
 
 		try:
 			for expense_transaction_item in self.expense_transaction_items:
@@ -152,8 +159,21 @@ class ExpenseTransaction(Transaction):
 
 				register_record = model.create_register_record(expense_transaction_item.get('value'))
 				register_record.save()
+
 		except Exception as e:
 			self.set_data(status_id = TransactionStatus.objects.get_error_status().guid)
 			self.model.save(force_insert, force_update, using, force_update)
 
 			raise TransactionSaveError('The error is occupied during expense items saving')
+
+	def get_total_value(self):
+		"""
+		Calculates total value of transaction
+		:return:
+		"""
+		value = .0
+
+		for transaction_expense_item in self.expense_transaction_items:
+			value += float(transaction_expense_item.get('value'))
+
+		return value

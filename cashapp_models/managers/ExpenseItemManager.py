@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 
 class ExpenseItemManager(models.Manager):
@@ -18,4 +19,5 @@ class ExpenseItemManager(models.Manager):
 			kwargs.__setitem__('owner', kwargs.get(user_name))
 			del kwargs[user_name]
 
-		return self.filter(name__icontains = q, **kwargs)
+		query = Q(name__icontains = q) | Q(category__name__icontains = q)
+		return self.filter(query, **kwargs)

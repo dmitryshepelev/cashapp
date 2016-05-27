@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Max
+from datetime import datetime
 
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.ModelBase import ModelBase
@@ -59,6 +60,15 @@ class PaymentObject(ModelBase):
 		"""
 		return self.poregister_set.annotate(max_date = Max('creation_datetime')).last()
 
+	def get_register_record(self, dt = None):
+		"""
+		Get register record on specified date
+		:param dt:
+		:return:
+		"""
+		dt = dt or datetime.now()
+		return self.poregister_set.filter(creation_datetime__lte = dt).order_by('creation_datetime').last()
+
 	def get_protected_fields(self):
 		"""
 		Overrides base class method
@@ -66,3 +76,10 @@ class PaymentObject(ModelBase):
 		"""
 		fields = super(PaymentObject, self).get_protected_fields()
 		return tuple(set(fields) | {'user_id'})
+
+	def is_locked(self):
+		"""
+		Returns is_locked status
+		:return:{bool}
+		"""
+		return False

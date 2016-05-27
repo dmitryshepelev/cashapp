@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.db import models
 
+from cashapp.decorators import payment_object_permission
 from cashapp_models.managers.ExpenseTransactionManager import ExpenseTransactionManager
 from cashapp_models.models.ModelBase import ModelBase
 from cashapp_models.models.SupplierModel import Supplier
@@ -76,3 +77,14 @@ class ExpenseTransaction(ModelBase, TransactionModelBase):
 		register_record.value -= Decimal(self.get_total_value())
 
 		return register_record
+
+	def save(self, force_insert = False, force_update = False, using = None, update_fields = None):
+		"""
+		Overrides base class method
+		:param force_insert:
+		:param force_update:
+		:param using:
+		:param update_fields:
+		:return:
+		"""
+		super(ExpenseTransaction, self).save(force_insert, force_update, using, update_fields)
