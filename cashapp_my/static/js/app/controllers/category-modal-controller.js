@@ -4,7 +4,6 @@
         var action = $stateParams.action;
         $scope.isEditMode = action === 'edit';
         
-        $scope.parent = {};
         $scope.category = {};
 
         /**
@@ -31,8 +30,6 @@
          * Manage category
          */
         $scope.manageCategory = function () {
-            var action = $stateParams.action;
-
             var validationResult = $validator.validateForm($scope.categoryForm);
             if (validationResult.status) {
                 
@@ -81,12 +78,7 @@
          * Loads initial data values
          */
         function loadInitialData() {
-            $q
-                .all([
-
-                ])
-                .then(initScope)
-                .catch(onError)
+            initScope()
         }
         
         loadInitialData();

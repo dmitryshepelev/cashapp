@@ -4,7 +4,7 @@ describe('POModalController tests', function () {
     
     var uibModalInstance = {
         close: function () {}
-    }
+    };
 
     beforeEach(module('CashAppMy'));
 
