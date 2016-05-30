@@ -6,8 +6,8 @@ from django.utils.decorators import available_attrs
 
 from cashapp.libs.Request import Request
 from cashapp.libs.ServerResponse import ServerResponse
-from cashapp_models.Exceptions.PaymentObjectLockedError import PaymentObjectLockedError
-from cashapp_models.Exceptions.PaymentObjectValueError import PaymentObjectValueError
+from cashapp_models.exceptions.PaymentObjectLockedError import PaymentObjectLockedError
+from cashapp_models.exceptions.PaymentObjectValueError import PaymentObjectValueError
 
 
 def api_authorized():

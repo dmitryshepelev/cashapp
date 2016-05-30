@@ -1,7 +1,7 @@
 from django.db import models
 
-from cashapp_models.Exceptions.BoundCategoryLevelException import BoundCategoryLevelException
-from cashapp_models.Exceptions.ModelsAppBaseException import CreationError
+from cashapp_models.exceptions.BoundCategoryLevelException import BoundCategoryLevelException
+from cashapp_models.exceptions.ModelsAppBaseException import CreationError
 from cashapp_models.libs.ISearchable import ISearchable
 from cashapp_models.models.CategoryLevelModel import CategoryLevel
 

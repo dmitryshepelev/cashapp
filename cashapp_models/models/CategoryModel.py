@@ -79,3 +79,10 @@ class Category(ModelBase):
 		"""
 		fields = super(Category, self).get_protected_fields()
 		return tuple(set(fields) | {'level_id', 'parent_guid'})
+
+	def has_dependencies(self):
+		"""
+		Overrides base class method
+		:return:
+		"""
+		return self.get_subs().count() > 0 or self.expenseitem_set.all().count() > 0

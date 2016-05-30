@@ -1,7 +1,7 @@
 from django.db import models
 
 from cashapp import settings
-from cashapp_models.Exceptions.BoundCategoryLevelException import BoundCategoryLevelException
+from cashapp_models.exceptions.BoundCategoryLevelException import BoundCategoryLevelException
 
 
 class CategoryLevelManager(models.Manager):

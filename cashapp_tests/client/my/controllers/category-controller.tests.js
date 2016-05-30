@@ -116,6 +116,59 @@ describe('CategoryController tests', function () {
         })
     });
 
+        describe('Delete category', function () {
+        var $scope;
+        var controller;
+
+        beforeEach(function () {
+            $scope = {};
+            controller = $controller('category-controller', {
+                $scope: $scope,
+                $stateParams: {
+                    guid: ''
+                }
+            });
+
+            spyOn($state, 'go');
+            spyOn($ToastService, 'error');
+            spyOn($ToastService, 'messageFromResponse');
+
+            $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
+            $httpBackend.expectGET('/my/uiview/').respond(200, {});
+            $httpBackend.expectGET('/my/dashboard/').respond(200, {});
+            $httpBackend.whenGET('/api/cmn/category/?subs=true&parent=true').respond(200, { category: { subs: [{guid: 'test_guid'}]}});
+
+            $httpBackend.flush();
+        });
+
+        it('should be successful deleted category', function () {
+            $httpBackend.whenDELETE('/api/cmn/category/test_guid/').respond(200, { category: 'test_guid'});
+
+            var categoriesCount = $scope.category.subs.length;
+            $scope.delete($event, 'test_guid');
+            
+            $httpBackend.flush();
+            expect($scope.category.subs.length).toBe(categoriesCount - 1);
+        });
+
+        it('should be an error during successful callback executing', function () {
+            $httpBackend.whenDELETE('/api/cmn/category/test_guid/').respond(200, { category: 'other_test_guid'});
+            
+            $scope.delete($event, 'test_guid');
+            
+            $httpBackend.flush();            
+        });
+
+        it('should be an error during deleting', function () {
+            $httpBackend.whenDELETE('/api/cmn/category/test_guid/').respond(500, {});
+
+            $scope.delete($event, 'test_guid');
+
+            $httpBackend.flush();
+            expect($ToastService.messageFromResponse).toHaveBeenCalled();
+        })
+    });
+
     describe('Non root category', function () {
         var $scope;
         var controller;

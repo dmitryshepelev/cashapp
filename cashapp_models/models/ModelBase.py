@@ -115,3 +115,10 @@ class ModelBase(models.Model):
 		"""
 		exclude = tuple(set(exclude or tuple()) | {'guid'})
 		super(ModelBase, self).full_clean(exclude = exclude, validate_unique = validate_unique)
+
+	def has_dependencies(self):
+		"""
+		Check if the instance has dependencies
+		:return: {bool}
+		"""
+		return False

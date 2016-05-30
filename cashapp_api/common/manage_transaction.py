@@ -5,7 +5,7 @@ from django.views.decorators.http import require_http_methods
 from cashapp.decorators import request_wrapper, api_authorized
 from cashapp.libs.Message import Message
 from cashapp.libs.ServerResponse import ServerResponse
-from cashapp_models.Exceptions.TransactionSaveError import TransactionSaveError
+from cashapp_models.exceptions.TransactionSaveError import TransactionSaveError
 from cashapp_models.models.TransactionStatusModel import TransactionStatus
 from cashapp_my.libs.Transaction import Transaction
 

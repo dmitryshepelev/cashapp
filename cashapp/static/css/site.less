@@ -499,3 +499,16 @@ ul.dropdown-menu {
 	visibility: hidden;
 	padding: 5px;
 }
+
+tr {
+	& .delete-row {
+		width: 2em;
+		visibility: hidden;
+	}
+
+	&:hover {
+		& .delete-row {
+				visibility: visible;
+			}
+	}
+}

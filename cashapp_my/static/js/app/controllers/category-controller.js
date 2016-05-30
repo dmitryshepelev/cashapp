@@ -31,7 +31,6 @@
 
         /**
          * Opens manage PO modal
-         * @private
          */
         $scope.manage = function($event, guid) {
             $event.stopImmediatePropagation();
@@ -46,6 +45,34 @@
             }
             $state.go(state, params);
         };
+
+        /**
+         * Callback to execute on delete category success
+         * @param response
+         */
+        function onDeleteCategoyrSuccess(response) {
+            var guid = response.data.category;
+            var index = $CommonService.getIndexByField($scope.category.subs, guid);
+            
+            if (index >= 0) {
+                $scope.category.subs.splice(index, 1);
+            } else {
+
+            }
+        }
+        
+        /**
+         * Delete category
+         * @param $event
+         * @param guid
+         */
+        $scope.delete = function ($event, guid) {
+            $event.stopImmediatePropagation();
+            $CategoryService
+                .delete(guid)
+                    .then(onDeleteCategoyrSuccess)
+                    .catch(onError)
+        }
 
         /**
          * Go to category details

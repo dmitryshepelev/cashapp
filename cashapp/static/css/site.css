@@ -405,3 +405,10 @@ ul.dropdown-menu > li > a {
   visibility: hidden;
   padding: 5px;
 }
+tr .delete-row {
+  width: 2em;
+  visibility: hidden;
+}
+tr:hover .delete-row {
+  visibility: visible;
+}

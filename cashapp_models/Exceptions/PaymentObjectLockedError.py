@@ -1,4 +1,4 @@
-from cashapp_models.Exceptions.ModelsAppBaseException import ModelsAppBaseException
+from cashapp_models.exceptions.ModelsAppBaseException import ModelsAppBaseException
 
 
 class PaymentObjectLockedError(ModelsAppBaseException):

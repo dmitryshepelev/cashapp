@@ -27,6 +27,13 @@
                 var paramsString = $CommonService.encodeQueryData(defaultParams);
                 var categoryGuid = guid ? guid + '/' : '';
                 return $http.get(baseUrl + categoryGuid + (paramsString ? '?' + paramsString : ''));
+            },
+            /**
+             * Delete category by guid
+             * @param guid
+             */
+            delete: function (guid) {
+                return $http.delete(baseUrl + guid + '/');
             }
         }
     }

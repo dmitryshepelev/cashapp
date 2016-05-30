@@ -4,13 +4,13 @@ from django.views.decorators.http import require_http_methods
 from cashapp.decorators import request_wrapper, api_authorized
 from cashapp.libs.Message import Message
 from cashapp.libs.ServerResponse import ServerResponse
-from cashapp_models.Exceptions.ModelsAppBaseException import CreationError
+from cashapp_models.exceptions.ModelsAppBaseException import CreationError
 from cashapp_models.models.CategoryModel import Category
 from cashapp_my.forms.CategoryForm import CategoryForm
 
 
 @api_authorized()
-@require_http_methods(['GET', 'PUT', 'POST'])
+@require_http_methods(['GET', 'PUT', 'POST', 'DELETE'])
 @request_wrapper()
 def manage_category(request, guid = None):
 	"""
@@ -72,6 +72,21 @@ def manage_category(request, guid = None):
 			return ServerResponse.internal_server_error(message=Message.error('The error was occured during saving process'))
 
 		return ServerResponse.ok(data={field_name: category.serialize()})
+
+	if request.is_DELETE:
+		if not guid:
+			return ServerResponse.bad_request(message = Message.error('Guid must be set'))
+
+		try:
+			category = Category.objects.get(guid = guid, owner_id = request.user.pk)
+		except ObjectDoesNotExist as e:
+			return ServerResponse.not_found()
+
+		if category.has_dependencies():
+			return ServerResponse.internal_server_error(message = Message.warning('Category has dependencies. It cannot be deleted'))
+
+		category.delete()
+		return ServerResponse.ok(data = {field_name: guid})
 
 	if request.is_POST:
 		form = CategoryForm(request.data)

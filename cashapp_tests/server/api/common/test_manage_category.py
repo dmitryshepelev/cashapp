@@ -185,3 +185,37 @@ class TestManage_category(TestCase):
 
 		self.assertEqual(response.status_code, 500, response.content)
 		self.assertIn('Max Category nesting reached', response.content)
+
+	def test_delete_category_guid_not_set(self):
+		response = self.client.delete(self.url, content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 400, response.content)
+		self.assertIn('"Guid must be set"', response.content)
+
+	def test_delete_category_not_found(self):
+		guid = str(range(0, 39))
+
+		response = self.client.delete(self.url + guid, content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 404, response.content)
+
+	def test_delete_category_has_dependencies_error(self):
+		response = self.client.delete(self.url + self.root_category.guid + '/', content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 500, response.content)
+		self.assertIn('"Category has dependencies.', response.content)
+
+	def test_delete_category_success(self):
+		new_category = Category.objects.create_sub('category_to_delete', self.root_category)
+		new_category.owner = self.user
+		new_category.save()
+
+		guid = new_category.guid
+
+		categories_count = Category.objects.all().count()
+
+		response = self.client.delete(self.url + guid + '/', content_type = self.request_content_type)
+
+		self.assertEqual(response.status_code, 200, response.content)
+		self.assertIn(guid, response.content)
+		self.assertEqual(Category.objects.all().count(), categories_count - 1)

@@ -31,6 +31,7 @@
                                 <td></td>
                                 <td><span class="action-text" ng-click="manage($event, category.guid)">[[ category.name ]]</span></td>
                                 <td>[[ category.subs_count > 0 ? category.subs_count : '' ]]</td>
+	                            <td ng-click="delete($event, category.guid)" class="action-text delete-row"><span class="lnr lnr-cross"></span></td>
                             </tr>
                         </tbody>
                     </table>
