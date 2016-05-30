@@ -33,11 +33,7 @@
                 $scope.suppliers = null;
             }
             
-            data.forEach(function (item) {
-                if (item.data.hasOwnProperty('supplier')) {
-                    initRecentSuppliers(item.data.supplier);
-                }
-            });
+            initRecentSuppliers(data[0].data.supplier);
 
             $rootScope.$on('Supplier.addSuccess', function (event, supplier) {
                 $scope.recentSuppliers.push(supplier);
@@ -54,7 +50,7 @@
              * Callback to execute on search success
              */
             function onSearchSuccess(response) {
-                $scope.suppliers = response.data.instances || [];
+                $scope.suppliers = response.data.instances;
             }
 
             $scope.$watch(function () {
