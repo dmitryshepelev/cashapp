@@ -100,7 +100,7 @@ nav > .container {
   margin-bottom: 5em !important;
 }
 select {
-  background: #ffffff url(images/lnr-arrow-down.svg) no-repeat 96% 50% !important;
+  background: #fff url(images/lnr-arrow-down.svg) no-repeat 96% 50% !important;
   background-size: 0.9em !important;
   margin: 0;
   overflow: hidden;
@@ -135,7 +135,7 @@ select.form-control:disabled {
   border: 0.0625rem dashed #e5e5e5;
 }
 .border-primary {
-  border-color: #0275d8;
+  border-color: #0275D8;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -157,13 +157,13 @@ select.form-control:disabled {
   margin-top: 3px;
 }
 .row-action-td > .row-action-button:hover {
-  color: #0275d8;
+  color: #0275D8;
 }
 .action-text {
   cursor: pointer;
 }
 .action-text:hover {
-  color: #0275d8;
+  color: #0275D8;
 }
 tr:hover .row-action-td {
   opacity: 1;
@@ -172,9 +172,9 @@ tr:hover .row-action-td {
   padding-bottom: 0.5em;
 }
 [uib-tooltip] + div.tooltip > .tooltip-inner {
-  color: #0275d8;
+  color: #0275D8;
   background-color: white;
-  border: 1px solid #7db8ea;
+  border: 1px solid #7DB8EA;
 }
 .uib-day .btn-default,
 .uib-daypicker .btn-default,
@@ -190,8 +190,8 @@ tr:hover .row-action-td {
 .uib-time .btn-default.active,
 .uib-monthpicker .btn-default.active,
 .uib-yearpicker .btn-default.active {
-  border-color: #0275d8;
-  color: #0275d8 !important;
+  border-color: #0275D8;
+  color: #0275D8 !important;
 }
 .uib-day .btn-default.active:hover,
 .uib-daypicker .btn-default.active:hover,
@@ -363,17 +363,17 @@ ul.icon-list li .value strong {
   cursor: pointer;
 }
 .input-icon + span:hover {
-  color: #0275d8;
+  color: #0275D8;
 }
 ul.dropdown-menu + .no-result {
   position: absolute;
   top: 41px;
   right: 30px;
   font-size: 14px;
-  color: #0275d8;
+  color: #0275D8;
 }
 ul.dropdown-menu > .active > a {
-  color: #0275d8;
+  color: #0275D8;
   text-decoration: none;
   outline: 0;
 }

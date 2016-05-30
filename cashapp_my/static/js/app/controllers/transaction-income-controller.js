@@ -25,7 +25,7 @@
             if (result.status) {
                 var transaction = $CommonService.createFlatCopy($scope.transaction);
                 transaction.date = transaction.date.getTime();
-                
+
                 $TransactionService.createIncomeTransaction(transaction)
                     .then(onCreateTransactionSuccess)
                     .catch(onError)
@@ -48,16 +48,11 @@
              * Init POs model
              * @param po
              */
-            function initPOs(po) {
-                $scope.po = po || {}
+            function initPO(po) {
+                $scope.po = po;
             }
-
-            data.forEach(function (item) {
-                if (item.data.hasOwnProperty('po')) {
-                    initPOs(item.data.po)
-                }
-            });
-
+            
+            initPO(data[0].data.po);
             $scope.transaction.payment_object = $scope.po;
         }
 

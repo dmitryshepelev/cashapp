@@ -1,16 +1,14 @@
 describe('TransactionIncome tests', function () {
     var $controller;
     var $httpBackend;
-    
-    var uibModalInstance = {
-        close: function () {}
-    }
+    var $state;
 
     beforeEach(module('CashAppMy'));
 
-    beforeEach(inject(function (_$controller_, _$httpBackend_) {
+    beforeEach(inject(function (_$controller_, _$httpBackend_, _$state_) {
         $controller = _$controller_;
         $httpBackend = _$httpBackend_;
+        $state = _$state_;
     }));
 
     afterEach(function () {
@@ -36,12 +34,12 @@ describe('TransactionIncome tests', function () {
             $httpBackend.whenGET('/api/cmn/po//').respond(500, { types: [{ name: 'card'}, { name: 'cash'}]});
         });
     
-        it('should be an gettin data error', function () {
+        it('should be an getting data error', function () {
             $httpBackend.flush();
         });
     });
 
-    describe('Transaction income modal. Pre selected PO', function () {
+    describe('Transaction income modal', function () {
         var $scope;
         var controller;
 
@@ -54,6 +52,8 @@ describe('TransactionIncome tests', function () {
                 $scope: $scope,
                 $stateParams: { guid: guid }
             });
+            
+            spyOn($state, 'go');
 
             $httpBackend.expectGET('/static/locale/en.json').respond(200, {});
             $httpBackend.expectGET('/my/uiview/').respond(200, {});
@@ -64,14 +64,18 @@ describe('TransactionIncome tests', function () {
 
             $httpBackend.flush();
         });
+        
+        it('should be initialized $scope.po', function () {
+            expect($scope.po.name).toBe('test');
+        });
 
         it('should be transaction creation success', function () {
-            $httpBackend.whenPOST('/api/cmn/transaction/income/').respond(201, { transaction: { }});
+            $httpBackend.whenPOST('/api/cmn/transaction/income/').respond(201, { transaction: { name: 'test01'}});
 
             $scope.transaction = {
                 date: new Date()
             };
-
+            
             $scope.createTransaction();
             
             $httpBackend.flush();
