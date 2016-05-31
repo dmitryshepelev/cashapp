@@ -23,6 +23,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
+            '../cashapp/static/js/libs/chart.min.js',
             '../cashapp/static/js/libs/angular-1.5.0-beta.min.js',
             '../cashapp/static/js/libs/angular-mock.js',
             '../cashapp/static/js/libs/angular-ui-router-0.2.15.min.js',
@@ -41,6 +42,7 @@ module.exports = function(config) {
             '../cashapp/static/js/libs/angular-ui-stackedMap.js',
             '../cashapp/static/js/libs/angular-ui-switch.min.js',
             '../cashapp/static/js/libs/angular-ui-datetimepicker.min.js',
+            '../cashapp/static/js/libs/angular-chart.min.js',
 
             '../cashapp/static/js/app/services-module.js',
             '../cashapp/static/js/app/directives/*.js',

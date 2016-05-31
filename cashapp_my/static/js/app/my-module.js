@@ -1,6 +1,6 @@
 (function (angular) {
 
-    function _config($stateProvider, $urlRouterProvider, $translateProvider, $interpolateProvider, $httpProvider) {
+    function _config($stateProvider, $urlRouterProvider, $translateProvider, $interpolateProvider, $httpProvider, ChartJsProvider) {
         var _baseUrl = '/my';
 
         $interpolateProvider.startSymbol('[[');
@@ -14,6 +14,10 @@
 
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+
+        ChartJsProvider.setOptions({
+            colours : ['#d9534f', '#5cb85c', '#0275D8']
+        })
 
         $urlRouterProvider.when('', '/dashboard');
         $stateProvider
@@ -163,11 +167,12 @@
             'CashApp.Service',
             'ngAnimate',
             'ui.bootstrap',
-            'uiSwitch'
+            'uiSwitch',
+            'chart.js'
         ]);
     angular
         .module('CashAppMy')
-        .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', _config]);
+        .config(['$stateProvider', '$urlRouterProvider', '$translateProvider', '$interpolateProvider', '$httpProvider', 'ChartJsProvider', _config]);
 
     angular
         .module('CashAppMy')

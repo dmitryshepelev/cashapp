@@ -25,11 +25,17 @@ def manage_po_transaction(request, guid):
 	except ObjectDoesNotExist as e:
 		return ServerResponse.not_found(message=Message.error('The object {guid} is\'n found'.format(guid=guid)))
 
-	transaction_type = request.get_params.get('type', None)
+	transaction_type = request.get_params.get('type', 'income,expense')
 	count = request.get_params.get('count', None)
 
-	income_transactions = IncomeTransaction.objects.get_po_associated(payment_object)
-	expense_transactions = ExpenseTransaction.objects.get_po_associated(payment_object)
+	income_transactions = []
+	expense_transactions = []
+
+	if 'income' in transaction_type:
+		income_transactions = IncomeTransaction.objects.get_po_associated(payment_object)
+
+	if 'expense' in transaction_type:
+		expense_transactions = ExpenseTransaction.objects.get_po_associated(payment_object)
 
 	transactions = sorted(chain(income_transactions, expense_transactions), key = lambda x: x.date)[::-1]
 

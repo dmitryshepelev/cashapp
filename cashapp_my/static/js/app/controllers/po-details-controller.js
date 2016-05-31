@@ -11,14 +11,14 @@
          * Error callback
          * @param response
          */
-        function onError (response) {
+        function onError(response) {
             $ToastrService.messageFromResponse(response);
         }
 
         /**
          * Function to init $scope
          */
-        function initScope (data) {
+        function initScope(data) {
             /**
              * Init PO model
              * @param po
@@ -52,14 +52,12 @@
                     .catch(onError)
             }
 
-            data.forEach(function (item) {
-                if (item.data.hasOwnProperty('po')) {
-                    initPO(item.data.po);
-                } else if (item.data.hasOwnProperty('register')) {
-                    initRegisterFormResponse(item);
-                } else if (item.data.hasOwnProperty('transactions')) {
-                    initTransactions(item.data.transactions);
-                }
+            initPO(data[0].data.po);
+            initRegisterFormResponse(data[1]);
+            initTransactions(data[2].data.transactions);
+
+            var chartData = data[3].data.transactions.map(function (item) {
+                return Number(item.value);
             });
 
             $rootScope.$on('Transaction.createSuccess', function (event, transaction) {
@@ -69,14 +67,41 @@
                 $scope.transactions.push(transaction);
                 updateRegister();
             })
+
+            $scope.labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
+            $scope.data = [chartData];
+
+            $scope.options = {
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        display: false,
+                        points: false
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            max: 55000
+                        }
+                    }]
+                },
+                elements: {point: {radius: 0}}
+            };
+
+            $scope.colors = [{
+                backgroundColor: 'transparent',
+                borderColor: '#0275D8'
+            }];
         }
 
-        function loadInitialData () {
+        function loadInitialData() {
             $q
                 .all([
                     $POService.getPO(guid),
                     $POService.getLastRegisterRecord(guid),
-                    $POService.getTransactions(guid, { count: 5 })
+                    $POService.getTransactions(guid, {count: 5}),
+                    $POService.getTransactions(guid, {count: 10, type: 'expense'})
                 ])
                 .then(initScope)
                 .catch(onError);
