@@ -45,8 +45,13 @@
 
 		</div>
 		<div class="col-lg-4">
-			<canvas id="line" class="chart chart-line" chart-data="data"
-		        chart-labels="labels" chart-series="series" chart-options="options" chart-colors="colors" height="100">
+			<canvas class="chart chart-line" chart-data="expenseTransactionsChart.data"
+		        chart-labels="expenseTransactionsChart.labels" chart-series="expenseTransactionsChart.series"
+                chart-options="expenseTransactionsChart.options" chart-colors="expenseTransactionsChart.colors" height="100">
+			</canvas>
+            <canvas class="chart chart-line" chart-data="incomeTransactionsChart.data"
+		        chart-labels="incomeTransactionsChart.labels" chart-series="incomeTransactionsChart.series"
+                chart-options="incomeTransactionsChart.options" chart-colors="incomeTransactionsChart.colors" height="100">
 			</canvas>
 		</div>
 	</ui-view>

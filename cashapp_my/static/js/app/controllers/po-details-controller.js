@@ -1,11 +1,12 @@
 (function (angular) {
 
-    function POCtrl ($scope, $rootScope, $q, $CommonService, $POService, $CurrencyService, $ToastrService, $state, $stateParams, $TransactionService) {
+    function POCtrl ($scope, $rootScope, $q, $CommonService, $POService, $ToastrService, $stateParams, $ChartService) {
         var guid = $stateParams.guid || '';
 
         $scope.po = {};
         $scope.transactions = [];
         $scope.register = {};
+        $scope.expenseTransactionsChart = {};
 
         /**
          * Error callback
@@ -56,43 +57,20 @@
             initRegisterFormResponse(data[1]);
             initTransactions(data[2].data.transactions);
 
-            var chartData = data[3].data.transactions.map(function (item) {
-                return Number(item.value);
-            });
-
             $rootScope.$on('Transaction.createSuccess', function (event, transaction) {
                 if (!Array.isArray($scope.transactions)) {
                     $scope.transactions = [];
                 }
                 $scope.transactions.push(transaction);
                 updateRegister();
-            })
+                $scope[transaction.type + 'TransactionsChart'].addValue(transaction.value, transaction.date);
+            });
 
-            $scope.labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-
-            $scope.data = [chartData];
-
-            $scope.options = {
-                responsive: true,
-                scales: {
-                    xAxes: [{
-                        display: false,
-                        points: false
-                    }],
-                    yAxes: [{
-                        display: false,
-                        ticks: {
-                            max: 55000
-                        }
-                    }]
-                },
-                elements: {point: {radius: 0}}
-            };
-
-            $scope.colors = [{
-                backgroundColor: 'transparent',
-                borderColor: '#0275D8'
-            }];
+            $scope.expenseTransactionsChart =
+                $ChartService.expenseTransactionsChart(data[3].data.transactions, {});
+            
+            $scope.incomeTransactionsChart =
+                $ChartService.incomeTransactionsChart(data[4].data.transactions, {});
         }
 
         function loadInitialData() {
@@ -101,7 +79,8 @@
                     $POService.getPO(guid),
                     $POService.getLastRegisterRecord(guid),
                     $POService.getTransactions(guid, {count: 5}),
-                    $POService.getTransactions(guid, {count: 10, type: 'expense'})
+                    $POService.getTransactions(guid, {count: 10, type: 'expense'}),
+                    $POService.getTransactions(guid, {count: 10, type: 'income'})
                 ])
                 .then(initScope)
                 .catch(onError);
@@ -116,11 +95,9 @@
         '$q',
         '$CommonService',
         '$POService',
-        '$CurrencyService',
         '$ToastrService',
-        '$state',
         '$stateParams',
-        '$TransactionService'
+        '$ChartService'
     ];
 
     angular
