@@ -14,7 +14,7 @@ class SearchEngine(object):
 	def __resolve_model(self, obj_type):
 		"""
 		Set __model value
-		:param type:
+		:param obj_type:
 		:return:
 		"""
 		d = {

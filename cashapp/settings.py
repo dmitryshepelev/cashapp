@@ -64,7 +64,12 @@ ROOT_URLCONF = 'cashapp.urls'
 TEMPLATES = [
 	{
 		'BACKEND': 'django.template.backends.django.DjangoTemplates',
-		'DIRS': [],
+		'DIRS': (
+			os.path.join(BASE_DIR, 'cashapp/templates'),
+			os.path.join(BASE_DIR, 'cashapp_auth/templates'),
+			os.path.join(BASE_DIR, 'cashapp_my/templates'),
+			os.path.join(BASE_DIR, 'cashapp_sett/templates'),
+		),
 		'APP_DIRS': True,
 		'OPTIONS': {
 			'context_processors': [
@@ -148,13 +153,6 @@ STATICFILES_DIRS = (
 )
 
 STATIC_URL = '/static/'
-
-TEMPLATE_DIRS = (
-	os.path.join(BASE_DIR,  'cashapp/templates'),
-	os.path.join(BASE_DIR,  'cashapp_auth/templates'),
-	os.path.join(BASE_DIR,  'cashapp_my/templates'),
-	os.path.join(BASE_DIR,  'cashapp_sett/templates'),
-)
 
 LOGIN_URL = '/auth/#/'
 
