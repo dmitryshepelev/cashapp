@@ -31,5 +31,6 @@ def manage_po_register(request, guid):
 		return ServerResponse.ok({field_name: register_record.serialize() if register_record else {}})
 
 	else:
-		# TODO: get all register records
-		raise NotImplementedError('Not implemented yet')
+		register_records = payment_object.get_aggregated_register_records()
+
+		return ServerResponse.ok({field_name + 's': [record._asdict() for record in register_records]})

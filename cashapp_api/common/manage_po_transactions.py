@@ -27,19 +27,36 @@ def manage_po_transaction(request, guid):
 
 	transaction_type = request.get_params.get('type', 'income,expense')
 	count = request.get_params.get('count', None)
+	aggregation = request.get_params.get('aggregation', None)
 
-	income_transactions = []
-	expense_transactions = []
+	if not aggregation:
+		income_transactions = []
+		expense_transactions = []
 
-	if 'income' in transaction_type:
-		income_transactions = IncomeTransaction.objects.get_po_associated(payment_object)
+		if 'income' in transaction_type:
+			income_transactions = IncomeTransaction.objects.get_po_associated(payment_object)
 
-	if 'expense' in transaction_type:
-		expense_transactions = ExpenseTransaction.objects.get_po_associated(payment_object)
+		if 'expense' in transaction_type:
+			expense_transactions = ExpenseTransaction.objects.get_po_associated(payment_object)
 
-	transactions = sorted(chain(income_transactions, expense_transactions), key = lambda x: x.date)[::-1]
+		transactions = sorted(chain(income_transactions, expense_transactions), key = lambda x: x.date)[::-1]
 
-	if count:
-		transactions = transactions[:int(count):]
+		if count:
+			transactions = transactions[:int(count):]
 
-	return ServerResponse.ok(data={'transactions': [t.serialize() for t in transactions]})
+		return ServerResponse.ok(data={'transactions': [t.serialize() for t in transactions]})
+
+	else:
+		transaction_type = transaction_type.split(',')[0]
+
+		transactions = []
+		if 'income' in transaction_type:
+			transactions = IncomeTransaction.objects.get_aggregated_by_days(payment_object)
+
+		if 'expense' in transaction_type:
+			transactions = ExpenseTransaction.objects.get_aggregated_by_days(payment_object)
+
+		if count:
+			transactions = transactions[:int(count):]
+
+		return ServerResponse.ok(data={'transactions': [t._asdict() for t in transactions]})

@@ -63,14 +63,10 @@
                 }
                 $scope.transactions.push(transaction);
                 updateRegister();
-                $scope[transaction.type + 'TransactionsChart'].addValue(transaction.value, transaction.date);
             });
 
-            $scope.expenseTransactionsChart =
-                $ChartService.expenseTransactionsChart(data[3].data.transactions, {});
-            
-            $scope.incomeTransactionsChart =
-                $ChartService.incomeTransactionsChart(data[4].data.transactions, {});
+            $scope.registerChart =
+                $ChartService.registerChart(data[3].data.registers, {});
         }
 
         function loadInitialData() {
@@ -79,8 +75,7 @@
                     $POService.getPO(guid),
                     $POService.getLastRegisterRecord(guid),
                     $POService.getTransactions(guid, {count: 5}),
-                    $POService.getTransactions(guid, {count: 10, type: 'expense'}),
-                    $POService.getTransactions(guid, {count: 10, type: 'income'})
+                    $POService.getRegisterRecords(guid)
                 ])
                 .then(initScope)
                 .catch(onError);

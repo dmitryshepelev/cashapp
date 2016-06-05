@@ -42,73 +42,52 @@
             }
         };
 
-        /**
-         * Generic transactions chart
-         * @param transactions
-         * @param options
-         * @param colors
-         * @returns ChartSettings
-         */
-        function transactionsChart(transactions, options, colors) {
-            var data = [];
-            var labels = [];
-
-           var defaultOptions = {
-                responsive: true,
-                scales: {
-                    xAxes: [{
-                        display: false,
-                        points: false
-                    }],
-                    yAxes: [{
-                        display: false,
-                        ticks: {
-                            min: 0
-                        }
-                    }]
-                },
-                elements: {
-                    point: {
-                        radius: 0
-                    }
-                }
-            };
-
-            var chartSettings = new ChartSettings(data, labels, angular.merge(defaultOptions, options), colors || []);
-
-            transactions.reverse().forEach(function (transaction) {
-                chartSettings.addValue(Number(transaction.value), transaction.date);
-            });
-
-            return chartSettings;
-        }
-
         return {
-            /***
-             * Creates chart data for expense transaction chart
-             * @param expenseTransactions
+            /**
+             * Creates chart for register records
+             * @param registerRecords
              * @param options
              * @param colors
              */
-            expenseTransactionsChart: function (expenseTransactions, options, colors) {
+            registerChart: function (registerRecords, options, colors) {
+                var data = [];
+                var labels = [];
+
+                var defaultOptions = {
+                    // responsive: true,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            points: false
+                        }],
+                        yAxes: [{
+                            display: false,
+                            ticks: {
+                                min: 0
+                            }
+                        }]
+                    },
+                    elements: {
+                        point: {
+                            radius: 0
+                        }
+                    }
+                };
+
                 var defaultColors = [{
                     backgroundColor: 'transparent',
-                    borderColor: '#d9534f'
+                    borderColor: '#0275D8'
                 }];
-                return transactionsChart(expenseTransactions, options, angular.merge(defaultColors, colors))
-            },
-            /***
-             * Creates chart data for income transaction chart
-             * @param incomeTransactions
-             * @param options
-             * @param colors
-             */
-            incomeTransactionsChart: function (incomeTransactions, options, colors) {
-                var defaultColors = [{
-                    backgroundColor: 'transparent',
-                    borderColor: '#5cb85c'
-                }];
-                return transactionsChart(incomeTransactions, options, angular.merge(defaultColors, colors))
+
+                angular.extend(defaultColors, colors);
+
+                var chartSettings = new ChartSettings(data, labels, angular.merge(defaultOptions, options), defaultColors);
+
+                registerRecords.reverse().forEach(function (registerRecord) {
+                    chartSettings.addValue(Number(registerRecord.value), registerRecord.date);
+                });
+
+                return chartSettings;
             }
         }
     }

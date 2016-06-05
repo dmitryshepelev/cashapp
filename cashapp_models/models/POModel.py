@@ -1,7 +1,10 @@
+from collections import namedtuple
+
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import User
-from django.db import models
+from django.db import models, connection
 from django.db.models import Max
-from datetime import datetime
+from datetime import datetime, date
 
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.ModelBase import ModelBase
@@ -52,6 +55,53 @@ class PaymentObject(ModelBase):
 		serialized = super(PaymentObject, self).serialize(format, include_fields, exclude_fields, use_natural_foreign_keys,
 															use_natural_primary_keys)
 		return serialized
+
+	def get_aggregated_register_records(self, start_date = None, end_date = None, normalize = True):
+		"""
+		Returns aggregated register records
+		:return: {list}
+		"""
+		start_date = start_date or (date.today() - relativedelta(months = 1))
+		end_date = end_date or (date.today() + relativedelta(days = 1))
+
+		with connection.cursor() as c:
+			c.execute(
+				'SELECT * FROM get_aggregated_poregisers(%s, %s, %s)',
+				[self.guid, start_date.isoformat(), end_date.isoformat()]
+			)
+
+			aggregated_model = namedtuple('AggregatedModel', [col[0] for col in c.description])
+
+			register_records = [aggregated_model(*row) for row in c.fetchall()]
+
+			if normalize:
+				if len(register_records) == 0:
+					return register_records
+
+				register_records.reverse()
+				normalized_register_records = [register_records[0]]
+				value = None
+				for register_record in register_records[1::]:
+
+					difference = (register_record.date - normalized_register_records[-1].date).days
+					value = value or normalized_register_records[-1].value
+
+					if difference > 1:
+
+						for i in range(0, difference):
+							model = aggregated_model(
+								normalized_register_records[-1].date + relativedelta(days = 1),
+								value
+							)
+							normalized_register_records.append(model)
+
+					else:
+						normalized_register_records.append(register_record)
+					value = register_record.value
+
+				register_records = normalized_register_records
+
+			return register_records
 
 	def get_last_register_record(self):
 		"""

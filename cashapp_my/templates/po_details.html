@@ -22,6 +22,12 @@
 		</h3>
 	</div>
 	<ui-view class="form-group col-lg-12">
+        <div class="col-lg-12">
+            <canvas class="chart chart-line" chart-data="registerChart.data"
+		        chart-labels="registerChart.labels" chart-series="registerChart.series"
+                chart-options="registerChart.options" chart-colors="registerChart.colors" height="100">
+			</canvas>
+        </div>
         <div class="col-lg-4">
             <ul class="icon-list">
 	            <li><label class="text-uppercase text-muted">[[ 'recent_transactions' | translate ]]</label></li>
@@ -45,14 +51,7 @@
 
 		</div>
 		<div class="col-lg-4">
-			<canvas class="chart chart-line" chart-data="expenseTransactionsChart.data"
-		        chart-labels="expenseTransactionsChart.labels" chart-series="expenseTransactionsChart.series"
-                chart-options="expenseTransactionsChart.options" chart-colors="expenseTransactionsChart.colors" height="100">
-			</canvas>
-            <canvas class="chart chart-line" chart-data="incomeTransactionsChart.data"
-		        chart-labels="incomeTransactionsChart.labels" chart-series="incomeTransactionsChart.series"
-                chart-options="incomeTransactionsChart.options" chart-colors="incomeTransactionsChart.colors" height="100">
-			</canvas>
+
 		</div>
 	</ui-view>
 </div>

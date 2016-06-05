@@ -37,12 +37,16 @@
              * @param params: {}
              */
             getTransactions: function (guid, params) {
-                var defaultParams = {};
-                if (angular.isObject(params)) {
-                    angular.extend(defaultParams, params)    
-                }
-                var paramsString = $CommonService.encodeQueryData(defaultParams);
-                var url = guid + '/transactions/' + (paramsString ? '?' + paramsString : '');
+                var url = guid + '/transactions/' + $CommonService.getQueryStringFromParams(params);
+                return $http.get(baseUrl + url);
+            },
+            /**
+             * Get register records
+             * @param guid
+             * @param params
+             */
+            getRegisterRecords: function (guid, params) {
+                var url = guid + '/register/' + $CommonService.getQueryStringFromParams(params);
                 return $http.get(baseUrl + url);
             },
             /**
@@ -50,8 +54,7 @@
              * @param guid po guid
              */
             getLastRegisterRecord: function (guid) {
-                var url = guid + '/register/?last=true';
-                return $http.get(baseUrl + url);
+                return this.getRegisterRecords(guid, { last: true });
             }
         }
     }

@@ -34,6 +34,23 @@
                 }
             },
             /**
+             * Returns query string from params
+             * @param params
+             * @param defaultParams
+             * @returns {string}
+             */
+            getQueryStringFromParams: function (params, defaultParams) {
+                defaultParams = defaultParams || {};
+                params = params || {};
+                if (angular.isObject(params)) {
+                    angular.extend(defaultParams, params)
+                } else {
+                    throw new TypeError('The parameter \'params\' is not an object')
+                }
+                var paramsString = this.encodeQueryData(defaultParams); 
+                return paramsString ? '?' + paramsString : '';
+            },
+            /**
              * Creates flat copy of object
              * @param obj
              * @returns {{}}
