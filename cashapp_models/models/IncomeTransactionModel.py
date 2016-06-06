@@ -59,5 +59,8 @@ class IncomeTransaction(ModelBase, TransactionModelBase):
 			date = self.date
 		)
 		register_record.value += Decimal(self.value)
+		register_record.save()
+
+		PORegister.objects.update_register_values(self.payment_object.guid, Decimal(self.value), True, register_record.date)
 
 		return register_record

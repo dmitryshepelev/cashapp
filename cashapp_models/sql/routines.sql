@@ -88,3 +88,21 @@ CREATE OR REPLACE FUNCTION get_aggregated_poregisers(payment_object_id VARCHAR(4
 			date DESC;
 	$body$
 	LANGUAGE sql;
+
+
+CREATE OR REPLACE FUNCTION increase_poregister_values(payment_object_id VARCHAR(40), value DECIMAL, start_date DATE, end_date DATE)
+	RETURNS VOID AS
+	$body$
+		UPDATE cashapp_models_poregister SET value = value + $2, last_edited_datetime = NOW()
+		WHERE payment_object_id = $1 AND date BETWEEN $3 AND $4;
+	$body$
+	LANGUAGE sql;
+
+
+CREATE OR REPLACE FUNCTION decrease_poregister_values(payment_object_id VARCHAR(40), value FLOAT, start_date DATE, end_date DATE)
+	RETURNS VOID AS
+	$body$
+		UPDATE cashapp_models_poregister SET value = value - $2, last_edited_datetime = NOW()
+		WHERE payment_object_id = $1 AND date BETWEEN $3 AND $4;
+	$body$
+	LANGUAGE sql;

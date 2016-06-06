@@ -7,6 +7,16 @@
         $scope.transactions = [];
         $scope.register = {};
         $scope.expenseTransactionsChart = {};
+        $scope.registerChart = {
+            settings: {},
+            update: function () {
+                var self = this;
+                $POService.getRegisterRecords(guid)
+                    .then(function (result) {
+                        self.settings = $ChartService.registerChart(result.data.registers);
+                    })
+            }
+        };
 
         /**
          * Error callback
@@ -63,10 +73,10 @@
                 }
                 $scope.transactions.push(transaction);
                 updateRegister();
+                $scope.registerChart.update();
             });
 
-            $scope.registerChart =
-                $ChartService.registerChart(data[3].data.registers, {});
+            $scope.registerChart.update();
         }
 
         function loadInitialData() {
@@ -74,8 +84,7 @@
                 .all([
                     $POService.getPO(guid),
                     $POService.getLastRegisterRecord(guid),
-                    $POService.getTransactions(guid, {count: 5}),
-                    $POService.getRegisterRecords(guid)
+                    $POService.getTransactions(guid, {count: 5})
                 ])
                 .then(initScope)
                 .catch(onError);

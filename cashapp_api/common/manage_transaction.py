@@ -1,5 +1,4 @@
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
 from django.views.decorators.http import require_http_methods
 
 from cashapp.decorators import request_wrapper, api_authorized
@@ -56,8 +55,7 @@ def manage_transaction(request, transaction_type = None):
 		except TransactionSaveError as e:
 			return ServerResponse.internal_server_error(message = Message.error(e.message))
 
-		register_record = transaction.model.create_register_record()
-		register_record.save()
+		transaction.model.create_register_record()
 
 		return ServerResponse.created(
 			data = {field_name: transaction.model.__class__.objects.get(guid = transaction.model.guid).serialize()}

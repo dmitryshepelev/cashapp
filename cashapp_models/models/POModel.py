@@ -1,10 +1,7 @@
-from collections import namedtuple
+from datetime import datetime
 
-from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import User
-from django.db import models, connection
-from django.db.models import Max
-from datetime import datetime, date
+from django.db import models
 
 from cashapp_models.models.CurrencyModel import Currency
 from cashapp_models.models.ModelBase import ModelBase
@@ -56,59 +53,25 @@ class PaymentObject(ModelBase):
 															use_natural_primary_keys)
 		return serialized
 
-	def get_aggregated_register_records(self, start_date = None, end_date = None, normalize = True):
+	def get_aggregated_by_days_register_records(self, start_date = None, end_date = None, normalize = True):
 		"""
 		Returns aggregated register records
 		:return: {list}
 		"""
-		start_date = start_date or (date.today() - relativedelta(months = 1))
-		end_date = end_date or (date.today() + relativedelta(days = 1))
+		from cashapp_models.models.PORegisterModel import PORegister
+		register_records = PORegister.objects.aggregate_by_days(self, start_date = start_date, end_date = end_date)
 
-		with connection.cursor() as c:
-			c.execute(
-				'SELECT * FROM get_aggregated_poregisers(%s, %s, %s)',
-				[self.guid, start_date.isoformat(), end_date.isoformat()]
-			)
+		if normalize:
+			return register_records.normalize()
 
-			aggregated_model = namedtuple('AggregatedModel', [col[0] for col in c.description])
-
-			register_records = [aggregated_model(*row) for row in c.fetchall()]
-
-			if normalize:
-				if len(register_records) == 0:
-					return register_records
-
-				register_records.reverse()
-				normalized_register_records = [register_records[0]]
-				value = None
-				for register_record in register_records[1::]:
-
-					difference = (register_record.date - normalized_register_records[-1].date).days
-					value = value or normalized_register_records[-1].value
-
-					if difference > 1:
-
-						for i in range(0, difference):
-							model = aggregated_model(
-								normalized_register_records[-1].date + relativedelta(days = 1),
-								value
-							)
-							normalized_register_records.append(model)
-
-					else:
-						normalized_register_records.append(register_record)
-					value = register_record.value
-
-				register_records = normalized_register_records
-
-			return register_records
+		return register_records
 
 	def get_last_register_record(self):
 		"""
 		Overrides base class method
 		:return: {PORegister} instance
 		"""
-		return self.poregister_set.annotate(max_date = Max('creation_datetime')).last()
+		return self.poregister_set.order_by('-date').first()
 
 	def get_register_record(self, dt = None):
 		"""
@@ -117,7 +80,7 @@ class PaymentObject(ModelBase):
 		:return:
 		"""
 		dt = dt or datetime.now()
-		return self.poregister_set.filter(creation_datetime__lte = dt).order_by('creation_datetime').last()
+		return self.poregister_set.filter(creation_datetime__lte = dt).order_by('date').last()
 
 	def get_protected_fields(self):
 		"""

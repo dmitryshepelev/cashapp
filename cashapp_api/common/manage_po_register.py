@@ -4,6 +4,7 @@ from django.views.decorators.http import require_http_methods
 from cashapp.decorators import request_wrapper, api_authorized
 from cashapp.libs.Message import Message
 from cashapp.libs.ServerResponse import ServerResponse
+from cashapp_models.models.PORegisterModel import PORegister
 
 
 @api_authorized()
@@ -31,6 +32,6 @@ def manage_po_register(request, guid):
 		return ServerResponse.ok({field_name: register_record.serialize() if register_record else {}})
 
 	else:
-		register_records = payment_object.get_aggregated_register_records()
+		register_records = payment_object.get_aggregated_by_days_register_records()
 
 		return ServerResponse.ok({field_name + 's': [record._asdict() for record in register_records]})
