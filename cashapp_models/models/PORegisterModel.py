@@ -32,4 +32,3 @@ class PORegister(ModelBase, RegisterModelBase):
 		serialized = super(PORegister, self).serialize(format, include_fields, exclude_fields, use_natural_foreign_keys,
 														use_natural_primary_keys)
 		return serialized
-

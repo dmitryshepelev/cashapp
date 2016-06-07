@@ -66,15 +66,18 @@ class ExpenseTransaction(ModelBase, TransactionModelBase):
 		Overrides base class method
 		:return: {PORegister} instance
 		"""
-		last_register_record = self.payment_object.get_last_register_record()
+		previous_register_record = self.payment_object.get_last_register_record()
 
 		from cashapp_models.models.PORegisterModel import PORegister
 		register_record = PORegister(
 			payment_object_id = self.payment_object.guid,
-			value = last_register_record.value if last_register_record else Decimal(0),
+			value = previous_register_record.value if previous_register_record else Decimal(0),
 			date = self.date
 		)
 		register_record.value -= Decimal(self.get_total_value())
+		register_record.save()
+
+		PORegister.objects.update_register_values(self.payment_object.guid, self.get_total_value(), False, register_record.date)
 
 		return register_record
 

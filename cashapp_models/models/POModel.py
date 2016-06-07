@@ -80,7 +80,7 @@ class PaymentObject(ModelBase):
 		:return:
 		"""
 		dt = dt or datetime.now()
-		return self.poregister_set.filter(creation_datetime__lte = dt).order_by('date').last()
+		return self.poregister_set.filter(date__lte = dt).order_by('-date').first()
 
 	def get_protected_fields(self):
 		"""

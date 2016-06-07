@@ -1,7 +1,8 @@
-from datetime import date
+from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 
 from django.db import models, connection
+from django.db.models import F
 
 from cashapp_models.libs.IAggregatable import IAggregatable
 
@@ -70,12 +71,7 @@ class PORegisterManager(models.Manager, IAggregatable):
 		:param end_date:
 		"""
 		end_date = end_date or date.today() + relativedelta(days = 1)
+		update_value_expression = F('value') + value if addition else F('value') - value
 
-		with connection.cursor() as c:
-			params = [payment_object_id, float(value), start_date.isoformat(), end_date.isoformat()]
-			print(params)
-			if addition:
-				c.execute('SELECT * FROM increase_poregister_values(%s, %s, %s, %s)', params)
-			else:
-				c.execute('SELECT * FROM decrease_poregister_values(%s, %s, %s, %s)', params)
-			c.fetchall()
+		self.filter(payment_object_id = payment_object_id, date__gt = start_date, date__lte = end_date).update(value = update_value_expression, last_edited_datetime = datetime.utcnow())
+

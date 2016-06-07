@@ -31,7 +31,7 @@ class Transaction(object):
 		"""
 		date = kwargs.get('date', None)
 		if date:
-			self.model.date = DateTimeUtil.from_timestamp(date)
+			self.model.date = DateTimeUtil.convert_to_UTC(DateTimeUtil.from_timestamp(date))
 
 		self.model.description = kwargs.get('description', self.model.description)
 		self.model.payment_object_id = kwargs.get('payment_object_id', self.model.payment_object_id)
