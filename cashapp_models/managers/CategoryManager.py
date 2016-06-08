@@ -49,7 +49,7 @@ class CategoryManager(models.Manager, ISearchable):
 		:return: {CategoryModel} instance
 		"""
 		try:
-			level = parent.level.next_category()
+			level = parent.level.next_level()
 		except BoundCategoryLevelException as e:
 			raise CreationError(e.message)
 

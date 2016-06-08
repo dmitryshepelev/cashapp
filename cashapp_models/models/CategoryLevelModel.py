@@ -29,7 +29,7 @@ class CategoryLevel(ModelBase):
 		natural_keys = super(CategoryLevel, self).natural_key(self_keys)
 		return natural_keys
 
-	def next_category(self):
+	def next_level(self):
 		"""
 		Returns next level
 		:return:
