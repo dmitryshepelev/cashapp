@@ -6,7 +6,7 @@ from cashapp_models.models.CategoryLevelModel import CategoryLevel
 from cashapp_tests.server import Dummies
 
 
-class TestCategoryLevel(TestCase):
+class TestCategoryLevelModel(TestCase):
 	def setUp(self):
 		self.category_level = Dummies.get_or_create_root_category_level()
 
